@@ -1,6 +1,6 @@
 require("dotenv").config();
 const express = require("express");
-// const connectDB = require("./src/db/db");
+const connectDB = require("./src/db/db");
 
 //SAFEGUARDS
 const cors = require("cors");
@@ -14,7 +14,7 @@ const limiter = rateLimit({
   legacyHeaders: false,
 });
 
-// connectDB();
+connectDB();
 const app = express();
 app.use(cors());
 app.use(helmet());
@@ -22,7 +22,7 @@ app.use(limiter);
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-const PORT = process.env.PORT || 5432;
+const PORT = process.env.DB_PORT || 5432;
 app.listen(PORT, () => {
   console.log(`Server started on port ${PORT}`);
 });
