@@ -1,7 +1,7 @@
 const pool = require("../db/db");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const { v4: uuid4 } = require("uuid");
+const { v4: uuidv4 } = require("uuid");
 
 const getAllUsers = async (req, res) => {
   try {
@@ -28,7 +28,7 @@ const registerUser = async (req, res) => {
       return res.status(400).json({ status: "error", msg: "duplicate email" });
     }
 
-    const hash = await bcrypt.hash(req.body.user_hash, 12);
+    const hash = await bcrypt.hash(req.body.password, 12);
     await pool.query(
       `INSERT INTO users (user_name, user_email, user_hash) VALUES ($1, $2, $3)`,
       [req.body.user_name, req.body.user_email, hash]
@@ -53,7 +53,47 @@ const getOneUser = async (req, res) => {
     }
   } catch (error) {
     console.error(error.message);
-    res.staus(400).json({ status: "error", msg: "getting one user error" });
+    res.status(400).json({ status: "error", msg: "getting one user error" });
+  }
+};
+
+const loginUser = async (req, res) => {
+  try {
+    // check if user_email exists in database
+    const { rows } = await pool.query(
+      `SELECT * FROM users WHERE user_email = $1`,
+      [req.body.user_email]
+    );
+    if (rows.length < 1)
+      return res.status(400).json({ status: "error", msg: "login error" });
+
+    // check if password matches
+    const result = await bcrypt.compare(req.body.password, rows[0].user_hash);
+    if (!result) {
+      console.error(
+        "password error in login attempt for user_email " + rows[0].user_email
+      );
+      return res.json(401).json({ status: "error", msg: "login failed" });
+    }
+
+    const claims = {
+      email: rows[0].user_email,
+      role: "user",
+      id: rows[0].user_id,
+    };
+    const access = jwt.sign(claims, process.env.ACCESS_SECRET, {
+      expiresIn: "20m",
+      jwtid: uuidv4(),
+    });
+    const refresh = jwt.sign(claims, process.env.REFRESH_SECRET, {
+      expiresIn: "30d",
+      jwtid: uuidv4(),
+    });
+
+    res.json({ access, refresh });
+  } catch (error) {
+    console.error(error.message);
+    return res.status(400).json({ status: "error", msg: "login failed" });
   }
 };
 
@@ -61,4 +101,5 @@ module.exports = {
   getAllUsers,
   registerUser,
   getOneUser,
+  loginUser,
 };
