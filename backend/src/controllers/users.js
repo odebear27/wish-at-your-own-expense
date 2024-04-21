@@ -5,7 +5,7 @@ const { v4: uuid4 } = require("uuid");
 
 const getAllUsers = async (req, res) => {
   try {
-    const allUsers = await pool.query("SELECT * FROM users");
+    const allUsers = await pool.query(`SELECT * FROM users`);
     console.log(allUsers.rows);
     res.json(allUsers.rows);
   } catch (error) {
@@ -40,7 +40,25 @@ const registerUser = async (req, res) => {
   }
 };
 
+const getOneUser = async (req, res) => {
+  try {
+    const user = await pool.query(`SELECT * FROM users WHERE user_id = $1`, [
+      req.params.user_id,
+    ]);
+
+    if (user.rows.length > 0) {
+      res.json(user.rows);
+    } else {
+      res.json({ status: "error", msg: "user_id does not exist in database" });
+    }
+  } catch (error) {
+    console.error(error.message);
+    res.staus(400).json({ status: "error", msg: "getting one user error" });
+  }
+};
+
 module.exports = {
   getAllUsers,
   registerUser,
+  getOneUser,
 };
