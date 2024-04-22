@@ -16,7 +16,7 @@ router.put("/u/register", registerUser);
 router.post("/u/profile/:user_id", authUser, getOneUser);
 router.post("/u/login", loginUser);
 router.post("/u/refresh", refreshUser);
-router.patch("/u/:user_id", authUser, updateUser);
-router.patch("/u/delete/:user_id", authUser, deleteUser);
+router.patch("/u", authUser, updateUser);
+router.patch("/u/delete", authUser, deleteUser);
 
 module.exports = router;

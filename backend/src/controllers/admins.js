@@ -92,8 +92,34 @@ const refreshAdmin = async (req, res) => {
   }
 };
 
+const deleteAdmin = async (req, res) => {
+  try {
+    // check if admin_id exists in database
+    const { rows } = await pool.query(
+      `SELECT admin_id FROM admins WHERE admin_id=$1`,
+      [req.decoded.id]
+    );
+    console.log(rows);
+    if (rows.length < 1) {
+      res.json({ status: "error", msg: "admin does not exist in database" });
+    } else {
+      // proceed to delete admin
+      await pool.query(`DELETE FROM admins WHERE admin_id=$1`, [
+        req.decoded.id,
+      ]);
+      res.json({ status: "ok", msg: "delete admin successful" });
+    }
+  } catch (error) {
+    console.error(error);
+    return res
+      .status(400)
+      .json({ status: "error", msg: "delete admin unsuccessful" });
+  }
+};
+
 module.exports = {
   registerAdmin,
   loginAdmin,
   refreshAdmin,
+  deleteAdmin,
 };
