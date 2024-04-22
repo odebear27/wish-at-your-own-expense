@@ -97,9 +97,32 @@ const loginUser = async (req, res) => {
   }
 };
 
+const refreshUser = async (req, res) => {
+  try {
+    const decoded = jwt.verify(req.body.refresh, process.env.REFRESH_SECRET);
+
+    const claims = {
+      email: decoded.email,
+      role: decoded.role,
+      id: decoded.id,
+    };
+
+    const access = jwt.sign(claims, process.env.ACCESS_SECRET, {
+      expiresIn: "20m",
+      jwtid: uuidv4(),
+    });
+
+    res.json({ access });
+  } catch (error) {
+    console.error(error.message);
+    res.status(400).json({ status: "error", msg: "refreshing token failed" });
+  }
+};
+
 module.exports = {
   getAllUsers,
   registerUser,
   getOneUser,
   loginUser,
+  refreshUser,
 };
