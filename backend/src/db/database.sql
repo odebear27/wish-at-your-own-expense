@@ -18,7 +18,7 @@ CREATE TABLE users (
 CREATE TABLE budgets (
     budget_id SERIAL NOT NULL PRIMARY KEY,
     budget_amt SMALLINT,
-    budget_mth VARCHAR(10),
+    budget_mth SMALLINT,
     budget_year SMALLINT
 );
 
@@ -67,9 +67,9 @@ CREATE TABLE wishlists (
 INSERT INTO admins (admin_name, admin_email, admin_hash) VALUES ('Admin', 'admin@mail.com', '$2a$12$BDZr1BZ13aWkYMqFxy4JR.W1eC2zrFEqv1YpQhcfNuYW86jph7L2.');
 INSERT INTO users (user_name, user_email, user_hash) VALUES ('User', 'user@mail.com', '$2a$12$eJLAQCEQaQAMUOWMMtjna.71lMkIBQWNZrF/aFKkx794rL1nQQsoS');
 INSERT INTO budgets (budget_amt, budget_mth, budget_year) VALUES
-(300, 'apr', 2024),
-(300, 'may', 2024),
-(300, 'jun', 2024);
+(300, 4, 2024),
+(300, 5, 2024),
+(300, 6, 2024);
 INSERT INTO user_budgets (budget_id, user_id) VALUES
 (1, 1),
 (2, 1),
