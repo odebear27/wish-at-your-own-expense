@@ -10,6 +10,7 @@ CREATE TABLE admins (
 
 CREATE TABLE users (
     user_id SERIAL NOT NULL PRIMARY KEY,
+    user_is_active BOOLEAN DEFAULT TRUE,
     user_name VARCHAR(20) NOT NULL,
     user_email VARCHAR(50) NOT NULL,
     user_hash VARCHAR(60) NOT NULL

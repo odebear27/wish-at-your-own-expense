@@ -147,6 +147,28 @@ const updateUser = async (req, res) => {
   }
 };
 
+// sets _user_is_active to false
+const deleteUser = async (req, res) => {
+  try {
+    // check if user_is_active is already false
+    const { rows } = await pool.query(
+      `SELECT user_is_active FROM users WHERE user_id=$1`,
+      [req.decoded.id]
+    );
+    if (rows[0].user_is_active == false)
+      res.json({ status: "error", msg: "user has already been deleted" });
+
+    // proceed to set user_is_active to false
+    await pool.query(`UPDATE users SET user_is_active=FALSE WHERE user_id=$1`, [
+      req.decoded.id,
+    ]);
+    res.json({ status: "ok", msg: "user deleted" });
+  } catch (error) {
+    console.error(error);
+    return res.status(400).json({ status: "error", msg: "delete user failed" });
+  }
+};
+
 module.exports = {
   getAllUsers,
   registerUser,
@@ -154,4 +176,5 @@ module.exports = {
   loginUser,
   refreshUser,
   updateUser,
+  deleteUser,
 };
