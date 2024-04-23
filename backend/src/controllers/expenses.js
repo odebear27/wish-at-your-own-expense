@@ -44,4 +44,23 @@ const createExpenseForUser = async (req, res) => {
   }
 };
 
-module.exports = { getAllExpensesForUser, createExpenseForUser };
+const deleteExpenseForUser = async (req, res) => {
+  try {
+    await pool.query(
+      `DELETE FROM expenses WHERE user_id=$1 AND expense_id=$2`,
+      [req.decoded.id, req.params.expense_id]
+    );
+    res.json({ status: "ok", msg: "expense deleted for user" });
+  } catch (error) {
+    console.error(error);
+    res
+      .status(400)
+      .json({ status: "error", msg: "delete expense for user unsuccessful" });
+  }
+};
+
+module.exports = {
+  getAllExpensesForUser,
+  createExpenseForUser,
+  deleteExpenseForUser,
+};
