@@ -46,11 +46,27 @@ const createExpenseForUser = async (req, res) => {
 
 const deleteExpenseForUser = async (req, res) => {
   try {
-    await pool.query(
-      `DELETE FROM expenses WHERE user_id=$1 AND expense_id=$2`,
-      [req.decoded.id, req.params.expense_id]
-    );
-    res.json({ status: "ok", msg: "expense deleted for user" });
+    // check if user or admin
+    if (req.decoded.role === "admin") {
+      res.json({ status: "error", msg: "unauthorised" });
+    } else if (req.decoded.role === "user") {
+      // find the expense using the expense_id
+      const { rows } = await pool.query(
+        `SELECT * FROM expenses WHERE expense_id=$1`,
+        [req.params.expense_id]
+      );
+
+      // check if user_id for that expense is the user that logged in
+      if (rows[0].user_id != req.decoded.id) {
+        res.json({ status: "error", msg: "unauthorised" });
+      } else if (rows[0].user_id === req.decoded.id) {
+        await pool.query(
+          `DELETE FROM expenses WHERE user_id=$1 AND expense_id=$2`,
+          [req.decoded.id, req.params.expense_id]
+        );
+        res.json({ status: "ok", msg: "expense deleted for user" });
+      }
+    }
   } catch (error) {
     console.error(error);
     res
@@ -61,7 +77,7 @@ const deleteExpenseForUser = async (req, res) => {
 
 const updateExpenseForUser = async (req, res) => {
   try {
-    // check if user
+    // check if user or admin
     if (req.decoded.role === "admin") {
       res.json({ status: "error", msg: "unauthorised" });
     } else if (req.decoded.role === "user") {
