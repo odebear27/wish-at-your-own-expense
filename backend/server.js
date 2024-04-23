@@ -6,8 +6,9 @@ const cors = require("cors");
 const helmet = require("helmet");
 const rateLimit = require("express-rate-limit");
 
-const user = require("./src/routers/users");
-const admin = require("./src/routers/admins");
+const users = require("./src/routers/users");
+const admins = require("./src/routers/admins");
+const expenses = require("./src/routers/expenses");
 
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000,
@@ -23,7 +24,8 @@ app.use(limiter);
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-app.use("/auth", user, admin);
+app.use("/auth", users, admins);
+app.use("/api", expenses);
 
 const PORT = process.env.SERVER_PORT || 5001;
 app.listen(PORT, () => {

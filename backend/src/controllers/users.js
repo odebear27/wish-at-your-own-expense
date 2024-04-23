@@ -6,7 +6,6 @@ const { v4: uuidv4 } = require("uuid");
 const getAllUsers = async (req, res) => {
   try {
     const allUsers = await pool.query(`SELECT * FROM users`);
-    console.log(allUsers.rows);
     res.json(allUsers.rows);
   } catch (error) {
     console.error(error.message);
