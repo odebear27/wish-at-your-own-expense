@@ -44,7 +44,39 @@ const createWishlistForUser = async (req, res) => {
   }
 };
 
+const deleteWishlistForUser = async (req, res) => {
+  try {
+    // check if USER OR ADMIN
+    if (req.decoded.role === "admin") {
+      res.json({ status: "error", msg: "admin cannot delete wishlist" });
+    } else if (req.decoded.role === "user") {
+      // find the wishlist using the wishlist_id
+      const { rows } = await pool.query(
+        `SELECT * FROM wishlists WHERE wishlist_id=$1`,
+        [req.params.wishlist_id]
+      );
+
+      // check if user_id for that wishlist is the user that is logged in
+      if (rows[0].user_id != req.decoded.id) {
+        res.json({ status: "error", msg: "unauthorised" });
+      } else if (rows[0].user_id === req.decoded.id) {
+        await pool.query(
+          `DELETE FROM wishlists WHERE user_id=$1 AND wishlist_id=$2`,
+          [req.decoded.id, req.params.wishlist_id]
+        );
+        res.json({ status: "ok", msg: "delete wishlist for user successful" });
+      }
+    }
+  } catch (error) {
+    console.error(error);
+    res
+      .status(400)
+      .json({ status: "error", msg: "delete wishlsit for user unsuccessful" });
+  }
+};
+
 module.exports = {
   getAllWishlistsForUser,
   createWishlistForUser,
+  deleteWishlistForUser,
 };
