@@ -4,11 +4,13 @@ const {
   getAllWishlistsForUser,
   createWishlistForUser,
   deleteWishlistForUser,
+  updateWishlistForUser,
 } = require("../controllers/wishlists");
 const router = express.Router();
 
 router.get("/wishlists", authUser, getAllWishlistsForUser);
 router.put("/wishlists", authUser, createWishlistForUser);
 router.delete("/wishlists/:wishlist_id", authUser, deleteWishlistForUser);
+router.patch("/wishlists/:wishlist_id", authUser, updateWishlistForUser);
 
 module.exports = router;

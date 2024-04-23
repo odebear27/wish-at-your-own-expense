@@ -52,7 +52,7 @@ const deleteWishlistForUser = async (req, res) => {
     } else if (req.decoded.role === "user") {
       // find the wishlist using the wishlist_id
       const { rows } = await pool.query(
-        `SELECT * FROM wishlists WHERE wishlist_id=$1`,
+        `SELECT * FROM wishlists WHERE wishlist_id = $1`,
         [req.params.wishlist_id]
       );
 
@@ -61,7 +61,7 @@ const deleteWishlistForUser = async (req, res) => {
         res.json({ status: "error", msg: "unauthorised" });
       } else if (rows[0].user_id === req.decoded.id) {
         await pool.query(
-          `DELETE FROM wishlists WHERE user_id=$1 AND wishlist_id=$2`,
+          `DELETE FROM wishlists WHERE user_id=$1 AND wishlist_id = $2`,
           [req.decoded.id, req.params.wishlist_id]
         );
         res.json({ status: "ok", msg: "delete wishlist for user successful" });
@@ -75,8 +75,35 @@ const deleteWishlistForUser = async (req, res) => {
   }
 };
 
+const updateWishlistForUser = async (req, res) => {
+  // check if admin or user
+  if (req.decoded.role === "admin") {
+    res.json({ status: "error", msg: "admin cannot update wishlist" });
+  } else if (req.decoded.role === "user") {
+    // find the wishlist using the wishlist_id
+    const { rows } = await pool.query(
+      `SELECT * FROM wishlists WHERE wishlist_id = $1`,
+      [req.params.wishlist_id]
+    );
+
+    // check if user_id for that wishlist is the user that logged in
+    if (rows[0].user_id != req.decoded.id) {
+      res.json({ status: "error", msg: "unauthorised" });
+    } else if (rows[0].user_id === req.decoded.id) {
+      for (field in req.body) {
+        await pool.query(
+          `UPDATE wishlists SET ${field} = $1 WHERE user_id = $2 AND wishlist_id = $3`,
+          [req.body[field], req.decoded.id, req.params.wishlist_id]
+        );
+      }
+      res.json({ status: "ok", msg: "update wishlist for user successful" });
+    }
+  }
+};
+
 module.exports = {
   getAllWishlistsForUser,
   createWishlistForUser,
   deleteWishlistForUser,
+  updateWishlistForUser,
 };
