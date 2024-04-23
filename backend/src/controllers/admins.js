@@ -117,9 +117,26 @@ const deleteAdmin = async (req, res) => {
   }
 };
 
+const updateAdmin = async (req, res) => {
+  try {
+    if ("admin_name" in req.body)
+      await pool.query(
+        `UPDATE admins SET admin_name = $1 WHERE admin_id = $2`,
+        [req.body.admin_name, req.decoded.id]
+      );
+    res.json({ status: "ok", msg: "admin updated" });
+  } catch (error) {
+    console.error(error);
+    return res
+      .status(400)
+      .json({ status: "error", msg: "update admin failed" });
+  }
+};
+
 module.exports = {
   registerAdmin,
   loginAdmin,
   refreshAdmin,
   deleteAdmin,
+  updateAdmin,
 };
