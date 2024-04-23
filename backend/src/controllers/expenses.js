@@ -119,9 +119,40 @@ const updateExpenseForUser = async (req, res) => {
   }
 };
 
+const getOneExpenseForUser = async (req, res) => {
+  try {
+    // check the role
+    if (req.decoded.role === "admin") {
+      res.json({ status: "error", msg: "unauthorised" });
+    } else if (req.decoded.role === "user") {
+      // get the expense
+      const { rows } = await pool.query(
+        `SELECT * FROM expenses WHERE expense_id = $1`,
+        [req.params.expense_id]
+      );
+      // check if user_id in expense is the user logged in
+      if (rows[0].user_id != req.decoded.id) {
+        res.json({ status: "error", msg: "unauthorised" });
+      } else if (rows[0].user_id === req.decoded.id) {
+        const expense = await pool.query(
+          `SELECT * FROM expenses WHERE USER_ID = $1 AND expense_id = $2`,
+          [req.decoded.id, req.params.expense_id]
+        );
+        res.json(expense.rows[0]);
+      }
+    }
+  } catch (error) {
+    console.error(error);
+    res
+      .status(400)
+      .json({ status: "error", msg: "get one expense for user unsuccessful" });
+  }
+};
+
 module.exports = {
   getAllExpensesForUser,
   createExpenseForUser,
   deleteExpenseForUser,
   updateExpenseForUser,
+  getOneExpenseForUser,
 };
