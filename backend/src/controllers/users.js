@@ -59,9 +59,10 @@ const getOneUser = async (req, res) => {
 const loginUser = async (req, res) => {
   try {
     // check if user_email exists in database
+    // check if user_is_active is true
     const { rows } = await pool.query(
-      `SELECT * FROM users WHERE user_email = $1`,
-      [req.body.user_email]
+      `SELECT * FROM users WHERE user_email = $1 AND user_is_active = $2`,
+      [req.body.user_email, true]
     );
     if (rows.length < 1)
       return res.status(400).json({ status: "error", msg: "login error" });
