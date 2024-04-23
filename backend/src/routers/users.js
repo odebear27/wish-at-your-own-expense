@@ -17,6 +17,6 @@ router.post("/u/profile/:user_id", authUser, getOneUser);
 router.post("/u/login", loginUser);
 router.post("/u/refresh", refreshUser);
 router.patch("/u/update", authUser, updateUser);
-router.patch("/u/delete", authUser, deleteUser);
+router.delete("/u/delete", authUser, deleteUser);
 
 module.exports = router;
