@@ -46,9 +46,9 @@ INSERT INTO expense_category VALUES
 CREATE TABLE expenses (
     expense_id SERIAL NOT NULL PRIMARY KEY,
     expense_date DATE,
-    expense_item VARCHAR(50),
+    expense_item VARCHAR(50) NOT NULL,
     expense_category VARCHAR(20),
-    expense_amt DECIMAL(10,2),
+    expense_amt DECIMAL(10,2) NOT NULL,
     user_id INT NOT NULL,
     CONSTRAINT fk_expense_category FOREIGN KEY(expense_category) REFERENCES expense_category(expense_category),
     CONSTRAINT fk_user FOREIGN KEY(user_id) REFERENCES users(user_id)
@@ -65,8 +65,14 @@ CREATE TABLE wishlists (
     CONSTRAINT fk_user FOREIGN KEY(user_id) REFERENCES users(user_id)
 );
 
-INSERT INTO admins (admin_name, admin_email, admin_hash) VALUES ('Admin', 'admin@mail.com', '$2a$12$BDZr1BZ13aWkYMqFxy4JR.W1eC2zrFEqv1YpQhcfNuYW86jph7L2.');
-INSERT INTO users (user_name, user_email, user_hash) VALUES ('User', 'user@mail.com', '$2a$12$eJLAQCEQaQAMUOWMMtjna.71lMkIBQWNZrF/aFKkx794rL1nQQsoS');
+INSERT INTO admins (admin_name, admin_email, admin_hash) VALUES 
+('Admin', 'admin@mail.com', '$2a$12$BDZr1BZ13aWkYMqFxy4JR.W1eC2zrFEqv1YpQhcfNuYW86jph7L2.'),
+('Admin One', 'adminone@mail.com', '$2a$12$pyA9UwYu1hh8ZiLuB.ZzbeWG43yVcfbQGWIpJE7DIG8JxEHR9Bbei'),
+('Admin Two', 'admintwo@mail.com', '$2a$12$H0iqgu/27HFA08/w0nt9GeRr1W6DC1WNY63Ex1P2RAqKsOJOCNOtq');
+INSERT INTO users (user_name, user_email, user_hash) VALUES 
+('User', 'user@mail.com', '$2a$12$eJLAQCEQaQAMUOWMMtjna.71lMkIBQWNZrF/aFKkx794rL1nQQsoS'),
+('User One', 'userone@mail.com', '$2a$12$h90hW0a6EXpM9gzGmR1ozeOFVnV96sw5xtzCN5wqOhiEaV6jeOuK6'),
+('User Two', 'usertwo@mail.com', '$2a$12$0W.OnFdY00PThOrvmBCUm.gp.dVqyprFpDhmBew4qby1Q6uCK3tZu');
 INSERT INTO budgets (budget_amt, budget_mth, budget_year) VALUES
 (300, 4, 2024),
 (300, 5, 2024),
@@ -74,12 +80,18 @@ INSERT INTO budgets (budget_amt, budget_mth, budget_year) VALUES
 INSERT INTO user_budgets (budget_id, user_id) VALUES
 (1, 1),
 (2, 1),
-(3, 1);
+(3, 1),
+(1, 2),
+(1, 3);
 INSERT INTO expenses (expense_date, expense_item, expense_category, expense_amt, user_id) VALUES
 ('2024-04-07', 'Mon to fri lunch', 'FOOD', 50, 1),
 ('2024-04-08', 'Grab to office', 'TRANSPORT', 20, 1),
-('2024-04-08', 'Visit to doctor', 'HEALTH', 20, 1);
+('2024-04-08', 'Visit to doctor', 'HEALTH', 20, 1),
+('2024-04-07', 'Movie Ticket', 'RECREATION', 10, 2),
+('2024-04-07', 'Buffet dinner', 'FOOD', 100, 3);
 INSERT INTO wishlists (wishlist_position, wishlist_item, wishlist_cost, wishlist_store, wishlist_status, user_id) VALUES
 (1, 'Apple ipad mini', 997.20, 'https://www.apple.com/sg/shop/buy-ipad/ipad-mini/256gb-pink-wifi', 'Not yet purchased', 1),
 (2, 'Pillow', 100, 'Tangs department store', 'Not yet purchased', 1),
-(3, 'Snoopy MoonSwatch', 430, 'https://www.swatch.com/en-sg/bioceramic-moonswatch/mission-to-the-moonphase/full-moon.html', 'Not yet purchased', 1);
+(3, 'Snoopy MoonSwatch', 430, 'https://www.swatch.com/en-sg/bioceramic-moonswatch/mission-to-the-moonphase/full-moon.html', 'Not yet purchased', 1),
+(1, 'Windows Laptop', 1500, 'Best Denki', 'Not yet purchased', 2),
+(1, 'Water Bottle', 30, 'Shopee', 'Not yet purchased', 3);
