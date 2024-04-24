@@ -133,10 +133,34 @@ const updateAdmin = async (req, res) => {
   }
 };
 
+const getOneAdmin = async (req, res) => {
+  try {
+    // check if role is admin or user
+    if (req.decoded.role === "user") {
+      res.json({ status: "error", admin: "user cannot view admin profile" });
+    } else if (req.decoded.role === "admin") {
+      // check if admin exists in database
+      const { rows } = await pool.query(
+        `SELECT * FROM admins WHERE admin_id = $1`,
+        [req.decoded.id]
+      );
+      if (rows.length < 1) {
+        res.json({ ststus: "error", msg: "admin_id does not exist" });
+      } else {
+        res.json(rows[0]);
+      }
+    }
+  } catch (error) {
+    console.error(error);
+    res.json({ status: "error", msg: "get one admin unsuccessful" });
+  }
+};
+
 module.exports = {
   registerAdmin,
   loginAdmin,
   refreshAdmin,
   deleteAdmin,
   updateAdmin,
+  getOneAdmin,
 };
