@@ -8,11 +8,22 @@ const {
   getOneAdmin,
 } = require("../controllers/admins");
 const { authAdmin } = require("../middleware/auth");
+const {
+  validateAdminLoginData,
+  validateAdminRegistrationData,
+  validateRefreshToken,
+} = require("../validators/auth");
+const { errorCheck } = require("../validators/errorCheck");
 const router = express.Router();
 
-router.put("/a/register", registerAdmin);
-router.post("/a/login", loginAdmin);
-router.post("/a/refresh", refreshAdmin);
+router.put(
+  "/a/register",
+  validateAdminRegistrationData,
+  errorCheck,
+  registerAdmin
+);
+router.post("/a/login", validateAdminLoginData, errorCheck, loginAdmin);
+router.post("/a/refresh", validateRefreshToken, errorCheck, refreshAdmin);
 router.delete("/a/delete", authAdmin, deleteAdmin);
 router.patch("/a/update", authAdmin, updateAdmin);
 router.post("/a/profile", authAdmin, getOneAdmin);
