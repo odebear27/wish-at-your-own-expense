@@ -121,26 +121,31 @@ const refreshUser = async (req, res) => {
 
 const updateUser = async (req, res) => {
   try {
-    if ("user_name" in req.body)
-      await pool.query(`UPDATE users SET user_name = $1 WHERE user_id = $2`, [
-        req.body.user_name,
-        req.decoded.id,
-      ]);
-    if ("budget_amt" in req.body) {
-      const date = new Date();
-      budget_id = await pool.query(
-        `INSERT INTO budgets (budget_amt, budget_mth, budget_year) VALUES ($1, $2, $3) RETURNING budget_id
+    // check if role is admin or user
+    if (req.decoded.role === "admin") {
+      res.json({ status: "error", admin: "admin cannot update user profile" });
+    } else if (req.decoded.role === "user") {
+      if ("user_name" in req.body)
+        await pool.query(`UPDATE users SET user_name = $1 WHERE user_id = $2`, [
+          req.body.user_name,
+          req.decoded.id,
+        ]);
+      if ("budget_amt" in req.body) {
+        const date = new Date();
+        budget_id = await pool.query(
+          `INSERT INTO budgets (budget_amt, budget_mth, budget_year) VALUES ($1, $2, $3) RETURNING budget_id
         `,
-        [req.body.budget_amt, date.getMonth() + 1, date.getFullYear()]
-      );
+          [req.body.budget_amt, date.getMonth() + 1, date.getFullYear()]
+        );
 
-      await pool.query(
-        `INSERT INTO user_budgets (budget_id, user_id) VALUES ($1, $2)`,
-        [budget_id.rows[0].budget_id, req.decoded.id]
-      );
+        await pool.query(
+          `INSERT INTO user_budgets (budget_id, user_id) VALUES ($1, $2)`,
+          [budget_id.rows[0].budget_id, req.decoded.id]
+        );
+      }
+
+      res.json({ status: "ok", msg: "user updated" });
     }
-
-    res.json({ status: "ok", msg: "user updated" });
   } catch (error) {
     console.error(error);
     return res.status(400).json({ status: "error", msg: "update user failed" });

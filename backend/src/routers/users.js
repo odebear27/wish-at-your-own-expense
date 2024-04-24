@@ -8,10 +8,10 @@ const {
   updateUser,
   deleteUser,
 } = require("../controllers/users");
-const { authUser } = require("../middleware/auth");
+const { authUser, authAdmin } = require("../middleware/auth");
 const router = express.Router();
 
-router.get("/u", getAllUsers);
+router.get("/u", authAdmin, getAllUsers);
 router.put("/u/register", registerUser);
 router.post("/u/profile/:user_id", authUser, getOneUser);
 router.post("/u/login", loginUser);
