@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import UserContext from "./context/user";
 import LoginPage from "./pages.jsx/UserLoginPage";
+import UserProfilePage from "./pages.jsx/UserProfilePage";
 
 function App() {
   const [accessToken, setAccessToken] = useState("");
@@ -28,6 +29,7 @@ function App() {
       >
         <Routes>
           <Route path="/" element={<LoginPage />} />
+          <Route path="/profile" element={<UserProfilePage />} />
         </Routes>
         {/* <LoginPage></LoginPage> */}
       </UserContext.Provider>
