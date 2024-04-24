@@ -90,26 +90,12 @@ const updateExpenseForUser = async (req, res) => {
       if (rows[0].user_id != req.decoded.id) {
         res.json({ status: "error", msg: "unauthorised" });
       } else if (rows[0].user_id === req.decoded.id) {
-        if ("expense_date" in req.body)
+        for (field in req.body) {
           await pool.query(
-            `UPDATE expenses SET expense_date = $1 WHERE user_id = $2 AND expense_id=$3`,
-            [req.body.expense_date, req.decoded.id, req.params.expense_id]
+            `UPDATE expenses SET ${field} = $1 WHERE user_id = $2 AND expense_id=$3`,
+            [req.body[field], req.decoded.id, req.params.expense_id]
           );
-        if ("expense_item" in req.body)
-          await pool.query(
-            `UPDATE expenses SET expense_item = $1 WHERE  user_id = $2 AND expense_id=$3`,
-            [req.body.expense_item, req.decoded.id, req.params.expense_id]
-          );
-        if ("expense_category" in req.body)
-          await pool.query(
-            `UPDATE expenses SET expense_category = $1 WHERE user_id = $2 AND expense_id=$3`,
-            [req.body.expense_category, req.decoded.id, req.params.expense_id]
-          );
-        if ("expense_amt" in req.body)
-          await pool.query(
-            `UPDATE expenses SET expense_amt = $1 WHERE user_id = $2 AND expense_id=$3`,
-            [req.body.expense_amt, req.decoded.id, req.params.expense_id]
-          );
+        }
         res.json({ status: "ok", msg: "update expense for user successful" });
       }
     }
