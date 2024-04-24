@@ -5,6 +5,7 @@ const {
   deleteExpenseForUser,
   updateExpenseForUser,
   getOneExpenseForUser,
+  getAllExpenseCategory,
 } = require("../controllers/expenses");
 const { authUser } = require("../middleware/auth");
 const {
@@ -44,5 +45,6 @@ router.post(
   errorCheck,
   getOneExpenseForUser
 );
+router.get("/expenses/category", getAllExpenseCategory);
 
 module.exports = router;

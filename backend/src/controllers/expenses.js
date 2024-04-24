@@ -135,10 +135,23 @@ const getOneExpenseForUser = async (req, res) => {
   }
 };
 
+const getAllExpenseCategory = async (req, res) => {
+  try {
+    const { rows } = await pool.query(`SELECT * FROM expense_category`);
+    res.json(rows);
+  } catch (error) {
+    console.error(error);
+    res
+      .status(400)
+      .json({ status: "error", msg: "getting all expense category error" });
+  }
+};
+
 module.exports = {
   getAllExpensesForUser,
   createExpenseForUser,
   deleteExpenseForUser,
   updateExpenseForUser,
   getOneExpenseForUser,
+  getAllExpenseCategory,
 };
