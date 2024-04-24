@@ -101,9 +101,36 @@ const updateWishlistForUser = async (req, res) => {
   }
 };
 
+const getOneWishlistForUser = async (req, res) => {
+  try {
+    // check if admin or user
+    if (req.decoded.role === "admin") {
+      res.json({ status: "ok", msg: "admin cannot view wishlist" });
+    } else if (req.decoded.role === "user") {
+      // get the wishlist
+      const { rows } = await pool.query(
+        `SELECT * FROM wishlists WHERE wishlist_id = $1`,
+        [req.params.wishlist_id]
+      );
+      // check if user_id in the wishlist is the same as the user logged in
+      if (rows[0].user_id != req.decoded.id) {
+        res.json({ status: "error", msg: "unauthorised" });
+      } else if (rows[0].user_id === req.decoded.id) {
+        res.json(rows[0]);
+      }
+    }
+  } catch (error) {
+    console.error(error);
+    res
+      .status(400)
+      .json({ status: "error", msg: "get one wishlist for user unsuccessful" });
+  }
+};
+
 module.exports = {
   getAllWishlistsForUser,
   createWishlistForUser,
   deleteWishlistForUser,
   updateWishlistForUser,
+  getOneWishlistForUser,
 };
