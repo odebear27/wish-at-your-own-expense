@@ -3,7 +3,10 @@ const { body, param } = require("express-validator");
 const validateExpenseForUserInput = [
   body("expense_date", "expense date is required").not().isEmpty(),
   body("expense_item", "expense item is required").not().isEmpty(),
-  body("expense_item", "expense item must be between length 1-50").isLength({
+  body(
+    "expense_item",
+    "expense item must be between length 1-50 characters"
+  ).isLength({
     min: 1,
     max: 50,
   }),

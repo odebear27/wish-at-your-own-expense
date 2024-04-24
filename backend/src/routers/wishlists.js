@@ -7,12 +7,42 @@ const {
   updateWishlistForUser,
   getOneWishlistForUser,
 } = require("../controllers/wishlists");
+const {
+  validateWishlistForUserInput,
+  validateWishlistIdInParams,
+} = require("../validators/wishlists");
+const { errorCheck } = require("../validators/errorCheck");
 const router = express.Router();
 
 router.get("/wishlists", authUser, getAllWishlistsForUser);
-router.put("/wishlists", authUser, createWishlistForUser);
-router.delete("/wishlists/:wishlist_id", authUser, deleteWishlistForUser);
-router.patch("/wishlists/:wishlist_id", authUser, updateWishlistForUser);
-router.post("/wishlists/:wishlist_id", authUser, getOneWishlistForUser);
+router.put(
+  "/wishlists",
+  authUser,
+  validateWishlistForUserInput,
+  errorCheck,
+  createWishlistForUser
+);
+router.delete(
+  "/wishlists/:wishlist_id",
+  authUser,
+  validateWishlistIdInParams,
+  errorCheck,
+  deleteWishlistForUser
+);
+router.patch(
+  "/wishlists/:wishlist_id",
+  authUser,
+  validateWishlistForUserInput,
+  validateWishlistIdInParams,
+  errorCheck,
+  updateWishlistForUser
+);
+router.post(
+  "/wishlists/:wishlist_id",
+  authUser,
+  validateWishlistIdInParams,
+  errorCheck,
+  getOneWishlistForUser
+);
 
 module.exports = router;
