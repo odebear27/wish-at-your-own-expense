@@ -43,6 +43,14 @@ INSERT INTO expense_category VALUES
     ('GIVING'),
     ('OTHERS');
 
+CREATE TABLE wishlist_status (
+    wishlist_status VARCHAR(30) PRIMARY KEY
+);
+
+INSERT INTO wishlist_status VALUES
+    ('PURCHASED'),
+    ('NOT YET PURCHASED');
+
 CREATE TABLE expenses (
     expense_id SERIAL NOT NULL PRIMARY KEY,
     expense_date DATE,
@@ -62,6 +70,7 @@ CREATE TABLE wishlists (
     wishlist_store VARCHAR(300),
     wishlist_status VARCHAR(30),
     user_id INT NOT NULL,
+    CONSTRAINT fk_wishlist_status FOREIGN KEY(wishlist_status) REFERENCES wishlist_status(wishlist_status),
     CONSTRAINT fk_user FOREIGN KEY(user_id) REFERENCES users(user_id)
 );
 
@@ -90,8 +99,8 @@ INSERT INTO expenses (expense_date, expense_item, expense_category, expense_amt,
 ('2024-04-07', 'Movie Ticket', 'RECREATION', 10, 2),
 ('2024-04-07', 'Buffet dinner', 'FOOD', 100, 3);
 INSERT INTO wishlists (wishlist_position, wishlist_item, wishlist_cost, wishlist_store, wishlist_status, user_id) VALUES
-(1, 'Apple ipad mini', 997.20, 'https://www.apple.com/sg/shop/buy-ipad/ipad-mini/256gb-pink-wifi', 'Not yet purchased', 1),
-(2, 'Pillow', 100, 'Tangs department store', 'Not yet purchased', 1),
-(3, 'Snoopy MoonSwatch', 430, 'https://www.swatch.com/en-sg/bioceramic-moonswatch/mission-to-the-moonphase/full-moon.html', 'Not yet purchased', 1),
-(1, 'Windows Laptop', 1500, 'Best Denki', 'Not yet purchased', 2),
-(1, 'Water Bottle', 30, 'Shopee', 'Not yet purchased', 3);
+(1, 'Apple ipad mini', 997.20, 'https://www.apple.com/sg/shop/buy-ipad/ipad-mini/256gb-pink-wifi', 'NOT YET PURCHASED', 1),
+(2, 'Pillow', 100, 'Tangs department store', 'NOT YET PURCHASED', 1),
+(3, 'Snoopy MoonSwatch', 430, 'https://www.swatch.com/en-sg/bioceramic-moonswatch/mission-to-the-moonphase/full-moon.html', 'NOT YET PURCHASED', 1),
+(1, 'Windows Laptop', 1500, 'Best Denki', 'NOT YET PURCHASED', 2),
+(1, 'Water Bottle', 30, 'Shopee', 'NOT YET PURCHASED', 3);

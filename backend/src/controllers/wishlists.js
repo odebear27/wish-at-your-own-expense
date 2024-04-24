@@ -127,10 +127,23 @@ const getOneWishlistForUser = async (req, res) => {
   }
 };
 
+const getAllWishlistStatus = async (req, res) => {
+  try {
+    const { rows } = await pool.query(`SELECT * FROM wishlist_status`);
+    res.json(rows);
+  } catch (error) {
+    console.error(error);
+    res
+      .status(400)
+      .json({ status: "error", msg: "get all wishlist status failed" });
+  }
+};
+
 module.exports = {
   getAllWishlistsForUser,
   createWishlistForUser,
   deleteWishlistForUser,
   updateWishlistForUser,
   getOneWishlistForUser,
+  getAllWishlistStatus,
 };
