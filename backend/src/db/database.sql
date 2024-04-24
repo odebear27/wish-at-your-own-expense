@@ -46,9 +46,9 @@ INSERT INTO expense_category VALUES
 CREATE TABLE expenses (
     expense_id SERIAL NOT NULL PRIMARY KEY,
     expense_date DATE,
-    expense_item VARCHAR(50) NOT NULL,
+    expense_item VARCHAR(50),
     expense_category VARCHAR(20),
-    expense_amt DECIMAL(10,2) NOT NULL,
+    expense_amt DECIMAL(10,2),
     user_id INT NOT NULL,
     CONSTRAINT fk_expense_category FOREIGN KEY(expense_category) REFERENCES expense_category(expense_category),
     CONSTRAINT fk_user FOREIGN KEY(user_id) REFERENCES users(user_id)
