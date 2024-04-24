@@ -13,6 +13,7 @@ const {
   validateUserRegistrationData,
   validateUserLoginData,
   validateRefreshToken,
+  validateUserIdInParams,
 } = require("../validators/auth");
 const { errorCheck } = require("../validators/errorCheck");
 const router = express.Router();
@@ -24,10 +25,23 @@ router.put(
   errorCheck,
   registerUser
 );
-router.post("/u/profile/:user_id", authUser, getOneUser);
+router.post(
+  "/u/profile/:user_id",
+  authUser,
+  validateUserIdInParams,
+  errorCheck,
+  getOneUser
+);
 router.post("/u/login", validateUserLoginData, errorCheck, loginUser);
 router.post("/u/refresh", validateRefreshToken, errorCheck, refreshUser);
 router.patch("/u/update", authUser, updateUser);
-router.delete("/u/delete", authUser, deleteUser);
+router.delete(
+  "/u/delete/:user_id",
+  authUser,
+  authAdmin,
+  validateUserIdInParams,
+  errorCheck,
+  deleteUser
+);
 
 module.exports = router;

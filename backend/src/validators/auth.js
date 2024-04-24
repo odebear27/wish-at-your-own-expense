@@ -1,4 +1,4 @@
-const { body } = require("express-validator");
+const { body, param } = require("express-validator");
 
 const validateUserRegistrationData = [
   body("user_name", "name is required").not().isEmpty(),
@@ -39,10 +39,15 @@ const validateRefreshToken = [
     .isLength({ min: 1 }),
 ];
 
+const validateUserIdInParams = [
+  param("user_id", "user id must be a number").isInt({ min: 1 }),
+];
+
 module.exports = {
   validateUserRegistrationData,
   validateUserLoginData,
   validateAdminLoginData,
   validateAdminRegistrationData,
   validateRefreshToken,
+  validateUserIdInParams,
 };

@@ -158,7 +158,7 @@ const deleteUser = async (req, res) => {
     // check if user_is_active is already false
     const { rows } = await pool.query(
       `SELECT user_is_active FROM users WHERE user_id=$1`,
-      [req.decoded.id]
+      [req.params.user_id]
     );
     if (rows[0].user_is_active == false) {
       res.json({ status: "error", msg: "user has already been deleted" });
@@ -166,7 +166,7 @@ const deleteUser = async (req, res) => {
       // proceed to set user_is_active to false
       await pool.query(
         `UPDATE users SET user_is_active=FALSE WHERE user_id=$1`,
-        [req.decoded.id]
+        [req.params.user_id]
       );
       res.json({ status: "ok", msg: "user deleted" });
     }
