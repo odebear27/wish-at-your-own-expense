@@ -6,6 +6,13 @@ const UserProfilePage = () => {
   const fetchData = useFetch();
   const userCtx = useContext(UserContext);
   const [userProfileAndBudget, setUserProfileAndBudget] = useState({});
+  const [wishlistCost, setWishlistCost] = useState();
+  const [expensesAmt, setExpenseAmt] = useState();
+  const [isUpdateUserPressed, setIsUpdateUserPressed] = useState(false);
+  const [updateUserProfile, setUpdateUserProfile] = useState({
+    user_name: userProfileAndBudget.user_name,
+    budget_amt: userProfileAndBudget.budget_amt,
+  });
 
   const getUserProfileAndBudget = async () => {
     try {
@@ -16,7 +23,6 @@ const UserProfilePage = () => {
         userCtx.accessToken
       );
       if (res.ok) {
-        console.log(res.data[0]);
         setUserProfileAndBudget(res.data[0]);
       }
     } catch (error) {
@@ -24,16 +30,126 @@ const UserProfilePage = () => {
     }
   };
 
+  const getWishlistCost = async () => {
+    try {
+      const res = await fetchData(
+        `/api/wishlistscost`,
+        "POST",
+        undefined,
+        userCtx.accessToken
+      );
+      if (res.ok) {
+        setWishlistCost(res.data[0].sum);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const getExpenseAmt = async () => {
+    try {
+      const res = await fetchData(
+        `/api/expensesamt`,
+        "POST",
+        undefined,
+        userCtx.accessToken
+      );
+      if (res.ok) {
+        console.log(res.data);
+        setExpenseAmt(res.data[0].sum);
+      }
+    } catch (error) {}
+  };
+
   useEffect(() => {
     getUserProfileAndBudget();
+    getWishlistCost();
+    getExpenseAmt();
   }, [userCtx.userId]);
+
+  useEffect(() => {
+    if (userProfileAndBudget) {
+      setUpdateUserProfile({
+        user_name: userProfileAndBudget.user_name || "",
+        budget_amt: userProfileAndBudget.budget_amt || "",
+      });
+    }
+  }, [userProfileAndBudget]);
+
+  const handleChange = (event) => {
+    setUpdateUserProfile((prevState) => {
+      return { ...prevState, [event.target.id]: event.target.value };
+    });
+  };
+
+  const updateUser = async () => {
+    try {
+      const body = {
+        user_name: updateUserProfile.user_name,
+      };
+      const resForUpdateUser = await fetchData(
+        `/auth/u/update`,
+        "PATCH",
+        body,
+        userCtx.accessToken
+      );
+
+      const resForUpdateUserBudget = await fetchData(
+        `/auth/u/updatebudget`,
+        "PATCH",
+        { budget_amt: updateUserProfile.budget_amt },
+        userCtx.accessToken
+      );
+
+      if (resForUpdateUser.ok && resForUpdateUserBudget.ok) {
+        getUserProfileAndBudget();
+        setIsUpdateUserPressed(false);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    console.log(isUpdateUserPressed);
+  }, [isUpdateUserPressed]);
 
   return (
     <div>
       <h1>user profile page</h1>
-      <p>My name: {userProfileAndBudget.user_name}</p>
-      <p>My email: {userProfileAndBudget.user_email}</p>
-      <p>My budget for the month: {userProfileAndBudget.budget_amt}</p>
+      {!isUpdateUserPressed ? (
+        <div>
+          <p>My name: {userProfileAndBudget.user_name}</p>
+          <p>My email: {userProfileAndBudget.user_email}</p>
+          <p>My budget for the month: ${userProfileAndBudget.budget_amt}</p>
+          <p>My Expenses: ${expensesAmt}</p>
+          <p>My wishlist cost: ${wishlistCost}</p>
+          <button onClick={() => setIsUpdateUserPressed(true)}>
+            update user
+          </button>
+        </div>
+      ) : (
+        <div>
+          <p>My name: </p>
+          <input
+            id="user_name"
+            type="text"
+            value={updateUserProfile.user_name}
+            onChange={handleChange}
+          ></input>
+          <p>My email: {userProfileAndBudget.user_email}</p>
+          <p>My budget for the month: </p>
+          <input
+            id="budget_amt"
+            type="text"
+            value={updateUserProfile.budget_amt}
+            onChange={handleChange}
+          ></input>
+          <p>My Expenses: ${expensesAmt}</p>
+          <p>My wishlist cost: ${wishlistCost}</p>
+          <button onClick={updateUser}>submit</button>
+        </div>
+      )}
     </div>
   );
 };
