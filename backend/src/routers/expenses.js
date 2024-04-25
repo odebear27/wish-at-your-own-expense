@@ -6,6 +6,7 @@ const {
   updateExpenseForUser,
   getOneExpenseForUser,
   getAllExpenseCategory,
+  getTotalExpenseAmtForTheMonthForOneUser,
 } = require("../controllers/expenses");
 const { authUser } = require("../middleware/auth");
 const {
@@ -46,5 +47,6 @@ router.post(
   getOneExpenseForUser
 );
 router.get("/expenses/category", getAllExpenseCategory);
+router.post("/expensesamt", authUser, getTotalExpenseAmtForTheMonthForOneUser);
 
 module.exports = router;

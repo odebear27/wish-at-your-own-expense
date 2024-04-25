@@ -147,6 +147,39 @@ const getAllExpenseCategory = async (req, res) => {
   }
 };
 
+const getTotalExpenseAmtForTheMonthForOneUser = async (req, res) => {
+  try {
+    // check if admin or user
+    if (req.decoded.role === "admin") {
+      res.json({ status: "error", msg: "unauthorised" });
+    } else if (req.decoded.role === "user") {
+      const date = new Date();
+      const firstDayOfTheMonth = new Date(
+        date.getFullYear(),
+        date.getMonth(),
+        1
+      );
+      const lastDayOfTheMonth = new Date(
+        date.getFullYear(),
+        date.getMonth() + 1,
+        0
+      );
+
+      const { rows } = await pool.query(
+        `SELECT SUM(expense_amt) FROM expenses WHERE user_id = $1 AND expense_date BETWEEN $2 AND $3;`,
+        [req.decoded.id, firstDayOfTheMonth, lastDayOfTheMonth]
+      );
+      res.json(rows);
+    }
+  } catch (error) {
+    console.error(error);
+    res.json({
+      status: "error",
+      msg: "getting total expense amt for the month for one user error",
+    });
+  }
+};
+
 module.exports = {
   getAllExpensesForUser,
   createExpenseForUser,
@@ -154,4 +187,5 @@ module.exports = {
   updateExpenseForUser,
   getOneExpenseForUser,
   getAllExpenseCategory,
+  getTotalExpenseAmtForTheMonthForOneUser,
 };
