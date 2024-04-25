@@ -155,7 +155,13 @@ const getTotalWishlistCostForOneUser = async (req, res) => {
         res.json(rows);
       }
     }
-  } catch (error) {}
+  } catch (error) {
+    console.error(error);
+    res.json({
+      status: "error",
+      msg: "getting total wishlist cost for one user error",
+    });
+  }
 };
 
 module.exports = {
