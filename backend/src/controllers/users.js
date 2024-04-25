@@ -39,6 +39,8 @@ const registerUser = async (req, res) => {
   }
 };
 
+// get user profile
+// user and admin able to see when logged in
 const getOneUser = async (req, res) => {
   try {
     const user = await pool.query(`SELECT * FROM users WHERE user_id = $1`, [
@@ -49,6 +51,41 @@ const getOneUser = async (req, res) => {
       res.json(user.rows);
     } else {
       res.json({ status: "error", msg: "user_id does not exist in database" });
+    }
+  } catch (error) {
+    console.error(error.message);
+    res.status(400).json({ status: "error", msg: "getting one user error" });
+  }
+};
+
+// get user profile and budget for the month
+// only user able to see
+const getOneUserAndBudget = async (req, res) => {
+  try {
+    // check if user or admin
+    if (req.decoded.role === "admin") {
+      res.json({ status: "error", msg: "admin not able to view user budget" });
+    } else if (req.decoded.role === "user") {
+      const date = new Date();
+      const user = await pool.query(
+        `SELECT u.user_id, u.user_is_active, u.user_name, u.user_email, u.user_hash, b.budget_amt, b.budget_mth, b.budget_year FROM users u
+      JOIN user_budgets ub ON u.user_id = ub.user_id
+      JOIN budgets b ON ub.budget_id = b.budget_id
+      WHERE u.user_id = $1 AND
+      b.budget_mth = $2 AND
+      b.budget_year = $3
+      LIMIT 1;`,
+        [req.decoded.id, date.getMonth() + 1, date.getFullYear()]
+      );
+
+      if (user.rows.length > 0) {
+        res.json(user.rows);
+      } else {
+        res.json({
+          status: "error",
+          msg: "user_id does not exist in database",
+        });
+      }
     }
   } catch (error) {
     console.error(error.message);
@@ -180,6 +217,7 @@ module.exports = {
   getAllUsers,
   registerUser,
   getOneUser,
+  getOneUserAndBudget,
   loginUser,
   refreshUser,
   updateUser,

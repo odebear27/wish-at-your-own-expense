@@ -7,6 +7,7 @@ const {
   refreshUser,
   updateUser,
   deleteUser,
+  getOneUserAndBudget,
 } = require("../controllers/users");
 const { authUser, authAdmin } = require("../middleware/auth");
 const {
@@ -28,10 +29,12 @@ router.put(
 router.post(
   "/u/profile/:user_id",
   authUser,
+  authAdmin,
   validateUserIdInParams,
   errorCheck,
   getOneUser
 );
+router.post("/u/profilebudget", authUser, getOneUserAndBudget);
 router.post("/u/login", validateUserLoginData, errorCheck, loginUser);
 router.post("/u/refresh", validateRefreshToken, errorCheck, refreshUser);
 router.patch("/u/update", authUser, updateUser);
