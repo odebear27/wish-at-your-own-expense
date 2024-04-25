@@ -74,6 +74,7 @@ const getOneUserAndBudget = async (req, res) => {
       WHERE u.user_id = $1 AND
       b.budget_mth = $2 AND
       b.budget_year = $3
+      ORDER BY b.budget_id DESC
       LIMIT 1;`,
         [req.decoded.id, date.getMonth() + 1, date.getFullYear()]
       );
@@ -167,11 +168,39 @@ const updateUser = async (req, res) => {
           req.body.user_name,
           req.decoded.id,
         ]);
+      // if ("budget_amt" in req.body) {
+      //   const date = new Date();
+      //   budget_id = await pool.query(
+      //     `INSERT INTO budgets (budget_amt, budget_mth, budget_year) VALUES ($1, $2, $3) RETURNING budget_id
+      //   `,
+      //     [req.body.budget_amt, date.getMonth() + 1, date.getFullYear()]
+      //   );
+
+      //   await pool.query(
+      //     `INSERT INTO user_budgets (budget_id, user_id) VALUES ($1, $2)`,
+      //     [budget_id.rows[0].budget_id, req.decoded.id]
+      //   );
+      // }
+
+      res.json({ status: "ok", msg: "user updated" });
+    }
+  } catch (error) {
+    console.error(error);
+    return res.status(400).json({ status: "error", msg: "update user failed" });
+  }
+};
+
+const updateUserBudget = async (req, res) => {
+  try {
+    // check if role is admin or user
+    if (req.decoded.role === "admin") {
+      res.json({ status: "error", admin: "admin cannot update user profile" });
+    } else if (req.decoded.role === "user") {
       if ("budget_amt" in req.body) {
         const date = new Date();
         budget_id = await pool.query(
           `INSERT INTO budgets (budget_amt, budget_mth, budget_year) VALUES ($1, $2, $3) RETURNING budget_id
-        `,
+      `,
           [req.body.budget_amt, date.getMonth() + 1, date.getFullYear()]
         );
 
@@ -180,12 +209,13 @@ const updateUser = async (req, res) => {
           [budget_id.rows[0].budget_id, req.decoded.id]
         );
       }
-
-      res.json({ status: "ok", msg: "user updated" });
+      res.json({ status: "ok", msg: "user budget updated" });
     }
   } catch (error) {
     console.error(error);
-    return res.status(400).json({ status: "error", msg: "update user failed" });
+    return res
+      .status(400)
+      .json({ status: "error", msg: "update user budget failed" });
   }
 };
 
@@ -221,5 +251,6 @@ module.exports = {
   loginUser,
   refreshUser,
   updateUser,
+  updateUserBudget,
   deleteUser,
 };

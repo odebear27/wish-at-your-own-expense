@@ -43,6 +43,19 @@ const validateUserIdInParams = [
   param("user_id", "user id must be a number").isInt({ min: 1 }),
 ];
 
+const validateUpdateUserInput = [
+  body("user_name", "name must be between 1 to 20 characters").isLength({
+    min: 1,
+    max: 20,
+  }),
+];
+
+const validateUpdateUserBudgetInput = [
+  body("budget_amt", "budget amount must be a positive number").isInt({
+    min: 0.01,
+  }),
+];
+
 module.exports = {
   validateUserRegistrationData,
   validateUserLoginData,
@@ -50,4 +63,6 @@ module.exports = {
   validateAdminRegistrationData,
   validateRefreshToken,
   validateUserIdInParams,
+  validateUpdateUserInput,
+  validateUpdateUserBudgetInput,
 };

@@ -8,6 +8,7 @@ const {
   updateUser,
   deleteUser,
   getOneUserAndBudget,
+  updateUserBudget,
 } = require("../controllers/users");
 const { authUser, authAdmin } = require("../middleware/auth");
 const {
@@ -15,6 +16,8 @@ const {
   validateUserLoginData,
   validateRefreshToken,
   validateUserIdInParams,
+  validateUpdateUserInput,
+  validateUpdateUserBudgetInput,
 } = require("../validators/auth");
 const { errorCheck } = require("../validators/errorCheck");
 const router = express.Router();
@@ -37,7 +40,20 @@ router.post(
 router.post("/u/profilebudget", authUser, getOneUserAndBudget);
 router.post("/u/login", validateUserLoginData, errorCheck, loginUser);
 router.post("/u/refresh", validateRefreshToken, errorCheck, refreshUser);
-router.patch("/u/update", authUser, updateUser);
+router.patch(
+  "/u/update",
+  validateUpdateUserInput,
+  errorCheck,
+  authUser,
+  updateUser
+);
+router.patch(
+  "/u/updatebudget",
+  validateUpdateUserBudgetInput,
+  errorCheck,
+  authUser,
+  updateUserBudget
+);
 router.delete(
   "/u/delete/:user_id",
   authUser,
