@@ -18,7 +18,9 @@ const validateWishlistForUserInput = [
 ];
 
 const validateWishlistIdInParams = [
-  param("wishlist_id", "wishlist id must be a number").isInt({ min: 1 }),
+  param("wishlist_id", "wishlist id must be a positive number").isLength({
+    min: 1,
+  }),
 ];
 
 module.exports = {

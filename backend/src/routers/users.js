@@ -57,7 +57,6 @@ router.patch(
 router.delete(
   "/u/delete/:user_id",
   authUser,
-  authAdmin,
   validateUserIdInParams,
   errorCheck,
   deleteUser

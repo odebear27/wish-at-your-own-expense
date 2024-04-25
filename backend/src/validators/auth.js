@@ -43,7 +43,7 @@ const validateRefreshToken = [
 ];
 
 const validateUserIdInParams = [
-  param("user_id", "user id must be a number").isInt({ min: 1 }),
+  param("user_id", "user id must be a positive number").isLength({ min: 1 }),
 ];
 
 const validateUpdateUserInput = [
@@ -54,7 +54,7 @@ const validateUpdateUserInput = [
 ];
 
 const validateUpdateUserBudgetInput = [
-  body("budget_amt", "budget amount must be a positive number").isInt({
+  body("budget_amt", "budget amount must be a positive number").isLength({
     min: 0.01,
   }),
 ];

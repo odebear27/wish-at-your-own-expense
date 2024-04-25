@@ -16,7 +16,9 @@ const validateExpenseForUserInput = [
 ];
 
 const validateExpenseIdInParams = [
-  param("expense_id", "expense id must be a number").isInt({ min: 1 }),
+  param("expense_id", "expense id must be a positive number").isLength({
+    min: 1,
+  }),
 ];
 
 module.exports = {
