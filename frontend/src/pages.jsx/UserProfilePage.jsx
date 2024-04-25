@@ -1,9 +1,11 @@
 import React, { useContext, useEffect, useState } from "react";
 import useFetch from "../hooks/useFetch";
 import UserContext from "../context/user";
+import { useNavigate } from "react-router-dom";
 
 const UserProfilePage = () => {
   const fetchData = useFetch();
+  const navigate = useNavigate();
   const userCtx = useContext(UserContext);
   const [userProfileAndBudget, setUserProfileAndBudget] = useState({});
   const [wishlistCost, setWishlistCost] = useState();
@@ -111,6 +113,28 @@ const UserProfilePage = () => {
       if (resForUpdateUser.ok && resForUpdateUserBudget.ok) {
         getUserProfileAndBudget();
         setIsUpdateUserPressed(false);
+      } else {
+        alert(JSON.stringify(res.data));
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const deleteUser = async () => {
+    try {
+      console.log("delete " + userCtx.user_id);
+      const res = await fetchData(
+        `/auth/u/delete/${userCtx.userId}`,
+        "DELETE",
+        undefined,
+        userCtx.accessToken
+      );
+
+      if (res.ok) {
+        navigate("/");
+      } else {
+        alert(JSON.stringify(res.data));
       }
     } catch (error) {
       console.error(error);
@@ -139,6 +163,9 @@ const UserProfilePage = () => {
 
           <button onClick={() => setIsUpdateUserPressed(true)}>
             update profile
+          </button>
+          <button onClick={deleteUser}>
+            delete profile (there is no going back)
           </button>
         </div>
       ) : (
