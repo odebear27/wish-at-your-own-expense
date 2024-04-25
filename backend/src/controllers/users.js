@@ -28,9 +28,20 @@ const registerUser = async (req, res) => {
     }
 
     const hash = await bcrypt.hash(req.body.password, 12);
-    await pool.query(
-      `INSERT INTO users (user_name, user_email, user_hash) VALUES ($1, $2, $3)`,
+    const user_id = await pool.query(
+      `INSERT INTO users (user_name, user_email, user_hash) VALUES ($1, $2, $3) RETURNING user_id`,
       [req.body.user_name, req.body.user_email, hash]
+    );
+
+    const date = new Date();
+    const budget_id = await pool.query(
+      `INSERT INTO budgets (budget_amt, budget_mth, budget_year) VALUES ($1, $2, $3) RETURNING budget_id`,
+      [req.body.budget_amt, date.getMonth() + 1, date.getFullYear()]
+    );
+
+    await pool.query(
+      `INSERT INTO user_budgets (budget_id, user_id) VALUES ($1, $2)`,
+      [budget_id.rows[0].budget_id, user_id.rows[0].user_id]
     );
     res.json({ status: "ok", msg: "user registered" });
   } catch (error) {
