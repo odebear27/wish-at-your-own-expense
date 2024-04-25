@@ -139,6 +139,25 @@ const getAllWishlistStatus = async (req, res) => {
   }
 };
 
+const getTotalWishlistCostForOneUser = async (req, res) => {
+  try {
+    // check if admin or user
+    if (req.decoded.role === "admin") {
+      res.json({ status: "error", msg: "not authorised" });
+    } else if (req.decoded.role === "user") {
+      const { rows } = await pool.query(
+        `SELECT SUM(wishlist_cost) FROM wishlists WHERE user_id = $1`,
+        [req.decoded.id]
+      );
+      if (rows.length < 1) {
+        res.json({ sum: 0 });
+      } else {
+        res.json(rows);
+      }
+    }
+  } catch (error) {}
+};
+
 module.exports = {
   getAllWishlistsForUser,
   createWishlistForUser,
@@ -146,4 +165,5 @@ module.exports = {
   updateWishlistForUser,
   getOneWishlistForUser,
   getAllWishlistStatus,
+  getTotalWishlistCostForOneUser,
 };

@@ -7,6 +7,7 @@ const {
   updateWishlistForUser,
   getOneWishlistForUser,
   getAllWishlistStatus,
+  getTotalWishlistCostForOneUser,
 } = require("../controllers/wishlists");
 const {
   validateWishlistForUserInput,
@@ -46,5 +47,6 @@ router.post(
   getOneWishlistForUser
 );
 router.get("/wishlists/status", getAllWishlistStatus);
+router.post("/wishlistscost", authUser, getTotalWishlistCostForOneUser);
 
 module.exports = router;
