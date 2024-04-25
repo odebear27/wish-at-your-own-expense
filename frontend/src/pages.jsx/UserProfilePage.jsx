@@ -23,6 +23,7 @@ const UserProfilePage = () => {
         userCtx.accessToken
       );
       if (res.ok) {
+        console.log(res.data);
         setUserProfileAndBudget(res.data[0]);
       }
     } catch (error) {
@@ -65,7 +66,13 @@ const UserProfilePage = () => {
     getUserProfileAndBudget();
     getWishlistCost();
     getExpenseAmt();
-  }, [userCtx.userId]);
+  }, []);
+
+  // useEffect(() => {
+  //   getUserProfileAndBudget();
+  //   getWishlistCost();
+  //   getExpenseAmt();
+  // }, [userCtx.userId]);
 
   useEffect(() => {
     if (userProfileAndBudget) {
@@ -110,25 +117,32 @@ const UserProfilePage = () => {
     }
   };
 
-  useEffect(() => {
-    console.log(isUpdateUserPressed);
-  }, [isUpdateUserPressed]);
-
   return (
     <div>
       <h1>user profile page</h1>
       {!isUpdateUserPressed ? (
+        // ========================== user profile view ============================== //
         <div>
           <p>My name: {userProfileAndBudget.user_name}</p>
           <p>My email: {userProfileAndBudget.user_email}</p>
           <p>My budget for the month: ${userProfileAndBudget.budget_amt}</p>
-          <p>My Expenses: ${expensesAmt}</p>
-          <p>My wishlist cost: ${wishlistCost}</p>
+          {expensesAmt ? (
+            <p>My Expenses: ${expensesAmt}</p>
+          ) : (
+            <p>My Expenses: $0</p>
+          )}
+          {wishlistCost ? (
+            <p>My wishlist cost: ${wishlistCost}</p>
+          ) : (
+            <p>My wishlist cost: $0</p>
+          )}
+
           <button onClick={() => setIsUpdateUserPressed(true)}>
-            update user
+            update profile
           </button>
         </div>
       ) : (
+        // ========================== update user profile view ============================== //
         <div>
           <p>My name: </p>
           <input
@@ -145,9 +159,18 @@ const UserProfilePage = () => {
             value={updateUserProfile.budget_amt}
             onChange={handleChange}
           ></input>
-          <p>My Expenses: ${expensesAmt}</p>
-          <p>My wishlist cost: ${wishlistCost}</p>
+          {expensesAmt ? (
+            <p>My Expenses: ${expensesAmt}</p>
+          ) : (
+            <p>My Expenses: $0</p>
+          )}
+          {wishlistCost ? (
+            <p>My wishlist cost: ${wishlistCost}</p>
+          ) : (
+            <p>My wishlist cost: $0</p>
+          )}
           <button onClick={updateUser}>submit</button>
+          <button onClick={() => setIsUpdateUserPressed(false)}>cancel</button>
         </div>
       )}
     </div>

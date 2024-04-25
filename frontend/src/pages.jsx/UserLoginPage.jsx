@@ -29,6 +29,7 @@ const UserLoginPage = () => {
         userCtx.setUserId(decoded.id);
         userCtx.setUserEmail(decoded.email);
         console.log(userCtx.userId);
+        navigate("/profile");
       } else {
         alert(JSON.stringify(res.data));
       }
@@ -40,17 +41,23 @@ const UserLoginPage = () => {
   return (
     <div>
       <button>Login as Admin</button>
-      <label>username</label>
+      <label>email</label>
       <input ref={emailRef} type="text"></input>
       <label>password</label>
       <input ref={passwordRef} type="password"></input>
       <button
         onClick={() => {
           handleUserLogin();
-          navigate("/profile");
         }}
       >
         Login
+      </button>
+      <button
+        onClick={() => {
+          navigate("/register/user");
+        }}
+      >
+        No account? Register here
       </button>
     </div>
   );
