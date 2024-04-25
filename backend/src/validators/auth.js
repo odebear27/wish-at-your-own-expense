@@ -9,6 +9,9 @@ const validateUserRegistrationData = [
     min: 8,
     max: 50,
   }),
+  body("budget_amt", "budget amount must be a positive number").isInt({
+    min: 0.01,
+  }),
 ];
 
 const validateUserLoginData = [
