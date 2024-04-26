@@ -2,14 +2,14 @@ import React, { useContext, useEffect, useState } from "react";
 import useFetch from "../hooks/useFetch";
 import UserContext from "../context/user";
 import { useNavigate } from "react-router-dom";
+import ExpenseAmt from "../components/ExpenseAmt";
+import WishlistCost from "../components/WishlistCost";
 
 const UserProfilePage = () => {
   const fetchData = useFetch();
   const navigate = useNavigate();
   const userCtx = useContext(UserContext);
   const [userProfileAndBudget, setUserProfileAndBudget] = useState({});
-  const [wishlistCost, setWishlistCost] = useState();
-  const [expensesAmt, setExpenseAmt] = useState();
   const [isUpdateUserPressed, setIsUpdateUserPressed] = useState(false);
   const [updateUserProfile, setUpdateUserProfile] = useState({
     user_name: userProfileAndBudget.user_name,
@@ -33,41 +33,8 @@ const UserProfilePage = () => {
     }
   };
 
-  const getWishlistCost = async () => {
-    try {
-      const res = await fetchData(
-        `/api/wishlistscost`,
-        "POST",
-        undefined,
-        userCtx.accessToken
-      );
-      if (res.ok) {
-        setWishlistCost(res.data[0].sum);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const getExpenseAmt = async () => {
-    try {
-      const res = await fetchData(
-        `/api/expensesamt`,
-        "POST",
-        undefined,
-        userCtx.accessToken
-      );
-      if (res.ok) {
-        console.log(res.data);
-        setExpenseAmt(res.data[0].sum);
-      }
-    } catch (error) {}
-  };
-
   useEffect(() => {
     getUserProfileAndBudget();
-    getWishlistCost();
-    getExpenseAmt();
   }, []);
 
   // useEffect(() => {
@@ -150,17 +117,8 @@ const UserProfilePage = () => {
           <p>My name: {userProfileAndBudget.user_name}</p>
           <p>My email: {userProfileAndBudget.user_email}</p>
           <p>My budget for the month: ${userProfileAndBudget.budget_amt}</p>
-          {expensesAmt ? (
-            <p>My Expenses: ${expensesAmt}</p>
-          ) : (
-            <p>My Expenses: $0</p>
-          )}
-          {wishlistCost ? (
-            <p>My wishlist cost: ${wishlistCost}</p>
-          ) : (
-            <p>My wishlist cost: $0</p>
-          )}
-
+          <ExpenseAmt></ExpenseAmt>
+          <WishlistCost></WishlistCost>
           <button onClick={() => setIsUpdateUserPressed(true)}>
             update profile
           </button>
@@ -186,16 +144,8 @@ const UserProfilePage = () => {
             value={updateUserProfile.budget_amt}
             onChange={handleChange}
           ></input>
-          {expensesAmt ? (
-            <p>My Expenses: ${expensesAmt}</p>
-          ) : (
-            <p>My Expenses: $0</p>
-          )}
-          {wishlistCost ? (
-            <p>My wishlist cost: ${wishlistCost}</p>
-          ) : (
-            <p>My wishlist cost: $0</p>
-          )}
+          <ExpenseAmt></ExpenseAmt>
+          <WishlistCost></WishlistCost>
           <button onClick={updateUser}>submit</button>
           <button onClick={() => setIsUpdateUserPressed(false)}>cancel</button>
         </div>
