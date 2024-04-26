@@ -76,6 +76,25 @@ const ExpensesPage = () => {
     }
   };
 
+  const deleteExpenseForUser = async (expense_id) => {
+    try {
+      const res = await fetchData(
+        `/api/expenses/${expense_id}`,
+        "DELETE",
+        undefined,
+        userCtx.accessToken
+      );
+      if (res.ok) {
+        console.log(res.data);
+        getAllExpensesForAUser();
+      } else {
+        alert(JSON.stringify(res.data));
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   // Helper function to format the date
   const formatDate = (isoDateString) => {
     const date = new Date(isoDateString);
@@ -116,7 +135,11 @@ const ExpensesPage = () => {
                 <td>{expense.expense_category}</td>
                 <td>{expense.expense_amt}</td>
                 <button>update</button>
-                <button>delete</button>
+                <button
+                  onClick={() => deleteExpenseForUser(expense.expense_id)}
+                >
+                  delete
+                </button>
               </tr>
             );
           })}
