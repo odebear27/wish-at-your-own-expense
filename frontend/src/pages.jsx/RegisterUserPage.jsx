@@ -16,7 +16,7 @@ const RegisterUserPage = () => {
         user_name: nameRef.current.value,
         user_email: emailRef.current.value,
         password: passwordRef.current.value,
-        budget_amt: parseInt(budgetAmtRef.current.value),
+        budget_amt: parseFloat(budgetAmtRef.current.value),
       });
       if (res.ok) {
         console.log(res.data);
