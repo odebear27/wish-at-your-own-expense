@@ -2,6 +2,7 @@ import React, { useEffect, useContext, useState, useRef } from "react";
 import ExpenseAmt from "../components/ExpenseAmt";
 import useFetch from "../hooks/useFetch";
 import UserContext from "../context/user";
+import Expense from "../components/Expense";
 
 const ExpensesPage = () => {
   const fetchData = useFetch();
@@ -70,6 +71,8 @@ const ExpensesPage = () => {
         console.log(res.data);
         getAllExpensesForAUser();
         setIsAddExpensePressed(false);
+      } else {
+        alert(JSON.stringify(res.data));
       }
     } catch (error) {
       console.log(error);
@@ -96,14 +99,14 @@ const ExpensesPage = () => {
   };
 
   // Helper function to format the date
-  const formatDate = (isoDateString) => {
-    const date = new Date(isoDateString);
-    const year = date.getFullYear();
-    // padStart so that for eg, 4 will become 04
-    const month = String(date.getMonth() + 1).padStart(2, "0");
-    const day = String(date.getDate()).padStart(2, "0");
-    return `${year}-${month}-${day}`;
-  };
+  // const formatDate = (isoDateString) => {
+  //   const date = new Date(isoDateString);
+  //   const year = date.getFullYear();
+  //   // padStart so that for eg, 4 will become 04
+  //   const month = String(date.getMonth() + 1).padStart(2, "0");
+  //   const day = String(date.getDate()).padStart(2, "0");
+  //   return `${year}-${month}-${day}`;
+  // };
 
   useEffect(() => {
     getAllExpensesForAUser();
@@ -115,59 +118,42 @@ const ExpensesPage = () => {
       <p>Expenses Page</p>
       <ExpenseAmt></ExpenseAmt>
       <button onClick={() => setIsAddExpensePressed(true)}>Add an item</button>
-      {/* {JSON.stringify(expenses)} */}
-      <table>
-        <thead>
-          <tr>
-            <th>Date</th>
-            <th>Item</th>
-            <th>Category</th>
-            <th>Amount</th>
-          </tr>
-        </thead>
-        <tbody>
-          {expenses.map((expense) => {
-            const formattedDate = formatDate(expense.expense_date);
-            return (
-              <tr>
-                <td>{formattedDate}</td>
-                <td>{expense.expense_item}</td>
-                <td>{expense.expense_category}</td>
-                <td>{expense.expense_amt}</td>
-                <button>update</button>
-                <button
-                  onClick={() => deleteExpenseForUser(expense.expense_id)}
-                >
-                  delete
-                </button>
-              </tr>
-            );
-          })}
-          {isAddExpensePressed && (
-            <tr>
-              <td>
-                <input ref={dateRef} type="date"></input>
-              </td>
-              <td>
-                <input ref={itemRef} type="text"></input>
-              </td>
-              <td>
-                <select ref={categoryRef}>
-                  {expensecategories.map((expenseCategory) => {
-                    return <option>{expenseCategory.expense_category}</option>;
-                  })}
-                </select>
-              </td>
-              <td>
-                <input ref={amtRef} type="text"></input>
-              </td>
-              <td>
-                <button onClick={() => createExpenseForUser()}>Submit</button>
-              </td>
-            </tr>
-          )}
-        </tbody>
-      </table>
+      <tr>
+        <td>Date</td>
+        <td>Item</td>
+        <td>Category</td>
+        <td>Amount</td>
+      </tr>
+      {isAddExpensePressed && (
+        <div>
+          <input ref={dateRef} type="date"></input>
+
+          <input ref={itemRef} type="text"></input>
+
+          <select ref={categoryRef}>
+            {expensecategories.map((expenseCategory) => {
+              return <option>{expenseCategory.expense_category}</option>;
+            })}
+          </select>
+
+          <input ref={amtRef} type="text"></input>
+
+          <button onClick={() => createExpenseForUser()}>Submit</button>
+          <button onClick={() => setIsAddExpensePressed(false)}>Cancel</button>
+        </div>
+      )}
+      {expenses.map((expense, idx) => {
+        // const formattedDate = formatDate(expense.expense_date);
+        return (
+          <Expense
+            key={idx}
+            expense={expense}
+            deleteExpenseForUser={deleteExpenseForUser}
+            expensecategories={expensecategories}
+            getAllExpensesForAUser={getAllExpensesForAUser}
+          ></Expense>
+        );
+      })}
     </div>
   );
 };
