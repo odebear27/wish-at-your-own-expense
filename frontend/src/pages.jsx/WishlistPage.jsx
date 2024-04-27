@@ -9,7 +9,7 @@ const WishlistPage = () => {
   const userCtx = useContext(UserContext);
   const [wishlists, setWishlists] = useState([]);
   const [isAddWishlistPressed, setIsAddWishlistPressed] = useState(false);
-  const [allWishlistStatus, setAllWishlistStatus] = useState([]);
+
   const itemRef = useRef();
   const costRef = useRef();
   const storeRef = useRef();
@@ -29,25 +29,6 @@ const WishlistPage = () => {
         setWishlists(res.data);
       } else {
         alert(JSON.stringify(res.data));
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const getAllWishlistStatus = async () => {
-    try {
-      const res = await fetchData(
-        `/api/wishlists/status`,
-        undefined,
-        undefined,
-        undefined
-      );
-      if (res.ok) {
-        console.log(res.data);
-        setAllWishlistStatus(res.data);
-      } else {
-        alert.JSON.stringify(res.data);
       }
     } catch (error) {
       console.error(error);
@@ -82,7 +63,6 @@ const WishlistPage = () => {
 
   useEffect(() => {
     getAllWishlistForAUser();
-    getAllWishlistStatus();
   }, []);
 
   return (
@@ -108,11 +88,6 @@ const WishlistPage = () => {
           <input ref={itemRef} type="text"></input>
           <input ref={costRef} type="text"></input>
           <input ref={storeRef} type="text"></input>
-          {/* <select ref={statusRef}>
-            {allWishlistStatus.map((wishlistStatus) => {
-              return <option>{wishlistStatus.wishlist_status}</option>;
-            })}
-          </select> */}
           <button onClick={() => addWishlistForUser()}>Submit</button>
           <button onClick={() => setIsAddWishlistPressed(false)}>Cancel</button>
         </div>
