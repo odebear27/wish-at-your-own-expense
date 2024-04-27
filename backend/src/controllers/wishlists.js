@@ -32,7 +32,7 @@ const createWishlistForUser = async (req, res) => {
           req.body.wishlist_item,
           req.body.wishlist_cost,
           req.body.wishlist_store,
-          "Not yet purchased",
+          "NOT YET PURCHASED",
           req.decoded.id,
         ]
       );
