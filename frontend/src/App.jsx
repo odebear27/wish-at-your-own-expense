@@ -10,6 +10,7 @@ import WishlistPage from "./pages.jsx/WishlistPage";
 import AdminLoginPage from "./pages.jsx/AdminLoginPage";
 import RegisterAdminPage from "./pages.jsx/RegisterAdminPage";
 import AdminViewPage from "./pages.jsx/AdminViewPage";
+import AllUsersPage from "./pages.jsx/AllUsersPage";
 
 function App() {
   const [accessToken, setAccessToken] = useState("");
@@ -51,6 +52,7 @@ function App() {
           <Route path="/admin" element={<AdminLoginPage />} />
           <Route path="/register/admin" element={<RegisterAdminPage />} />
           <Route path="/view/admin" element={<AdminViewPage />} />
+          <Route path="/allusers/admin" element={<AllUsersPage />} />
         </Routes>
       </UserContext.Provider>
     </div>

@@ -70,7 +70,9 @@ const AdminViewPage = () => {
       <button onClick={() => deleteAdminAccount()}>
         Delete your admin account (there is no going back)
       </button>
-      <button>Delete user account</button>
+      <button onClick={() => navigate("/allusers/admin")}>
+        View all users
+      </button>
     </div>
   );
 };
