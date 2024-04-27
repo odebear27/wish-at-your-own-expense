@@ -6,6 +6,7 @@ import UserProfilePage from "./pages.jsx/UserProfilePage";
 import RegisterUserPage from "./pages.jsx/RegisterUserPage";
 import ExpensesPage from "./pages.jsx/ExpensesPage";
 import NavBar from "./components/NavBar";
+import WishlistPage from "./pages.jsx/WishlistPage";
 
 function App() {
   const [accessToken, setAccessToken] = useState("");
@@ -40,6 +41,7 @@ function App() {
           <Route path="/register/user" element={<RegisterUserPage />} />
           <Route path="/profile" element={<UserProfilePage />} />
           <Route path="/expenses" element={<ExpensesPage />} />
+          <Route path="/wishlist" element={<WishlistPage />} />
         </Routes>
       </UserContext.Provider>
     </div>
