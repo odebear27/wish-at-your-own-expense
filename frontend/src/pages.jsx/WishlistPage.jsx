@@ -72,6 +72,8 @@ const WishlistPage = () => {
         console.log(res.data);
         getAllWishlistForAUser();
         setIsAddWishlistPressed(false);
+      } else {
+        alert(JSON.stringify(res.data));
       }
     } catch (error) {
       console.error(error);
@@ -116,7 +118,13 @@ const WishlistPage = () => {
         </div>
       )}
       {wishlists.map((wishlist, idx) => {
-        return <Wishlist key={idx} wishlist={wishlist}></Wishlist>;
+        return (
+          <Wishlist
+            key={idx}
+            wishlist={wishlist}
+            getAllWishlistForAUser={getAllWishlistForAUser}
+          ></Wishlist>
+        );
       })}
     </div>
   );
