@@ -41,7 +41,7 @@ const ExpensesPage = () => {
         `/api/expenses/category`,
         undefined,
         undefined,
-        userCtx.accessToken
+        undefined
       );
       if (res.ok) {
         console.log(res.data);
