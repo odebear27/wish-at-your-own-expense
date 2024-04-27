@@ -41,7 +41,7 @@ const AllUsersPage = () => {
         <td>Account active / deleted</td>
       </tr>
       {allUsers.map((user, idx) => {
-        return <User key={idx} user={user}></User>;
+        return <User key={idx} user={user} getAllUsers={getAllUsers}></User>;
       })}
     </div>
   );

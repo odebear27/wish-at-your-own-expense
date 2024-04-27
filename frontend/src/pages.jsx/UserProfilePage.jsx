@@ -90,7 +90,6 @@ const UserProfilePage = () => {
 
   const deleteUser = async () => {
     try {
-      console.log("delete " + userCtx.user_id);
       const res = await fetchData(
         `/auth/u/delete/${userCtx.userId}`,
         "DELETE",
