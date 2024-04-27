@@ -2,12 +2,14 @@ import React, { useContext, useEffect, useState } from "react";
 import UserContext from "../context/user";
 import useFetch from "../hooks/useFetch";
 import { useNavigate } from "react-router-dom";
+import UpdateAdminModal from "../components/UpdateAdminModal";
 
 const AdminViewPage = () => {
   const userCtx = useContext(UserContext);
   const fetchData = useFetch();
   const navigate = useNavigate();
   const [admin, setAdmin] = useState({});
+  const [isUpdateAdminPressed, setIsUpdateAdminPressed] = useState(false);
 
   const getOneAdmin = async () => {
     try {
@@ -55,6 +57,16 @@ const AdminViewPage = () => {
       <p>
         Welcome {admin.admin_name} ({admin.admin_email})
       </p>
+      {isUpdateAdminPressed && (
+        <UpdateAdminModal
+          admin={admin}
+          setIsUpdateAdminPressed={setIsUpdateAdminPressed}
+          getOneAdmin={getOneAdmin}
+        ></UpdateAdminModal>
+      )}
+      <button onClick={() => setIsUpdateAdminPressed(true)}>
+        Update your profile
+      </button>
       <button onClick={() => deleteAdminAccount()}>
         Delete your admin account (there is no going back)
       </button>
