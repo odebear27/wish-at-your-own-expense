@@ -1,12 +1,15 @@
 import React, { useState } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 import UserContext from "./context/user";
-import LoginPage from "./pages.jsx/UserLoginPage";
+import UserLoginPage from "./pages.jsx/UserLoginPage";
 import UserProfilePage from "./pages.jsx/UserProfilePage";
 import RegisterUserPage from "./pages.jsx/RegisterUserPage";
 import ExpensesPage from "./pages.jsx/ExpensesPage";
 import NavBar from "./components/NavBar";
 import WishlistPage from "./pages.jsx/WishlistPage";
+import AdminLoginPage from "./pages.jsx/AdminLoginPage";
+import RegisterAdminPage from "./pages.jsx/RegisterAdminPage";
+import AdminViewPage from "./pages.jsx/AdminViewPage";
 
 function App() {
   const [accessToken, setAccessToken] = useState("");
@@ -17,7 +20,9 @@ function App() {
 
   const location = useLocation();
   const showNavBar =
-    location.pathname !== "/" && location.pathname !== "/register/user";
+    location.pathname === "/profile" &&
+    location.pathname === "/expenses" &&
+    location.pathname == "/wishlist";
 
   return (
     <div>
@@ -37,11 +42,15 @@ function App() {
       >
         {showNavBar && <NavBar></NavBar>}
         <Routes>
-          <Route path="/" element={<LoginPage />} />
+          <Route path="/" element={<UserLoginPage />} />
           <Route path="/register/user" element={<RegisterUserPage />} />
           <Route path="/profile" element={<UserProfilePage />} />
           <Route path="/expenses" element={<ExpensesPage />} />
           <Route path="/wishlist" element={<WishlistPage />} />
+          {/*============================== Admin=====================================  */}
+          <Route path="/admin" element={<AdminLoginPage />} />
+          <Route path="/register/admin" element={<RegisterAdminPage />} />
+          <Route path="/view/admin" element={<AdminViewPage />} />
         </Routes>
       </UserContext.Provider>
     </div>
