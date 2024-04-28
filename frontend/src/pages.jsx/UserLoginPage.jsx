@@ -26,6 +26,7 @@ const UserLoginPage = () => {
         userCtx.setRole(decoded.role);
         userCtx.setUserId(decoded.id);
         userCtx.setUserEmail(decoded.email);
+        userCtx.setIsLoggedIn(true);
         navigate("/profile");
       } else {
         alert(JSON.stringify(res.data));
@@ -34,6 +35,35 @@ const UserLoginPage = () => {
       console.error(error);
     }
   };
+
+  // const callRefreshToken = async () => {
+  //   try {
+  //     const res = await fetchData("/auth/u/refresh", "POST", {
+  //       refresh: userCtx.refreshToken,
+  //     });
+  //     if (res.ok) {
+  //       console.log("refreshing");
+  //       console.log(res.data);
+  //       userCtx.setAccessToken(res.data.access);
+  //     } else {
+  //       alert(JSON.stringify(res.data));
+  //     }
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   let intervalId;
+  //   // Set up interval to refresh token every 15 minutes
+  //   if (userCtx.refreshToken) {
+  //     intervalId = setInterval(callRefreshToken, 1000);
+  //   }
+  //   // 15 minutes
+
+  //   // Clean up interval on component unmount
+  //   return () => clearInterval(intervalId);
+  // }, [userCtx.isLoggedIn]);
 
   return (
     <div>

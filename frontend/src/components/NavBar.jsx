@@ -38,7 +38,15 @@ const NavBar = () => {
         >
           {userCtx.userEmail}
         </NavLink>
-        <NavLink to="/">Log Out</NavLink>
+        <NavLink to="/">
+          <button
+            onClick={() => {
+              userCtx.setIsLoggedIn(false);
+            }}
+          >
+            Log Out
+          </button>
+        </NavLink>
       </nav>
     </header>
   );

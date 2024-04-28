@@ -13,6 +13,7 @@ import AdminViewPage from "./pages.jsx/AdminViewPage";
 import AllUsersPage from "./pages.jsx/AllUsersPage";
 
 function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [accessToken, setAccessToken] = useState("");
   const [refreshToken, setRefreshToken] = useState("");
   const [role, setRole] = useState("");
@@ -32,6 +33,8 @@ function App() {
     <div>
       <UserContext.Provider
         value={{
+          isLoggedIn,
+          setIsLoggedIn,
           accessToken,
           setAccessToken,
           refreshToken,
