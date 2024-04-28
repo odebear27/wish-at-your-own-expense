@@ -164,7 +164,6 @@ const getTotalExpenseAmtForTheMonthForOneUser = async (req, res) => {
         date.getMonth() + 1,
         0
       );
-
       const { rows } = await pool.query(
         `SELECT SUM(expense_amt) FROM expenses WHERE user_id = $1 AND expense_date BETWEEN $2 AND $3;`,
         [req.decoded.id, firstDayOfTheMonth, lastDayOfTheMonth]
