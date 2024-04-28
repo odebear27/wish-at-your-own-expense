@@ -39,32 +39,45 @@ const AdminLoginPage = () => {
   };
 
   return (
-    <div>
-      <button
-        onClick={() => {
-          navigate("/");
-        }}
-      >
-        Back to user login
-      </button>
-      <label>email</label>
-      <input ref={emailRef} type="text"></input>
-      <label>password</label>
-      <input ref={passwordRef} type="password"></input>
-      <button
-        onClick={() => {
-          handleAdminLogin();
-        }}
-      >
-        Login
-      </button>
-      <button
-        onClick={() => {
-          navigate("/register/admin");
-        }}
-      >
-        Register as Admin
-      </button>
+    <div className="grid h-screen place-items-center relative">
+      <div className="absolute top-5 right-5">
+        <button
+          onClick={() => {
+            navigate("/");
+          }}
+        >
+          Back to user login
+        </button>
+      </div>
+      <div className="flex flex-col items-center space-y-4">
+        <div className="w-auto flex space-x-10">
+          <label>email</label>
+          <input ref={emailRef} type="text"></input>
+        </div>
+        <div className="w-auto flex space-x-4">
+          <label>password</label>
+          <input ref={passwordRef} type="password"></input>
+        </div>
+        <div className="w-auto">
+          <button
+            onClick={() => {
+              handleAdminLogin();
+            }}
+          >
+            Login
+          </button>
+        </div>
+
+        <div className="w-auto">
+          <button
+            onClick={() => {
+              navigate("/register/admin");
+            }}
+          >
+            Register as Admin
+          </button>
+        </div>
+      </div>
     </div>
   );
 };
