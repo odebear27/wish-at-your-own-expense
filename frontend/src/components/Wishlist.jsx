@@ -35,7 +35,7 @@ const Wishlist = (props) => {
     const excessBudget = userCtx.budget - userCtx.expense;
     if (
       props.wishlist.wishlist_status === "NOT YET PURCHASED" &&
-      excessBudget >= props.wishlist.wishlist_cost
+      excessBudget > props.wishlist.wishlist_cost
     ) {
       setCanBuy(true);
     }
@@ -44,6 +44,10 @@ const Wishlist = (props) => {
   useEffect(() => {
     checkIfCanBuy();
   }, []);
+
+  useEffect(() => {
+    checkIfCanBuy();
+  }, [props.wishlist.wishlist_status]);
 
   return (
     <div>

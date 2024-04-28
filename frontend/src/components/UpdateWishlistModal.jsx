@@ -96,6 +96,7 @@ const OverLay = (props) => {
       ></input>
       <label>Status</label>
       <select
+        disabled={true}
         id="wishlistStatus"
         value={updateWishlist.wishlistStatus}
         onChange={handleChange}

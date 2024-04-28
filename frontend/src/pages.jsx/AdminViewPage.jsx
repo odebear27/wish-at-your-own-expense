@@ -53,6 +53,7 @@ const AdminViewPage = () => {
 
   return (
     <div>
+      <button onClick={() => navigate("/admin")}>Log Out</button>
       <p>Admin view page</p>
       <p>
         Welcome {admin.admin_name} ({admin.admin_email})

@@ -38,6 +38,7 @@ const NavBar = () => {
         >
           {userCtx.userEmail}
         </NavLink>
+        <NavLink to="/">Log Out</NavLink>
       </nav>
     </header>
   );

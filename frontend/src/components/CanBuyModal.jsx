@@ -52,7 +52,14 @@ const OverLay = (props) => {
 
       if (res.ok) {
         console.log(res.data);
+        // props.checkIfCanBuy();
         props.getAllWishlistForAUser();
+        // props.checkIfCanBuy();
+        // if (body.wishlist_status === "PURCHASED") {
+        //   props.setCanBuy(false);
+        // } else {
+        //   props.setCanBuy(true);
+        // }
         // props.setIsUpdateWishlistPressed(false);
       } else {
         alert(JSON.stringify(res.data));
@@ -65,6 +72,7 @@ const OverLay = (props) => {
   const wishlistBought = () => {
     updateWishlistForUser(props.wishlistId);
     props.setCanBuy(false);
+    props.setIsCanBuyButtonPressed(false);
   };
 
   return (

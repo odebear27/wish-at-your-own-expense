@@ -25,7 +25,6 @@ const ExpensesPage = () => {
       );
 
       if (res.ok) {
-        console.log(res.data);
         setExpenses(res.data);
       } else {
         alert(JSON.stringify(res.data));
@@ -44,8 +43,9 @@ const ExpensesPage = () => {
         undefined
       );
       if (res.ok) {
-        console.log(res.data);
         setExpenseCategories(res.data);
+      } else {
+        alert(JSON.stringify(res.data));
       }
     } catch (error) {
       console.error(error);
@@ -68,7 +68,6 @@ const ExpensesPage = () => {
       );
 
       if (res.ok) {
-        console.log(res.data);
         getAllExpensesForAUser();
         setIsAddExpensePressed(false);
       } else {
@@ -88,7 +87,6 @@ const ExpensesPage = () => {
         userCtx.accessToken
       );
       if (res.ok) {
-        console.log(res.data);
         getAllExpensesForAUser();
       } else {
         alert(JSON.stringify(res.data));

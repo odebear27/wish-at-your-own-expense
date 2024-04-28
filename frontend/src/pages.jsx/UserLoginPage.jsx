@@ -19,16 +19,13 @@ const UserLoginPage = () => {
       });
 
       if (res.ok) {
-        console.log(res.data);
         userCtx.setAccessToken(res.data.access);
         userCtx.setRefreshToken(res.data.refresh);
         const decoded = jwtDecode(res.data.access);
 
-        console.log(decoded);
         userCtx.setRole(decoded.role);
         userCtx.setUserId(decoded.id);
         userCtx.setUserEmail(decoded.email);
-        console.log(userCtx.userId);
         navigate("/profile");
       } else {
         alert(JSON.stringify(res.data));

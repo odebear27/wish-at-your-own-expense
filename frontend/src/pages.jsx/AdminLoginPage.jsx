@@ -40,6 +40,13 @@ const AdminLoginPage = () => {
 
   return (
     <div>
+      <button
+        onClick={() => {
+          navigate("/");
+        }}
+      >
+        Back to user login
+      </button>
       <label>email</label>
       <input ref={emailRef} type="text"></input>
       <label>password</label>

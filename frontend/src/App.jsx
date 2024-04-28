@@ -11,7 +11,6 @@ import AdminLoginPage from "./pages.jsx/AdminLoginPage";
 import RegisterAdminPage from "./pages.jsx/RegisterAdminPage";
 import AdminViewPage from "./pages.jsx/AdminViewPage";
 import AllUsersPage from "./pages.jsx/AllUsersPage";
-import UserDataContext from "./context/user";
 
 function App() {
   const [accessToken, setAccessToken] = useState("");

@@ -2,9 +2,11 @@ import React, { useContext, useEffect, useState } from "react";
 import useFetch from "../hooks/useFetch";
 import UserContext from "../context/user";
 import User from "../components/User";
+import { useNavigate } from "react-router-dom";
 
 const AllUsersPage = () => {
   const fetchData = useFetch();
+  const navigate = useNavigate();
   const userCtx = useContext(UserContext);
   const [allUsers, setAllUsers] = useState([]);
 
@@ -43,6 +45,7 @@ const AllUsersPage = () => {
       {allUsers.map((user, idx) => {
         return <User key={idx} user={user} getAllUsers={getAllUsers}></User>;
       })}
+      <button onClick={() => navigate("/view/admin")}>Go Back</button>
     </div>
   );
 };

@@ -6,8 +6,12 @@ import UserContext from "../context/user";
 const OverLay = (props) => {
   const fetchData = useFetch();
   const userCtx = useContext(UserContext);
+
+  const formattedDate = props.formatDate(props.expenseDate);
+
   const [expenseToUpdate, setExpenseToUpdate] = useState({
-    expenseDate: new Date(props.expenseDate).toISOString().split("T")[0],
+    // expenseDate: new Date(props.expenseDate).toISOString().split("T")[0],
+    expenseDate: formattedDate,
     expenseItem: props.expenseItem,
     expenseCategory: props.expenseCategory,
     expenseAmt: props.expenseAmt,
@@ -36,7 +40,6 @@ const OverLay = (props) => {
       );
 
       if (res.ok) {
-        console.log(res.data);
         props.getAllExpensesForAUser();
         props.setShowUpdateExpenseModal(false);
       } else {
@@ -114,6 +117,7 @@ const UpdateExpenseModal = (props) => {
           expensecategories={props.expensecategories}
           setShowUpdateExpenseModal={props.setShowUpdateExpenseModal}
           getAllExpensesForAUser={props.getAllExpensesForAUser}
+          formatDate={props.formatDate}
         ></OverLay>,
         document.querySelector("#modal-root")
       )}
