@@ -27,6 +27,9 @@ const UserProfilePage = () => {
       if (res.ok) {
         console.log(res.data);
         setUserProfileAndBudget(res.data[0]);
+
+        // using userCtx.setBudget so that can access in Wishlist
+        userCtx.setBudget(res.data[0].budget_amt);
       }
     } catch (error) {
       console.log(error);
@@ -116,6 +119,7 @@ const UserProfilePage = () => {
           <p>My name: {userProfileAndBudget.user_name}</p>
           <p>My email: {userProfileAndBudget.user_email}</p>
           <p>My budget for the month: ${userProfileAndBudget.budget_amt}</p>
+          {/* <p>My budget for the month: ${userCtx.budget}</p> */}
           <ExpenseAmt></ExpenseAmt>
           <WishlistCost></WishlistCost>
           <button onClick={() => setIsUpdateUserPressed(true)}>
@@ -141,6 +145,7 @@ const UserProfilePage = () => {
             id="budget_amt"
             type="text"
             value={updateUserProfile.budget_amt}
+            // value={userCtx.budget}
             onChange={handleChange}
           ></input>
           <ExpenseAmt></ExpenseAmt>

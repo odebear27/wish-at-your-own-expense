@@ -11,6 +11,7 @@ import AdminLoginPage from "./pages.jsx/AdminLoginPage";
 import RegisterAdminPage from "./pages.jsx/RegisterAdminPage";
 import AdminViewPage from "./pages.jsx/AdminViewPage";
 import AllUsersPage from "./pages.jsx/AllUsersPage";
+import UserDataContext from "./context/user";
 
 function App() {
   const [accessToken, setAccessToken] = useState("");
@@ -19,10 +20,13 @@ function App() {
   const [userId, setUserId] = useState("");
   const [userEmail, setUserEmail] = useState("");
 
+  const [budget, setBudget] = useState(0);
+  const [expense, setExpense] = useState(0);
+
   const location = useLocation();
   const showNavBar =
-    location.pathname === "/profile" &&
-    location.pathname === "/expenses" &&
+    location.pathname === "/profile" ||
+    location.pathname === "/expenses" ||
     location.pathname == "/wishlist";
 
   return (
@@ -39,6 +43,10 @@ function App() {
           setUserId,
           userEmail,
           setUserEmail,
+          budget,
+          setBudget,
+          expense,
+          setExpense,
         }}
       >
         {showNavBar && <NavBar></NavBar>}
@@ -48,7 +56,9 @@ function App() {
           <Route path="/profile" element={<UserProfilePage />} />
           <Route path="/expenses" element={<ExpensesPage />} />
           <Route path="/wishlist" element={<WishlistPage />} />
+
           {/*============================== Admin=====================================  */}
+
           <Route path="/admin" element={<AdminLoginPage />} />
           <Route path="/register/admin" element={<RegisterAdminPage />} />
           <Route path="/view/admin" element={<AdminViewPage />} />

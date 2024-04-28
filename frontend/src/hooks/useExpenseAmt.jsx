@@ -17,6 +17,7 @@ const useExpenseAmt = () => {
       );
       if (res.ok) {
         setExpenseAmt(res.data[0].sum);
+        userCtx.setExpense(res.data[0].sum);
       } else {
         alert(JSON.stringify(res.data));
       }
@@ -34,6 +35,7 @@ const useExpenseAmt = () => {
   }, [userCtx.accessToken]);
 
   return expenseAmt;
+  // return userCtx.expense;
 };
 
 export default useExpenseAmt;
