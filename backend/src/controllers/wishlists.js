@@ -146,8 +146,8 @@ const getTotalWishlistCostForOneUser = async (req, res) => {
       res.json({ status: "error", msg: "not authorised" });
     } else if (req.decoded.role === "user") {
       const { rows } = await pool.query(
-        `SELECT SUM(wishlist_cost) FROM wishlists WHERE user_id = $1`,
-        [req.decoded.id]
+        `SELECT SUM(wishlist_cost) FROM wishlists WHERE user_id = $1 AND wishlist_status = $2`,
+        [req.decoded.id, "NOT YET PURCHASED"]
       );
       if (rows.length < 1) {
         res.json({ sum: 0 });
