@@ -4,8 +4,10 @@ import UserContext from "../context/user";
 import { useNavigate } from "react-router-dom";
 import ExpenseAmt from "../components/ExpenseAmt";
 import WishlistCost from "../components/WishlistCost";
+import useAuth from "../hooks/useAuth";
 
 const UserProfilePage = () => {
+  useAuth();
   const fetchData = useFetch();
   const navigate = useNavigate();
   const userCtx = useContext(UserContext);
@@ -37,8 +39,8 @@ const UserProfilePage = () => {
   };
 
   useEffect(() => {
-    getUserProfileAndBudget();
-  }, []);
+    if (userCtx.accessToken) getUserProfileAndBudget();
+  }, [userCtx.accessToken]);
 
   // useEffect(() => {
   //   getUserProfileAndBudget();

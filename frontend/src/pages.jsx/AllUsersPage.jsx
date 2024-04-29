@@ -3,8 +3,10 @@ import useFetch from "../hooks/useFetch";
 import UserContext from "../context/user";
 import User from "../components/User";
 import { useNavigate } from "react-router-dom";
+import useAuth from "../hooks/useAuth";
 
 const AllUsersPage = () => {
+  useAuth();
   const fetchData = useFetch();
   const navigate = useNavigate();
   const userCtx = useContext(UserContext);
@@ -31,8 +33,8 @@ const AllUsersPage = () => {
   };
 
   useEffect(() => {
-    getAllUsers();
-  }, []);
+    if (userCtx.accessToken) getAllUsers();
+  }, [userCtx.accessToken]);
 
   return (
     <div>

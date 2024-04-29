@@ -3,8 +3,10 @@ import ExpenseAmt from "../components/ExpenseAmt";
 import useFetch from "../hooks/useFetch";
 import UserContext from "../context/user";
 import Expense from "../components/Expense";
+import useAuth from "../hooks/useAuth";
 
 const ExpensesPage = () => {
+  useAuth();
   const fetchData = useFetch();
   const userCtx = useContext(UserContext);
   const [expenses, setExpenses] = useState([]);
@@ -107,9 +109,11 @@ const ExpensesPage = () => {
   // };
 
   useEffect(() => {
-    getAllExpensesForAUser();
-    getAllExpenseCategory();
-  }, []);
+    if (userCtx.accessToken) {
+      getAllExpensesForAUser();
+      getAllExpenseCategory();
+    }
+  }, [userCtx.accessToken]);
 
   return (
     <div className="mt-16">
@@ -140,9 +144,10 @@ const ExpensesPage = () => {
           <input ref={itemRef} type="text"></input>
 
           <select ref={categoryRef}>
-            {expensecategories.map((expenseCategory) => {
-              return <option>{expenseCategory.expense_category}</option>;
-            })}
+            {expensecategories.length > 0 &&
+              expensecategories.map((expenseCategory) => {
+                return <option>{expenseCategory.expense_category}</option>;
+              })}
           </select>
 
           <input ref={amtRef} type="text"></input>

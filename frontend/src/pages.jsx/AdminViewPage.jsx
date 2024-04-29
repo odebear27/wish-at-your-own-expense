@@ -3,8 +3,10 @@ import UserContext from "../context/user";
 import useFetch from "../hooks/useFetch";
 import { useNavigate } from "react-router-dom";
 import UpdateAdminModal from "../components/UpdateAdminModal";
+import useAuth from "../hooks/useAuth";
 
 const AdminViewPage = () => {
+  useAuth();
   const userCtx = useContext(UserContext);
   const fetchData = useFetch();
   const navigate = useNavigate();
@@ -47,13 +49,30 @@ const AdminViewPage = () => {
     }
   };
 
+  const handleLogout = () => {
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("refreshToken");
+    localStorage.removeItem("role");
+    localStorage.removeItem("userId");
+    localStorage.removeItem("userEmail");
+
+    userCtx.setIsLoggedIn(false);
+    userCtx.setAccessToken(null);
+    userCtx.setRefreshToken(null);
+    userCtx.setRole(null);
+    userCtx.setUserId(null);
+    userCtx.setUserEmail(null);
+
+    navigate("/admin");
+  };
+
   useEffect(() => {
-    getOneAdmin();
-  }, []);
+    if (userCtx.accessToken) getOneAdmin();
+  }, [userCtx.accessToken]);
 
   return (
     <div>
-      <button onClick={() => navigate("/admin")}>Log Out</button>
+      <button onClick={() => handleLogout()}>Log Out</button>
       <p>Admin view page</p>
       <p>
         Welcome {admin.admin_name} ({admin.admin_email})

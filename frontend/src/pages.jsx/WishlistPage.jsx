@@ -3,8 +3,10 @@ import useFetch from "../hooks/useFetch";
 import WishlistCost from "../components/WishlistCost";
 import UserContext from "../context/user";
 import Wishlist from "../components/Wishlist";
+import useAuth from "../hooks/useAuth";
 
 const WishlistPage = () => {
+  useAuth();
   const fetchData = useFetch();
   const userCtx = useContext(UserContext);
   const [wishlists, setWishlists] = useState([]);
@@ -62,8 +64,8 @@ const WishlistPage = () => {
   };
 
   useEffect(() => {
-    getAllWishlistForAUser();
-  }, []);
+    if (userCtx.accessToken) getAllWishlistForAUser();
+  }, [userCtx.accessToken]);
 
   return (
     <div className="mt-16">

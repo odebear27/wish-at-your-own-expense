@@ -19,9 +19,18 @@ const UserLoginPage = () => {
       });
 
       if (res.ok) {
+        const decoded = jwtDecode(res.data.access);
+
+        // store in local storage
+        localStorage.setItem("accessToken", res.data.access);
+        localStorage.setItem("refreshToken", res.data.refresh);
+        localStorage.setItem("role", decoded.role);
+        localStorage.setItem("userId", decoded.id);
+        localStorage.setItem("userEmail", decoded.email);
+
+        // store in userCtx
         userCtx.setAccessToken(res.data.access);
         userCtx.setRefreshToken(res.data.refresh);
-        const decoded = jwtDecode(res.data.access);
 
         userCtx.setRole(decoded.role);
         userCtx.setUserId(decoded.id);

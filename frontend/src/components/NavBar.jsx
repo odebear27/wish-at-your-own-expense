@@ -5,6 +5,21 @@ import UserContext from "../context/user";
 const NavBar = () => {
   const userCtx = useContext(UserContext);
 
+  const handleLogout = () => {
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("refreshToken");
+    localStorage.removeItem("role");
+    localStorage.removeItem("userId");
+    localStorage.removeItem("userEmail");
+
+    userCtx.setIsLoggedIn(false);
+    userCtx.setAccessToken(null);
+    userCtx.setRefreshToken(null);
+    userCtx.setRole(null);
+    userCtx.setUserId(null);
+    userCtx.setUserEmail(null);
+  };
+
   return (
     <header className="fixed top-0 left-0 right-0 z-50">
       <nav className="w-full mx-auto flex flex-row py-6 h-16 items-center justify-around bg-colour-white">
@@ -41,7 +56,7 @@ const NavBar = () => {
         <NavLink to="/">
           <button
             onClick={() => {
-              userCtx.setIsLoggedIn(false);
+              handleLogout();
             }}
           >
             Log Out
