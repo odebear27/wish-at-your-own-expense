@@ -22,6 +22,7 @@ const Wishlist = (props) => {
 
       if (res.ok) {
         console.log(res.data);
+        props.getWishlistCost();
         props.getAllWishlistForAUser();
       } else {
         alert(JSON.stringify(res.data));
@@ -60,6 +61,7 @@ const Wishlist = (props) => {
           wishlist={props.wishlist}
           setIsUpdateWishlistPressed={setIsUpdateWishlistPressed}
           getAllWishlistForAUser={props.getAllWishlistForAUser}
+          getWishlistCost={props.getWishlistCost}
         ></UpdateWishlistModal>
       )}
       {isCanBuyButtonPressed && (

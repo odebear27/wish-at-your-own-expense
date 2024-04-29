@@ -24,6 +24,7 @@ function App() {
 
   const [budget, setBudget] = useState(0);
   const [expense, setExpense] = useState(0);
+  const [wishlistCost, setWishlistCost] = useState(0);
 
   const location = useLocation();
   const showNavBar =
@@ -51,6 +52,8 @@ function App() {
           setBudget,
           expense,
           setExpense,
+          wishlistCost,
+          setWishlistCost,
         }}
       >
         {showNavBar && <NavBar></NavBar>}

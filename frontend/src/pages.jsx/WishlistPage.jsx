@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState, useRef } from "react";
 import useFetch from "../hooks/useFetch";
-import WishlistCost from "../components/WishlistCost";
 import UserContext from "../context/user";
 import Wishlist from "../components/Wishlist";
 import useLocalStorage from "../hooks/useLocalStorage";
@@ -15,6 +14,22 @@ const WishlistPage = () => {
   const itemRef = useRef();
   const costRef = useRef();
   const storeRef = useRef();
+
+  const getWishlistCost = async () => {
+    try {
+      const res = await fetchData(
+        `/api/wishlistscost`,
+        "POST",
+        undefined,
+        userCtx.accessToken
+      );
+      if (res.ok) {
+        userCtx.setWishlistCost(res.data[0].sum);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const getAllWishlistForAUser = async () => {
     try {
@@ -52,6 +67,7 @@ const WishlistPage = () => {
       );
       if (res.ok) {
         console.log(res.data);
+        getWishlistCost();
         getAllWishlistForAUser();
         setIsAddWishlistPressed(false);
       } else {
@@ -64,6 +80,7 @@ const WishlistPage = () => {
 
   useEffect(() => {
     if (userCtx.accessToken) {
+      getWishlistCost();
       getAllWishlistForAUser();
     }
   }, [userCtx.accessToken]);
@@ -72,7 +89,13 @@ const WishlistPage = () => {
     <div className="mt-16">
       <p>Wishlist Page</p>
       <div className="grid grid-cols-6">
-        <WishlistCost></WishlistCost>
+        {userCtx.wishlistCost > 0 ? (
+          <div>My wishlist cost: ${userCtx.wishlistCost}</div>
+        ) : (
+          <div>My wishlist cost: $0</div>
+        )}
+
+        {/* <WishlistCost></WishlistCost> */}
         {/* {JSON.stringify(wishlists)} */}
         <div></div>
         <div></div>
@@ -114,6 +137,7 @@ const WishlistPage = () => {
               key={idx}
               wishlist={wishlist}
               getAllWishlistForAUser={getAllWishlistForAUser}
+              getWishlistCost={getWishlistCost}
             ></Wishlist>
           );
         })}

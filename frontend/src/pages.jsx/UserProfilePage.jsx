@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useState } from "react";
 import useFetch from "../hooks/useFetch";
 import UserContext from "../context/user";
 import { useNavigate } from "react-router-dom";
-import WishlistCost from "../components/WishlistCost";
 import useLocalStorage from "../hooks/useLocalStorage";
 
 const UserProfilePage = () => {
@@ -53,6 +52,22 @@ const UserProfilePage = () => {
         alert(JSON.stringify(res.data));
       }
     } catch (error) {}
+  };
+
+  const getWishlistCost = async () => {
+    try {
+      const res = await fetchData(
+        `/api/wishlistscost`,
+        "POST",
+        undefined,
+        userCtx.accessToken
+      );
+      if (res.ok) {
+        userCtx.setWishlistCost(res.data[0].sum);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handleChange = (event) => {
@@ -114,6 +129,7 @@ const UserProfilePage = () => {
     if (userCtx.accessToken) {
       getUserProfileAndBudget();
       getExpenseAmt();
+      getWishlistCost();
     }
   }, [userCtx.accessToken]);
 
@@ -148,7 +164,11 @@ const UserProfilePage = () => {
             ) : (
               <p>My Expenses: $0</p>
             )}
-            <WishlistCost></WishlistCost>
+            {userCtx.wishlistCost > 0 ? (
+              <p>My Wishlist Cost: ${userCtx.wishlistCost}</p>
+            ) : (
+              <p>My Wishlist Cost: $0</p>
+            )}
             <button
               className="button"
               onClick={() => setIsUpdateUserPressed(true)}
@@ -191,7 +211,11 @@ const UserProfilePage = () => {
             ) : (
               <p>My Expenses: $0</p>
             )}
-            <WishlistCost></WishlistCost>
+            {userCtx.wishlistCost > 0 ? (
+              <p>My Wishlist Cost: ${userCtx.wishlistCost}</p>
+            ) : (
+              <p>My Wishlist Cost: $0</p>
+            )}
             <button className="button" onClick={updateUser}>
               submit
             </button>
