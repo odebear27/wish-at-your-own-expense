@@ -3,10 +3,10 @@ import useFetch from "../hooks/useFetch";
 import UserContext from "../context/user";
 import User from "../components/User";
 import { useNavigate } from "react-router-dom";
-import useAuth from "../hooks/useAuth";
+import useLocalStorage from "../hooks/useLocalStorage";
 
 const AllUsersPage = () => {
-  useAuth();
+  useLocalStorage();
   const fetchData = useFetch();
   const navigate = useNavigate();
   const userCtx = useContext(UserContext);

@@ -4,10 +4,10 @@ import UserContext from "../context/user";
 import { useNavigate } from "react-router-dom";
 import ExpenseAmt from "../components/ExpenseAmt";
 import WishlistCost from "../components/WishlistCost";
-import useAuth from "../hooks/useAuth";
+import useLocalStorage from "../hooks/useLocalStorage";
 
 const UserProfilePage = () => {
-  useAuth();
+  useLocalStorage();
   const fetchData = useFetch();
   const navigate = useNavigate();
   const userCtx = useContext(UserContext);

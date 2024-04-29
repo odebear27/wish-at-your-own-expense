@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from "react";
 import UserContext from "../context/user";
 
-const useAuth = () => {
+const useLocalStorage = () => {
   const userCtx = useContext(UserContext);
 
   useEffect(() => {
@@ -73,4 +73,4 @@ const useAuth = () => {
   //   };
 };
 
-export default useAuth;
+export default useLocalStorage;

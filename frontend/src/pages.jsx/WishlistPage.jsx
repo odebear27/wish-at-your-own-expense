@@ -3,10 +3,10 @@ import useFetch from "../hooks/useFetch";
 import WishlistCost from "../components/WishlistCost";
 import UserContext from "../context/user";
 import Wishlist from "../components/Wishlist";
-import useAuth from "../hooks/useAuth";
+import useLocalStorage from "../hooks/useLocalStorage";
 
 const WishlistPage = () => {
-  useAuth();
+  useLocalStorage();
   const fetchData = useFetch();
   const userCtx = useContext(UserContext);
   const [wishlists, setWishlists] = useState([]);

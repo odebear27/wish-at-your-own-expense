@@ -3,10 +3,10 @@ import ExpenseAmt from "../components/ExpenseAmt";
 import useFetch from "../hooks/useFetch";
 import UserContext from "../context/user";
 import Expense from "../components/Expense";
-import useAuth from "../hooks/useAuth";
+import useLocalStorage from "../hooks/useLocalStorage";
 
 const ExpensesPage = () => {
-  useAuth();
+  useLocalStorage();
   const fetchData = useFetch();
   const userCtx = useContext(UserContext);
   const [expenses, setExpenses] = useState([]);

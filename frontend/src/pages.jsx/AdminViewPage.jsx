@@ -3,10 +3,10 @@ import UserContext from "../context/user";
 import useFetch from "../hooks/useFetch";
 import { useNavigate } from "react-router-dom";
 import UpdateAdminModal from "../components/UpdateAdminModal";
-import useAuth from "../hooks/useAuth";
+import useLocalStorage from "../hooks/useLocalStorage";
 
 const AdminViewPage = () => {
-  useAuth();
+  useLocalStorage();
   const userCtx = useContext(UserContext);
   const fetchData = useFetch();
   const navigate = useNavigate();

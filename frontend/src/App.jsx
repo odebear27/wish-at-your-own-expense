@@ -11,6 +11,8 @@ import AdminLoginPage from "./pages.jsx/AdminLoginPage";
 import RegisterAdminPage from "./pages.jsx/RegisterAdminPage";
 import AdminViewPage from "./pages.jsx/AdminViewPage";
 import AllUsersPage from "./pages.jsx/AllUsersPage";
+import UnauthorisedPage from "./pages.jsx/UnauthorisedPage";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -63,8 +65,26 @@ function App() {
 
           <Route path="/admin" element={<AdminLoginPage />} />
           <Route path="/register/admin" element={<RegisterAdminPage />} />
-          <Route path="/view/admin" element={<AdminViewPage />} />
-          <Route path="/allusers/admin" element={<AllUsersPage />} />
+          <Route
+            path="/view/admin"
+            element={
+              <ProtectedRoute>
+                <AdminViewPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/allusers/admin"
+            element={
+              <ProtectedRoute>
+                <AllUsersPage />
+              </ProtectedRoute>
+            }
+          />
+
+          {/*============================== Unauthorised =====================================  */}
+
+          <Route path="/unauthorised" element={<UnauthorisedPage />} />
         </Routes>
       </UserContext.Provider>
     </div>
