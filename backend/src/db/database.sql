@@ -18,7 +18,7 @@ CREATE TABLE users (
 
 CREATE TABLE budgets (
     budget_id SERIAL NOT NULL PRIMARY KEY,
-    budget_amt SMALLINT,
+    budget_amt DECIMAL(10,2),
     budget_mth SMALLINT,
     budget_year SMALLINT
 );
@@ -97,7 +97,9 @@ INSERT INTO expenses (expense_date, expense_item, expense_category, expense_amt,
 ('2024-04-08', 'Grab to office', 'TRANSPORT', 20, 1),
 ('2024-04-08', 'Visit to doctor', 'HEALTH', 20, 1),
 ('2024-04-07', 'Movie Ticket', 'RECREATION', 10, 2),
-('2024-04-07', 'Buffet dinner', 'FOOD', 100, 3);
+('2024-04-07', 'Buffet dinner', 'FOOD', 100, 3),
+('2024-05-01', 'Groceries', 'FOOD', 50, 1),
+('2024-05-02', 'Monthly public transport', 'TRANSPORT', 100, 1);
 INSERT INTO wishlists (wishlist_position, wishlist_item, wishlist_cost, wishlist_store, wishlist_status, user_id) VALUES
 (1, 'Apple ipad mini', 997.20, 'https://www.apple.com/sg/shop/buy-ipad/ipad-mini/256gb-pink-wifi', 'NOT YET PURCHASED', 1),
 (2, 'Pillow', 100, 'Tangs department store', 'NOT YET PURCHASED', 1),
