@@ -7,7 +7,7 @@ const getAllExpensesForUser = async (req, res) => {
       res.json({ status: "error", msg: "admin cannot view expenses" });
     } else {
       const expenses = await pool.query(
-        `SELECT * FROM expenses WHERE user_id = $1`,
+        `SELECT * FROM expenses WHERE user_id = $1 ORDER BY expense_date`,
         [req.decoded.id]
       );
       res.json(expenses.rows);
