@@ -42,8 +42,8 @@ const Wishlist = (props) => {
   };
 
   useEffect(() => {
-    checkIfCanBuy();
-  }, []);
+    if (userCtx.accessToken) checkIfCanBuy();
+  }, [userCtx.accessToken]);
 
   useEffect(() => {
     checkIfCanBuy();
@@ -66,11 +66,11 @@ const Wishlist = (props) => {
           wishlist={props.wishlist}
         ></CanBuyModal>
       )}
-      <tr>
-        <td>{props.wishlist.wishlist_item}</td>
-        <td>{props.wishlist.wishlist_cost}</td>
-        <td>{props.wishlist.wishlist_store}</td>
-        <td>{props.wishlist.wishlist_status}</td>
+      <div className="grid grid-cols-8 gap-3">
+        <div>{props.wishlist.wishlist_item}</div>
+        <div>{props.wishlist.wishlist_cost}</div>
+        <div className="col-span-2">{props.wishlist.wishlist_store}</div>
+        <div>{props.wishlist.wishlist_status}</div>
         {canBuy && (
           <button onClick={() => setIsCanBuyButtonPressed(true)}>
             Can Buy
@@ -82,7 +82,7 @@ const Wishlist = (props) => {
         >
           delete
         </button>
-      </tr>
+      </div>
     </div>
   );
 };

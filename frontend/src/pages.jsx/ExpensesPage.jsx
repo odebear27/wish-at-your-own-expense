@@ -129,7 +129,7 @@ const ExpensesPage = () => {
         </button>
       </div>
 
-      <div className="grid grid-cols-6 gap-2">
+      <div className="grid grid-cols-6 gap-3">
         <div>Date</div>
         <div>Item</div>
         <div>Category</div>
@@ -138,7 +138,7 @@ const ExpensesPage = () => {
         <div></div>
       </div>
       {isAddExpensePressed && (
-        <div className="grid grid-cols-6 gap-1">
+        <div className="grid grid-cols-6 gap-3">
           <input ref={dateRef} type="date"></input>
 
           <input ref={itemRef} type="text"></input>
@@ -156,7 +156,7 @@ const ExpensesPage = () => {
           <button onClick={() => setIsAddExpensePressed(false)}>Cancel</button>
         </div>
       )}
-      <div className="grid gap-2">
+      <div className="grid gap-y-3">
         {expenses.map((expense, idx) => {
           // const formattedDate = formatDate(expense.expense_date);
           return (

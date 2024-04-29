@@ -51,48 +51,67 @@ const OverLay = (props) => {
   };
 
   return (
-    <div>
-      <label>Date</label>
-      <input
-        id="expenseDate"
-        type="date"
-        value={expenseToUpdate.expenseDate}
-        onChange={handleChange}
-      ></input>
-      <label>Item</label>
-      <input
-        id="expenseItem"
-        type="text"
-        value={expenseToUpdate.expenseItem}
-        onChange={handleChange}
-      ></input>
-      <label>Category</label>
-      <select
-        id="expenseCategory"
-        value={expenseToUpdate.expenseCategory}
-        onChange={handleChange}
-      >
-        {props.expensecategories.map((expenseCategory) => {
-          return <option>{expenseCategory.expense_category}</option>;
-        })}
-      </select>
-      <label>Amount</label>
-      <input
-        id="expenseAmt"
-        type="text"
-        value={expenseToUpdate.expenseAmt}
-        onChange={handleChange}
-      ></input>
-      <button onClick={() => updateExpenseForUser(props.expenseId)}>
-        submit
-      </button>
-      <button
-        onClick={() => {
-          props.setShowUpdateExpenseModal(false);
-        }}
-      >
-        cancel
-      </button>
+    <div className="z-10 w-screen h-screen bg-gray-800/75 fixed top-0 left-0 flex">
+      <div className="updateModal whitesmoke px-5 z-100 fixed top-1/4 w-auto overflow-hidden py-5 rounded-md">
+        <div className="flex flex-col items-start space-y-3 mb-6">
+          <div>Update Expense</div>
+          <div className="w-auto flex space-x-4">
+            <label>Date:</label>
+            <input
+              id="expenseDate"
+              type="date"
+              value={expenseToUpdate.expenseDate}
+              onChange={handleChange}
+            ></input>
+          </div>
+          <div className="w-auto flex space-x-4">
+            <label>Item:</label>
+            <input
+              id="expenseItem"
+              type="text"
+              value={expenseToUpdate.expenseItem}
+              onChange={handleChange}
+            ></input>
+          </div>
+          <div className="w-auto flex space-x-4">
+            <label>Category:</label>
+            <select
+              id="expenseCategory"
+              value={expenseToUpdate.expenseCategory}
+              onChange={handleChange}
+            >
+              {props.expensecategories.map((expenseCategory) => {
+                return <option>{expenseCategory.expense_category}</option>;
+              })}
+            </select>
+          </div>
+          <div className="w-auto flex space-x-4">
+            <label>Amount:</label>
+            <input
+              id="expenseAmt"
+              type="text"
+              value={expenseToUpdate.expenseAmt}
+              onChange={handleChange}
+            ></input>
+          </div>
+        </div>
+        <div className="flex justify-between">
+          <button
+            className="button"
+            onClick={() => updateExpenseForUser(props.expenseId)}
+          >
+            submit
+          </button>
+          <button
+            className="button"
+            onClick={() => {
+              props.setShowUpdateExpenseModal(false);
+            }}
+          >
+            cancel
+          </button>
+        </div>
+      </div>
     </div>
   );
 };

@@ -76,14 +76,23 @@ const OverLay = (props) => {
   };
 
   return (
-    <div>
-      <p>Have you purchased the item?</p>
-      <button onClick={() => wishlistBought()}>
-        Yes!!! (remember to add to your expense)
-      </button>
-      <button onClick={() => props.setIsCanBuyButtonPressed(false)}>
-        No :(
-      </button>
+    <div className="z-10 w-screen h-screen bg-gray-800/75 fixed top-0 left-0 flex">
+      <div className="updateModal whitesmoke px-5 z-100 fixed top-1/4 w-auto overflow-hidden py-5 rounded-md">
+        <div className="flex flex-col items-start space-y-3 mb-20">
+          <div>Have you purchased the item?</div>
+        </div>
+        <div className="flex justify-between">
+          <button className="button" onClick={() => wishlistBought()}>
+            Yes!!! (remember to add to your expense)
+          </button>
+          <button
+            className="button"
+            onClick={() => props.setIsCanBuyButtonPressed(false)}
+          >
+            No :(
+          </button>
+        </div>
+      </div>
     </div>
   );
 };

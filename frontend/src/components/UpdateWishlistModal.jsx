@@ -72,45 +72,68 @@ const OverLay = (props) => {
   }, []);
 
   return (
-    <div>
-      <label>Item</label>
-      <input
-        id="wishlistItem"
-        value={updateWishlist.wishlistItem}
-        type="text"
-        onChange={handleChange}
-      ></input>
-      <label>Cost</label>
-      <input
-        id="wishlistCost"
-        value={updateWishlist.wishlistCost}
-        type="text"
-        onChange={handleChange}
-      ></input>
-      <label>Store</label>
-      <input
-        id="wishlistStore"
-        value={updateWishlist.wishlistStore}
-        type="text"
-        onChange={handleChange}
-      ></input>
-      <label>Status</label>
-      <select
-        disabled={true}
-        id="wishlistStatus"
-        value={updateWishlist.wishlistStatus}
-        onChange={handleChange}
-      >
-        {allWishlistStatus.map((wishlistStatus) => {
-          return <option>{wishlistStatus.wishlist_status}</option>;
-        })}
-      </select>
-      <button onClick={() => updateWishlistForUser(props.wishlistId)}>
-        Submit
-      </button>
-      <button onClick={() => props.setIsUpdateWishlistPressed(false)}>
-        Cancel
-      </button>
+    <div className="z-10 w-screen h-screen bg-gray-800/75 fixed top-0 left-0 flex">
+      <div className="updateModal whitesmoke px-5 z-100 fixed top-1/4 w-auto overflow-hidden py-5 rounded-md">
+        <div className="flex flex-col items-start space-y-3 mb-6">
+          <div>Update Wishlist</div>
+          <div className="w-auto flex space-x-4">
+            <label>Item:</label>
+            <input
+              id="wishlistItem"
+              value={updateWishlist.wishlistItem}
+              type="text"
+              onChange={handleChange}
+            ></input>
+          </div>
+          <div className="w-auto flex space-x-4">
+            <label>Cost:</label>
+            <input
+              id="wishlistCost"
+              value={updateWishlist.wishlistCost}
+              type="text"
+              onChange={handleChange}
+            ></input>
+          </div>
+          <div className="w-auto flex space-x-4">
+            <label>Store:</label>
+            <textarea
+              className="w-96 h-20"
+              id="wishlistStore"
+              value={updateWishlist.wishlistStore}
+              type="text"
+              onChange={handleChange}
+            ></textarea>
+          </div>
+          <div className="w-auto flex space-x-4">
+            <label>Status:</label>
+            <select
+              className="dropdown"
+              disabled={true}
+              id="wishlistStatus"
+              value={updateWishlist.wishlistStatus}
+              onChange={handleChange}
+            >
+              {allWishlistStatus.map((wishlistStatus) => {
+                return <option>{wishlistStatus.wishlist_status}</option>;
+              })}
+            </select>
+          </div>
+        </div>
+        <div className="flex justify-between">
+          <button
+            className="button"
+            onClick={() => updateWishlistForUser(props.wishlistId)}
+          >
+            Submit
+          </button>
+          <button
+            className="button"
+            onClick={() => props.setIsUpdateWishlistPressed(false)}
+          >
+            Cancel
+          </button>
+        </div>
+      </div>
     </div>
   );
 };

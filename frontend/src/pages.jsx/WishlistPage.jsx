@@ -15,7 +15,6 @@ const WishlistPage = () => {
   const itemRef = useRef();
   const costRef = useRef();
   const storeRef = useRef();
-  const statusRef = useRef();
 
   const getAllWishlistForAUser = async () => {
     try {
@@ -64,45 +63,61 @@ const WishlistPage = () => {
   };
 
   useEffect(() => {
-    if (userCtx.accessToken) getAllWishlistForAUser();
+    if (userCtx.accessToken) {
+      getAllWishlistForAUser();
+    }
   }, [userCtx.accessToken]);
 
   return (
     <div className="mt-16">
       <p>Wishlist Page</p>
-      <WishlistCost></WishlistCost>
-      {/* {JSON.stringify(wishlists)} */}
-      <button
-        onClick={() => {
-          setIsAddWishlistPressed(true);
-        }}
-      >
-        Add an item
-      </button>
-      <tr>
-        <td>Item</td>
-        <td>Cost</td>
-        <td>Store</td>
-        <td>Status</td>
-      </tr>
+      <div className="grid grid-cols-6">
+        <WishlistCost></WishlistCost>
+        {/* {JSON.stringify(wishlists)} */}
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <button
+          onClick={() => {
+            setIsAddWishlistPressed(true);
+          }}
+        >
+          Add an item
+        </button>
+      </div>
+
+      <div className="grid grid-cols-8 gap-3">
+        <div>Item</div>
+        <div>Cost</div>
+        <div className="col-span-2">Store</div>
+        <div>Status</div>
+        <div></div>
+        <div></div>
+      </div>
       {isAddWishlistPressed && (
-        <div>
+        <div className="grid grid-cols-8 gap-3">
           <input ref={itemRef} type="text"></input>
           <input ref={costRef} type="text"></input>
-          <input ref={storeRef} type="text"></input>
+          <input className="col-span-2" ref={storeRef} type="text"></input>
+          <select disabled={true}>
+            <option>NOT YET PURCHASED</option>
+          </select>
           <button onClick={() => addWishlistForUser()}>Submit</button>
           <button onClick={() => setIsAddWishlistPressed(false)}>Cancel</button>
         </div>
       )}
-      {wishlists.map((wishlist, idx) => {
-        return (
-          <Wishlist
-            key={idx}
-            wishlist={wishlist}
-            getAllWishlistForAUser={getAllWishlistForAUser}
-          ></Wishlist>
-        );
-      })}
+      <div className="grid gap-y-3">
+        {wishlists.map((wishlist, idx) => {
+          return (
+            <Wishlist
+              key={idx}
+              wishlist={wishlist}
+              getAllWishlistForAUser={getAllWishlistForAUser}
+            ></Wishlist>
+          );
+        })}
+      </div>
     </div>
   );
 };

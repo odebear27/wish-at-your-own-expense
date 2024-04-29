@@ -30,7 +30,7 @@ const Expense = (props) => {
           formatDate={formatDate}
         ></UpdateExpenseModal>
       )}
-      <div className="grid grid-cols-6">
+      <div className="grid grid-cols-6 gap-3">
         <div>{formattedDate}</div>
         <div>{props.expense.expense_item}</div>
         <div>{props.expense.expense_category}</div>
