@@ -111,47 +111,68 @@ const UserProfilePage = () => {
   };
 
   return (
-    <div>
-      <h1>user profile page</h1>
+    <div className="mt-16 space-y-4">
+      <div>user profile page</div>
       {!isUpdateUserPressed ? (
         // ========================== user profile view ============================== //
-        <div>
-          <p>My name: {userProfileAndBudget.user_name}</p>
-          <p>My email: {userProfileAndBudget.user_email}</p>
-          <p>My budget for the month: ${userProfileAndBudget.budget_amt}</p>
-          {/* <p>My budget for the month: ${userCtx.budget}</p> */}
-          <ExpenseAmt></ExpenseAmt>
-          <WishlistCost></WishlistCost>
-          <button onClick={() => setIsUpdateUserPressed(true)}>
-            update profile
-          </button>
-          <button onClick={deleteUser}>
-            delete profile (there is no going back)
-          </button>
+        <div className="flex justify-center">
+          <div className="flex flex-col items-start space-y-4">
+            <p>My name: {userProfileAndBudget.user_name}</p>
+            <p>My email: {userProfileAndBudget.user_email}</p>
+            <p>My budget for the month: ${userProfileAndBudget.budget_amt}</p>
+            {/* <p>My budget for the month: ${userCtx.budget}</p> */}
+            <ExpenseAmt></ExpenseAmt>
+            <WishlistCost></WishlistCost>
+            <button
+              className="button"
+              onClick={() => setIsUpdateUserPressed(true)}
+            >
+              update profile
+            </button>
+            <button className="button" onClick={deleteUser}>
+              delete profile (there is no going back)
+            </button>
+          </div>
         </div>
       ) : (
         // ========================== update user profile view ============================== //
-        <div>
-          <p>My name: </p>
-          <input
-            id="user_name"
-            type="text"
-            value={updateUserProfile.user_name}
-            onChange={handleChange}
-          ></input>
-          <p>My email: {userProfileAndBudget.user_email}</p>
-          <p>My budget for the month: </p>
-          <input
-            id="budget_amt"
-            type="text"
-            value={updateUserProfile.budget_amt}
-            // value={userCtx.budget}
-            onChange={handleChange}
-          ></input>
-          <ExpenseAmt></ExpenseAmt>
-          <WishlistCost></WishlistCost>
-          <button onClick={updateUser}>submit</button>
-          <button onClick={() => setIsUpdateUserPressed(false)}>cancel</button>
+        <div className="flex justify-center">
+          <div className="flex flex-col items-start space-y-4">
+            <div className="w-auto flex space-x-4">
+              <p>My name: </p>
+              <input
+                id="user_name"
+                type="text"
+                value={updateUserProfile.user_name}
+                onChange={handleChange}
+              ></input>
+            </div>
+
+            <p>My email: {userProfileAndBudget.user_email}</p>
+
+            <div className="w-auto flex space-x-4">
+              <p>My budget for the month: </p>
+              <input
+                id="budget_amt"
+                type="text"
+                value={updateUserProfile.budget_amt}
+                // value={userCtx.budget}
+                onChange={handleChange}
+              ></input>
+            </div>
+
+            <ExpenseAmt></ExpenseAmt>
+            <WishlistCost></WishlistCost>
+            <button className="button" onClick={updateUser}>
+              submit
+            </button>
+            <button
+              className="button"
+              onClick={() => setIsUpdateUserPressed(false)}
+            >
+              cancel
+            </button>
+          </div>
         </div>
       )}
     </div>

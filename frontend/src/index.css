@@ -1,5 +1,9 @@
 @import url("https://fonts.googleapis.com/css2?family=Oxygen:wght@300;400;700&display=swap");
 
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 * {
   box-sizing: border-box;
 }
@@ -21,6 +25,9 @@ body {
   align-items: center;
 }
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+.button {
+  min-width: 5rem;
+  background-color: #a6c4e5;
+  padding: 0.3rem 0.8rem;
+  border-radius: 0.6rem;
+}

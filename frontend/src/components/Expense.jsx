@@ -30,18 +30,18 @@ const Expense = (props) => {
           formatDate={formatDate}
         ></UpdateExpenseModal>
       )}
-      <tr>
-        <td>{formattedDate}</td>
-        <td>{props.expense.expense_item}</td>
-        <td>{props.expense.expense_category}</td>
-        <td>{props.expense.expense_amt}</td>
+      <div className="grid grid-cols-6">
+        <div>{formattedDate}</div>
+        <div>{props.expense.expense_item}</div>
+        <div>{props.expense.expense_category}</div>
+        <div>{props.expense.expense_amt}</div>
         <button onClick={() => setShowUpdateExpenseModal(true)}>update</button>
         <button
           onClick={() => props.deleteExpenseForUser(props.expense.expense_id)}
         >
           delete
         </button>
-      </tr>
+      </div>
     </div>
   );
 };

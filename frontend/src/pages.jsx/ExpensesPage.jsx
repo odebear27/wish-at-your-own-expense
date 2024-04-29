@@ -112,18 +112,29 @@ const ExpensesPage = () => {
   }, []);
 
   return (
-    <div>
+    <div className="mt-16">
       <p>Expenses Page</p>
-      <ExpenseAmt></ExpenseAmt>
-      <button onClick={() => setIsAddExpensePressed(true)}>Add an item</button>
-      <tr>
-        <td>Date</td>
-        <td>Item</td>
-        <td>Category</td>
-        <td>Amount</td>
-      </tr>
+      <div className="grid grid-cols-6">
+        <ExpenseAmt></ExpenseAmt>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <button onClick={() => setIsAddExpensePressed(true)}>
+          Add an item
+        </button>
+      </div>
+
+      <div className="grid grid-cols-6 gap-2">
+        <div>Date</div>
+        <div>Item</div>
+        <div>Category</div>
+        <div>Amount</div>
+        <div></div>
+        <div></div>
+      </div>
       {isAddExpensePressed && (
-        <div>
+        <div className="grid grid-cols-6 gap-1">
           <input ref={dateRef} type="date"></input>
 
           <input ref={itemRef} type="text"></input>
@@ -140,18 +151,20 @@ const ExpensesPage = () => {
           <button onClick={() => setIsAddExpensePressed(false)}>Cancel</button>
         </div>
       )}
-      {expenses.map((expense, idx) => {
-        // const formattedDate = formatDate(expense.expense_date);
-        return (
-          <Expense
-            key={idx}
-            expense={expense}
-            deleteExpenseForUser={deleteExpenseForUser}
-            expensecategories={expensecategories}
-            getAllExpensesForAUser={getAllExpensesForAUser}
-          ></Expense>
-        );
-      })}
+      <div className="grid gap-2">
+        {expenses.map((expense, idx) => {
+          // const formattedDate = formatDate(expense.expense_date);
+          return (
+            <Expense
+              key={idx}
+              expense={expense}
+              deleteExpenseForUser={deleteExpenseForUser}
+              expensecategories={expensecategories}
+              getAllExpensesForAUser={getAllExpensesForAUser}
+            ></Expense>
+          );
+        })}
+      </div>
     </div>
   );
 };

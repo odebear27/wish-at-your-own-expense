@@ -66,7 +66,7 @@ const WishlistPage = () => {
   }, []);
 
   return (
-    <div>
+    <div className="mt-16">
       <p>Wishlist Page</p>
       <WishlistCost></WishlistCost>
       {/* {JSON.stringify(wishlists)} */}
