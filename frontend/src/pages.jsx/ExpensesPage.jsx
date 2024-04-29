@@ -1,5 +1,4 @@
 import React, { useEffect, useContext, useState, useRef } from "react";
-import ExpenseAmt from "../components/ExpenseAmt";
 import useFetch from "../hooks/useFetch";
 import UserContext from "../context/user";
 import Expense from "../components/Expense";
@@ -16,6 +15,24 @@ const ExpensesPage = () => {
   const itemRef = useRef();
   const categoryRef = useRef();
   const amtRef = useRef();
+
+  const getExpenseAmt = async () => {
+    try {
+      const res = await fetchData(
+        `/api/expensesamt`,
+        "POST",
+        undefined,
+        userCtx.accessToken
+      );
+      if (res.ok) {
+        console.log("sum" + res.data);
+        // setExpenseAmt(res.data[0].sum);
+        userCtx.setExpense(res.data[0].sum);
+      } else {
+        alert(JSON.stringify(res.data));
+      }
+    } catch (error) {}
+  };
 
   const getAllExpensesForAUser = async () => {
     try {
@@ -72,6 +89,7 @@ const ExpensesPage = () => {
       if (res.ok) {
         getAllExpensesForAUser();
         setIsAddExpensePressed(false);
+        getExpenseAmt();
       } else {
         alert(JSON.stringify(res.data));
       }
@@ -90,6 +108,7 @@ const ExpensesPage = () => {
       );
       if (res.ok) {
         getAllExpensesForAUser();
+        getExpenseAmt();
       } else {
         alert(JSON.stringify(res.data));
       }
@@ -108,8 +127,19 @@ const ExpensesPage = () => {
   //   return `${year}-${month}-${day}`;
   // };
 
+  // useEffect(() => {
+  //   getExpenseAmt();
+  // }, []); // Empty dependency array to run the effect on initial render
+
+  // useEffect(() => {
+  //   if (userCtx.accessToken) {
+  //     getExpenseAmt();
+  //   }
+  // }, [userCtx.accessToken]);
+
   useEffect(() => {
     if (userCtx.accessToken) {
+      getExpenseAmt();
       getAllExpensesForAUser();
       getAllExpenseCategory();
     }
@@ -119,7 +149,11 @@ const ExpensesPage = () => {
     <div className="mt-16">
       <p>Expenses Page</p>
       <div className="grid grid-cols-6">
-        <ExpenseAmt></ExpenseAmt>
+        {userCtx.expense > 0 ? (
+          <div>Expense Amt: {userCtx.expense}</div>
+        ) : (
+          <div>Expense Amt: $0</div>
+        )}
         <div></div>
         <div></div>
         <div></div>
@@ -166,6 +200,7 @@ const ExpensesPage = () => {
               deleteExpenseForUser={deleteExpenseForUser}
               expensecategories={expensecategories}
               getAllExpensesForAUser={getAllExpensesForAUser}
+              getExpenseAmt={getExpenseAmt}
             ></Expense>
           );
         })}

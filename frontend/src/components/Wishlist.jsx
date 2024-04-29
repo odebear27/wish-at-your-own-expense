@@ -35,19 +35,23 @@ const Wishlist = (props) => {
     const excessBudget = userCtx.budget - userCtx.expense;
     if (
       props.wishlist.wishlist_status === "NOT YET PURCHASED" &&
-      excessBudget > props.wishlist.wishlist_cost
+      excessBudget >= props.wishlist.wishlist_cost
     ) {
       setCanBuy(true);
     }
   };
 
   useEffect(() => {
+    checkIfCanBuy();
+  }, []);
+
+  useEffect(() => {
     if (userCtx.accessToken) checkIfCanBuy();
-  }, [userCtx.accessToken]);
+  }, [userCtx.accessToken, userCtx.budget, userCtx.expense]);
 
   useEffect(() => {
     checkIfCanBuy();
-  }, [props.wishlist.wishlist_status]);
+  }, [props.wishlist.wishlist_status, props.wishlist.wishlist_cost]);
 
   return (
     <div>
@@ -71,10 +75,12 @@ const Wishlist = (props) => {
         <div>{props.wishlist.wishlist_cost}</div>
         <div className="col-span-2">{props.wishlist.wishlist_store}</div>
         <div>{props.wishlist.wishlist_status}</div>
-        {canBuy && (
+        {canBuy ? (
           <button onClick={() => setIsCanBuyButtonPressed(true)}>
             Can Buy
           </button>
+        ) : (
+          <div></div>
         )}
         <button onClick={() => setIsUpdateWishlistPressed(true)}>update</button>
         <button

@@ -40,6 +40,7 @@ const OverLay = (props) => {
       );
 
       if (res.ok) {
+        props.getExpenseAmt();
         props.getAllExpensesForAUser();
         props.setShowUpdateExpenseModal(false);
       } else {
@@ -137,6 +138,7 @@ const UpdateExpenseModal = (props) => {
           setShowUpdateExpenseModal={props.setShowUpdateExpenseModal}
           getAllExpensesForAUser={props.getAllExpensesForAUser}
           formatDate={props.formatDate}
+          getExpenseAmt={props.getExpenseAmt}
         ></OverLay>,
         document.querySelector("#modal-root")
       )}

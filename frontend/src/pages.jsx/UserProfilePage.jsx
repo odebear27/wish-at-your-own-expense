@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useState } from "react";
 import useFetch from "../hooks/useFetch";
 import UserContext from "../context/user";
 import { useNavigate } from "react-router-dom";
-import ExpenseAmt from "../components/ExpenseAmt";
 import WishlistCost from "../components/WishlistCost";
 import useLocalStorage from "../hooks/useLocalStorage";
 
@@ -38,24 +37,23 @@ const UserProfilePage = () => {
     }
   };
 
-  useEffect(() => {
-    if (userCtx.accessToken) getUserProfileAndBudget();
-  }, [userCtx.accessToken]);
-
-  // useEffect(() => {
-  //   getUserProfileAndBudget();
-  //   getWishlistCost();
-  //   getExpenseAmt();
-  // }, [userCtx.userId]);
-
-  useEffect(() => {
-    if (userProfileAndBudget) {
-      setUpdateUserProfile({
-        user_name: userProfileAndBudget.user_name || "",
-        budget_amt: userProfileAndBudget.budget_amt || "",
-      });
-    }
-  }, [userProfileAndBudget]);
+  const getExpenseAmt = async () => {
+    try {
+      const res = await fetchData(
+        `/api/expensesamt`,
+        "POST",
+        undefined,
+        userCtx.accessToken
+      );
+      if (res.ok) {
+        console.log("sum" + res.data);
+        // setExpenseAmt(res.data[0].sum);
+        userCtx.setExpense(res.data[0].sum);
+      } else {
+        alert(JSON.stringify(res.data));
+      }
+    } catch (error) {}
+  };
 
   const handleChange = (event) => {
     setUpdateUserProfile((prevState) => {
@@ -112,6 +110,28 @@ const UserProfilePage = () => {
     }
   };
 
+  useEffect(() => {
+    if (userCtx.accessToken) {
+      getUserProfileAndBudget();
+      getExpenseAmt();
+    }
+  }, [userCtx.accessToken]);
+
+  // useEffect(() => {
+  //   getUserProfileAndBudget();
+  //   getWishlistCost();
+  //   getExpenseAmt();
+  // }, [userCtx.userId]);
+
+  useEffect(() => {
+    if (userProfileAndBudget) {
+      setUpdateUserProfile({
+        user_name: userProfileAndBudget.user_name || "",
+        budget_amt: userProfileAndBudget.budget_amt || "",
+      });
+    }
+  }, [userProfileAndBudget]);
+
   return (
     <div className="mt-16 space-y-4">
       <div>user profile page</div>
@@ -123,7 +143,11 @@ const UserProfilePage = () => {
             <p>My email: {userProfileAndBudget.user_email}</p>
             <p>My budget for the month: ${userProfileAndBudget.budget_amt}</p>
             {/* <p>My budget for the month: ${userCtx.budget}</p> */}
-            <ExpenseAmt></ExpenseAmt>
+            {userCtx.expense > 0 ? (
+              <p>My Expenses: ${userCtx.expense}</p>
+            ) : (
+              <p>My Expenses: $0</p>
+            )}
             <WishlistCost></WishlistCost>
             <button
               className="button"
@@ -162,8 +186,11 @@ const UserProfilePage = () => {
                 onChange={handleChange}
               ></input>
             </div>
-
-            <ExpenseAmt></ExpenseAmt>
+            {userCtx.expense > 0 ? (
+              <p>My Expenses: ${userCtx.expense}</p>
+            ) : (
+              <p>My Expenses: $0</p>
+            )}
             <WishlistCost></WishlistCost>
             <button className="button" onClick={updateUser}>
               submit

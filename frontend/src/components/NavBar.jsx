@@ -18,6 +18,8 @@ const NavBar = () => {
     userCtx.setRole(null);
     userCtx.setUserId(null);
     userCtx.setUserEmail(null);
+    userCtx.setExpense(0);
+    userCtx.setBudget(0);
   };
 
   return (

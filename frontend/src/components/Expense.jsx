@@ -28,6 +28,7 @@ const Expense = (props) => {
           setShowUpdateExpenseModal={setShowUpdateExpenseModal}
           getAllExpensesForAUser={props.getAllExpensesForAUser}
           formatDate={formatDate}
+          getExpenseAmt={props.getExpenseAmt}
         ></UpdateExpenseModal>
       )}
       <div className="grid grid-cols-6 gap-3">
