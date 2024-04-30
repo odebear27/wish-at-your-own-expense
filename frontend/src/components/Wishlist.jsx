@@ -81,7 +81,7 @@ const Wishlist = (props) => {
         backgroundColor:
           props.wishlist.wishlist_status === "PURCHASED" ? "#cbdee7" : "",
       }}
-      className="py-3"
+      className="pt-1 pb-3"
     >
       {isUpdateWishlistPressed && (
         <UpdateWishlistModal

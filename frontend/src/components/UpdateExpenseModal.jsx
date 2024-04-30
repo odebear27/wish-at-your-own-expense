@@ -55,7 +55,7 @@ const OverLay = (props) => {
     <div className="z-10 w-screen h-screen bg-gray-800/75 fixed top-0 left-0 flex">
       <div className="updateModal whitesmoke px-5 z-100 fixed top-1/4 w-auto overflow-hidden py-5 rounded-md">
         <div className="flex flex-col items-start space-y-3 mb-6">
-          <div>Update Expense</div>
+          <div className="font-medium">Update Expense</div>
           <div className="w-auto flex space-x-4">
             <label>Date:</label>
             <input

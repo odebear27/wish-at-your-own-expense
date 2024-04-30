@@ -20,7 +20,7 @@ const Expense = (props) => {
   //   .split("T")[0];
 
   return (
-    <div>
+    <div className="pt-1 pb-3">
       {showUpdateExpenseModal && (
         <UpdateExpenseModal
           expense={props.expense}
@@ -31,7 +31,7 @@ const Expense = (props) => {
           getExpenseAmt={props.getExpenseAmt}
         ></UpdateExpenseModal>
       )}
-      <div className="grid grid-cols-6 gap-3">
+      <div className="grid grid-cols-5 gap-3">
         <div>{formattedDate}</div>
         <div>{props.expense.expense_item}</div>
         <div>{props.expense.expense_category}</div>
@@ -42,12 +42,20 @@ const Expense = (props) => {
             currency: "SGD",
           }).format(props.expense.expense_amt)}
         </div>
-        <button onClick={() => setShowUpdateExpenseModal(true)}>update</button>
-        <button
-          onClick={() => props.deleteExpenseForUser(props.expense.expense_id)}
-        >
-          delete
-        </button>
+        <div className="flex justify-evenly">
+          <button
+            onClick={() => setShowUpdateExpenseModal(true)}
+            title="update"
+          >
+            <i class="bi bi-pencil-fill"></i>
+          </button>
+          <button
+            onClick={() => props.deleteExpenseForUser(props.expense.expense_id)}
+            title="delete"
+          >
+            <i class="bi bi-trash3-fill"></i>
+          </button>
+        </div>
       </div>
     </div>
   );

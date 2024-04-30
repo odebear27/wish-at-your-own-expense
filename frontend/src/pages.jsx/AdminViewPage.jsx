@@ -73,8 +73,8 @@ const AdminViewPage = () => {
   return (
     <div>
       <div className="flex justify-end">
-        <button className="" onClick={() => handleLogout()}>
-          Log Out
+        <button onClick={() => handleLogout()} title="logout">
+          <i class="bi bi-door-open"></i>
         </button>
       </div>
       <div className="flex flex-col gap-y-4">

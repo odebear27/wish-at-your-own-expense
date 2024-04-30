@@ -37,15 +37,18 @@ const AllUsersPage = () => {
   }, [userCtx.accessToken]);
 
   return (
-    <div>
-      <button onClick={() => navigate("/view/admin")}>Go Back</button>
-      <p className="text-lg">All Users listed below</p>
-      <div className="grid grid-cols-4 gap-3">
-        <div>Name</div>
-        <div>Email</div>
-        <div>Account active / deleted</div>
+    <div className="mx-5 py-3">
+      <button className="button" onClick={() => navigate("/view/admin")}>
+        Go Back
+      </button>
+      <p className="text-lg font-medium py-3">All Users listed below</p>
+      <div className="grid grid-cols-4 gap-3 h-10 bg-colour-tableHeader items-center">
+        <div className="font-medium">Name</div>
+        <div className="font-medium">Email</div>
+        <div className="font-medium">Account active / deleted</div>
       </div>
-      <div className="grid gap-3">
+      <hr />
+      <div className="grid divide-y-[1.3px]">
         {allUsers.map((user, idx) => {
           return <User key={idx} user={user} getAllUsers={getAllUsers}></User>;
         })}

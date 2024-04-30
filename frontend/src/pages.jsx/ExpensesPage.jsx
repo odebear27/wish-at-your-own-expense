@@ -146,39 +146,46 @@ const ExpensesPage = () => {
   }, [userCtx.accessToken]);
 
   return (
-    <div className="mt-16 mx-5">
-      <p>Expenses Page</p>
-      <div className="grid grid-cols-6">
+    <div className="mt-16 mx-5 py-6">
+      <div className="flex justify-between py-3">
         {userCtx.expense > 0 ? (
-          <div>
-            Expense Amt:{" "}
+          <div className="font-medium">
+            Expense amount for current month:{" "}
             {new Intl.NumberFormat("en-SG", {
               style: "currency",
               currency: "SGD",
             }).format(userCtx.expense)}
           </div>
         ) : (
-          <div>Expense Amt: $0</div>
+          <div className="font-medium">
+            Expense amount for current month: $0
+          </div>
         )}
         <div></div>
         <div></div>
         <div></div>
         <div></div>
         <button onClick={() => setIsAddExpensePressed(true)}>
-          Add an item
+          <div className="flex space-x-0.5 items-center">
+            <i class="bi bi-cash-coin"></i>
+            <span className="flex w-16 leading-tight font-medium">
+              Add an item
+            </span>
+          </div>
         </button>
       </div>
 
-      <div className="grid grid-cols-6 gap-3">
-        <div>Date</div>
-        <div>Item</div>
-        <div>Category</div>
-        <div>Amount</div>
-        <div></div>
-        <div></div>
+      <div className="grid grid-cols-5 gap-3 h-10 bg-colour-tableHeader items-center">
+        <div className="font-medium">Date</div>
+        <div className="font-medium">Item</div>
+        <div className="font-medium">Category</div>
+        <div className="font-medium">Amount</div>
+        <div className="font-medium"></div>
+        <div className="font-medium"></div>
       </div>
+      <hr />
       {isAddExpensePressed && (
-        <div className="grid grid-cols-6 gap-3">
+        <div className="grid grid-cols-5 gap-3">
           <input
             ref={dateRef}
             type="date"
@@ -195,12 +202,15 @@ const ExpensesPage = () => {
           </select>
 
           <input ref={amtRef} type="text"></input>
-
-          <button onClick={() => createExpenseForUser()}>Submit</button>
-          <button onClick={() => setIsAddExpensePressed(false)}>Cancel</button>
+          <div className="flex justify-evenly">
+            <button onClick={() => createExpenseForUser()}>Submit</button>
+            <button onClick={() => setIsAddExpensePressed(false)}>
+              Cancel
+            </button>
+          </div>
         </div>
       )}
-      <div className="grid gap-y-3">
+      <div className="grid divide-y-[1.3px]">
         {expenses.map((expense, idx) => {
           // const formattedDate = formatDate(expense.expense_date);
           return (

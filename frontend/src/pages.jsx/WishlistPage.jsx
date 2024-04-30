@@ -127,7 +127,7 @@ const WishlistPage = () => {
     <div className="mt-16 mx-5 py-6">
       <div className="flex justify-between py-3">
         {userCtx.wishlistCost > 0 ? (
-          <div>
+          <div className="font-medium">
             My wishlist cost (unpurchased):{" "}
             {new Intl.NumberFormat("en-SG", {
               style: "currency",
@@ -135,7 +135,7 @@ const WishlistPage = () => {
             }).format(userCtx.wishlistCost)}
           </div>
         ) : (
-          <div>My wishlist cost (unpurchased): $0</div>
+          <div className="font-medium">My wishlist cost (unpurchased): $0</div>
         )}
         <button
           onClick={() => {
