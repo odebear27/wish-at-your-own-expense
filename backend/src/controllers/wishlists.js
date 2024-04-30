@@ -7,7 +7,7 @@ const getAllWishlistsForUser = async (req, res) => {
       res.json({ status: "ok", msg: "admin cannot view wishlists" });
     } else if (req.decoded.role === "user") {
       const wishlists = await pool.query(
-        `SELECT * FROM wishlists WHERE user_id=$1`,
+        `SELECT * FROM wishlists WHERE user_id=$1 ORDER BY wishlist_status ASC, wishlist_cost ASC`,
         [req.decoded.id]
       );
       res.json(wishlists.rows);
