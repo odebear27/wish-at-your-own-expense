@@ -13,6 +13,7 @@ import AdminViewPage from "./pages.jsx/AdminViewPage";
 import AllUsersPage from "./pages.jsx/AllUsersPage";
 import UnauthorisedPage from "./pages.jsx/UnauthorisedPage";
 import ProtectedRoute from "./components/ProtectedRoute";
+import "bootstrap-icons/font/bootstrap-icons.css";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);

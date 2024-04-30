@@ -146,7 +146,7 @@ const ExpensesPage = () => {
   }, [userCtx.accessToken]);
 
   return (
-    <div className="mt-16">
+    <div className="mt-16 mx-5">
       <p>Expenses Page</p>
       <div className="grid grid-cols-6">
         {userCtx.expense > 0 ? (

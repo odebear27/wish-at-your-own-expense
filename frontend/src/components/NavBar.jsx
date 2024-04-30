@@ -24,7 +24,7 @@ const NavBar = () => {
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50">
-      <nav className="w-full mx-auto flex flex-row py-6 h-16 items-center justify-around bg-colour-darkBlue">
+      <nav className="w-full mx-auto px-5 flex flex-row py-6 h-16 items-center justify-between bg-colour-darkBlue">
         <NavLink
           className={({ isActive }) =>
             isActive
@@ -58,11 +58,12 @@ const NavBar = () => {
         <NavLink to="/">
           <button
             className="hover:text-colour-darkBluishGrey mb-5 font-bold pt-10 text-colour-white"
+            title="logout"
             onClick={() => {
               handleLogout();
             }}
           >
-            Log Out
+            <i class="bi bi-door-open"></i>
           </button>
         </NavLink>
       </nav>

@@ -79,9 +79,9 @@ const Wishlist = (props) => {
     <div
       style={{
         backgroundColor:
-          props.wishlist.wishlist_status === "PURCHASED" ? "#cbdee7" : "yellow",
+          props.wishlist.wishlist_status === "PURCHASED" ? "#cbdee7" : "",
       }}
-      className="py-1.5"
+      className="py-3"
     >
       {isUpdateWishlistPressed && (
         <UpdateWishlistModal
@@ -101,7 +101,7 @@ const Wishlist = (props) => {
           getWishlistCost={props.getWishlistCost}
         ></CanBuyModal>
       )}
-      <div className="grid grid-cols-8 gap-3">
+      <div className="grid grid-cols-6 gap-3">
         <div>{props.wishlist.wishlist_item}</div>
 
         <div>
@@ -112,20 +112,44 @@ const Wishlist = (props) => {
           }).format(props.wishlist.wishlist_cost)}
         </div>
         <div className="col-span-2">{props.wishlist.wishlist_store}</div>
-        <div>{props.wishlist.wishlist_status}</div>
-        {canBuy ? (
-          <button onClick={() => setIsCanBuyButtonPressed(true)}>
-            Can Buy
+        <div>
+          {props.wishlist.wishlist_status === "PURCHASED" ? (
+            <div className="flex space-x-2">
+              {" "}
+              <i class="bi bi-emoji-sunglasses"></i>
+              <span>purchased</span>
+            </div>
+          ) : (
+            <div className="flex space-x-2">
+              <i class="bi bi-emoji-frown"></i>
+              <span>unpurchased</span>
+            </div>
+          )}
+        </div>
+        <div className="flex justify-evenly">
+          {canBuy ? (
+            <button
+              onClick={() => setIsCanBuyButtonPressed(true)}
+              title="can buy"
+            >
+              <i class="bi bi-bell-fill"></i>
+            </button>
+          ) : (
+            <div className="w-4"></div>
+          )}
+          <button
+            onClick={() => setIsUpdateWishlistPressed(true)}
+            title="update"
+          >
+            <i class="bi bi-pencil-fill"></i>
           </button>
-        ) : (
-          <div></div>
-        )}
-        <button onClick={() => setIsUpdateWishlistPressed(true)}>update</button>
-        <button
-          onClick={() => deleteWishlistForUser(props.wishlist.wishlist_id)}
-        >
-          delete
-        </button>
+          <button
+            onClick={() => deleteWishlistForUser(props.wishlist.wishlist_id)}
+            title="delete"
+          >
+            <i class="bi bi-trash3-fill"></i>
+          </button>
+        </div>
       </div>
     </div>
   );

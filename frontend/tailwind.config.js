@@ -14,6 +14,7 @@ export default {
           darkBluishGrey: "#87a4c7",
           darkBlue: "#2e3c63",
           lightBlue: "#a6c4e5",
+          tableHeader: "#E1E5EC",
         },
       },
     },

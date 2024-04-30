@@ -124,9 +124,8 @@ const WishlistPage = () => {
   }, [userCtx.accessToken]);
 
   return (
-    <div className="mt-16">
-      <p>Wishlist Page</p>
-      <div className="grid grid-cols-6">
+    <div className="mt-16 mx-5 py-6">
+      <div className="flex justify-between py-3">
         {userCtx.wishlistCost > 0 ? (
           <div>
             My wishlist cost (unpurchased):{" "}
@@ -138,31 +137,31 @@ const WishlistPage = () => {
         ) : (
           <div>My wishlist cost (unpurchased): $0</div>
         )}
-        {/* <WishlistCost></WishlistCost> */}
-        {/* {JSON.stringify(wishlists)} */}
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
         <button
           onClick={() => {
             setIsAddWishlistPressed(true);
           }}
         >
-          Add an item
+          <div className="flex space-x-0.5 items-center">
+            <i class="bi bi-gift"></i>
+            <span className="flex w-16 leading-tight font-medium">
+              Add an item
+            </span>
+          </div>
         </button>
       </div>
 
-      <div className="grid grid-cols-8 gap-3">
-        <div>Item</div>
-        <div>Cost</div>
-        <div className="col-span-2">Store</div>
-        <div>Status</div>
+      <div className="grid grid-cols-6 gap-3 h-10 bg-colour-tableHeader items-center">
+        <div className="font-medium">Item</div>
+        <div className="font-medium">Cost</div>
+        <div className="col-span-2 font-medium">Store</div>
+        <div className="font-medium">Status</div>
         <div></div>
         <div></div>
       </div>
+      <hr />
       {isAddWishlistPressed && (
-        <div className="grid grid-cols-8 gap-3">
+        <div className="grid grid-cols-6 gap-3">
           <textarea className="h-12" ref={itemRef} type="text"></textarea>
           <textarea ref={costRef} type="text"></textarea>
           <textarea
@@ -170,14 +169,29 @@ const WishlistPage = () => {
             ref={storeRef}
             type="text"
           ></textarea>
-          <select className="dropdown w-44" disabled={true}>
+          {/* <select className="dropdown w-44" disabled={true}>
             <option>NOT YET PURCHASED</option>
-          </select>
-          <button onClick={() => addWishlistForUser()}>Submit</button>
-          <button onClick={() => setIsAddWishlistPressed(false)}>Cancel</button>
+          </select> */}
+          {/* <textarea
+            className="dropdown w-44"
+            disabled="true"
+            value="unpurchased"
+          ></textarea> */}
+          <div></div>
+          <div className="flex justify-evenly">
+            <button className="button" onClick={() => addWishlistForUser()}>
+              Submit
+            </button>
+            <button
+              className="button"
+              onClick={() => setIsAddWishlistPressed(false)}
+            >
+              Cancel
+            </button>
+          </div>
         </div>
       )}
-      <div className="grid gap-y-3">
+      <div className="grid divide-y-[1.3px]">
         {wishlists.map((wishlist, idx) => {
           return (
             <Wishlist
