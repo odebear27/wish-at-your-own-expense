@@ -5,7 +5,9 @@ const { v4: uuidv4 } = require("uuid");
 
 const getAllUsers = async (req, res) => {
   try {
-    const allUsers = await pool.query(`SELECT * FROM users`);
+    const allUsers = await pool.query(
+      `SELECT * FROM users ORDER BY user_is_active DESC`
+    );
     res.json(allUsers.rows);
   } catch (error) {
     console.error(error.message);
@@ -131,7 +133,8 @@ const loginUser = async (req, res) => {
       id: rows[0].user_id,
     };
     const access = jwt.sign(claims, process.env.ACCESS_SECRET, {
-      expiresIn: "20m",
+      // expiresIn: "20m",
+      expiresIn: "30d",
       jwtid: uuidv4(),
     });
     const refresh = jwt.sign(claims, process.env.REFRESH_SECRET, {
