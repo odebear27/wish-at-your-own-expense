@@ -33,35 +33,63 @@ const Wishlist = (props) => {
   };
 
   const checkIfCanBuy = () => {
+    console.log("budget: ", userCtx.budget);
+    console.log("expense: ", userCtx.expense);
     const excessBudget = userCtx.budget - userCtx.expense;
-    if (
-      props.wishlist.wishlist_status === "NOT YET PURCHASED" &&
-      excessBudget >= props.wishlist.wishlist_cost
-    ) {
-      setCanBuy(true);
+    if (userCtx.budget !== undefined && userCtx.expense !== undefined) {
+      console.log("checkpoint");
+      console.log("status: ", props.wishlist.wishlist_status);
+      console.log("cost: ", props.wishlist.wishlist_cost);
+      console.log("excessBudget: ", excessBudget);
+      if (
+        props.wishlist.wishlist_status === "NOT YET PURCHASED" &&
+        excessBudget >= props.wishlist.wishlist_cost
+      ) {
+        setCanBuy(true);
+        console.log("can buy " + props.wishlist.wishlist_item);
+      } else {
+        setCanBuy(false);
+        console.log("too bad " + props.wishlist.wishlist_item);
+      }
     }
   };
 
   useEffect(() => {
-    checkIfCanBuy();
-  }, []);
+    if (
+      userCtx.accessToken &&
+      userCtx.budget !== undefined &&
+      userCtx.expense !== undefined
+    ) {
+      console.log("i am checking" + props.wishlist.wishlist_item);
+      checkIfCanBuy();
+    }
+  }, [
+    userCtx.accessToken,
+    userCtx.budget,
+    userCtx.expense,
+    props.wishlist.wishlist_status,
+    props.wishlist.wishlist_cost,
+  ]);
 
-  useEffect(() => {
-    if (userCtx.accessToken) checkIfCanBuy();
-  }, [userCtx.accessToken, userCtx.budget, userCtx.expense]);
-
-  useEffect(() => {
-    checkIfCanBuy();
-  }, [props.wishlist.wishlist_status, props.wishlist.wishlist_cost]);
+  // useEffect(() => {
+  //   if (userCtx.accessToken) checkIfCanBuy();
+  // }, [userCtx.accessToken]);
 
   return (
-    <div>
+    <div
+      style={{
+        backgroundColor:
+          props.wishlist.wishlist_status === "PURCHASED" ? "#cbdee7" : "yellow",
+      }}
+      className="py-1.5"
+    >
       {isUpdateWishlistPressed && (
         <UpdateWishlistModal
           wishlist={props.wishlist}
           setIsUpdateWishlistPressed={setIsUpdateWishlistPressed}
           getAllWishlistForAUser={props.getAllWishlistForAUser}
           getWishlistCost={props.getWishlistCost}
+          checkIfCanBuy={checkIfCanBuy}
         ></UpdateWishlistModal>
       )}
       {isCanBuyButtonPressed && (
@@ -70,11 +98,19 @@ const Wishlist = (props) => {
           setCanBuy={setCanBuy}
           getAllWishlistForAUser={props.getAllWishlistForAUser}
           wishlist={props.wishlist}
+          getWishlistCost={props.getWishlistCost}
         ></CanBuyModal>
       )}
       <div className="grid grid-cols-8 gap-3">
         <div>{props.wishlist.wishlist_item}</div>
-        <div>{props.wishlist.wishlist_cost}</div>
+
+        <div>
+          {" "}
+          {new Intl.NumberFormat("en-SG", {
+            style: "currency",
+            currency: "SGD",
+          }).format(props.wishlist.wishlist_cost)}
+        </div>
         <div className="col-span-2">{props.wishlist.wishlist_store}</div>
         <div>{props.wishlist.wishlist_status}</div>
         {canBuy ? (

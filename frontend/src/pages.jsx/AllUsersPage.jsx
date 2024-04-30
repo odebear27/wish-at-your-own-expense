@@ -38,16 +38,18 @@ const AllUsersPage = () => {
 
   return (
     <div>
-      <p>All Users listed below</p>
-      <tr>
-        <td>Name</td>
-        <td>Email</td>
-        <td>Account active / deleted</td>
-      </tr>
-      {allUsers.map((user, idx) => {
-        return <User key={idx} user={user} getAllUsers={getAllUsers}></User>;
-      })}
       <button onClick={() => navigate("/view/admin")}>Go Back</button>
+      <p className="text-lg">All Users listed below</p>
+      <div className="grid grid-cols-4 gap-3">
+        <div>Name</div>
+        <div>Email</div>
+        <div>Account active / deleted</div>
+      </div>
+      <div className="grid gap-3">
+        {allUsers.map((user, idx) => {
+          return <User key={idx} user={user} getAllUsers={getAllUsers}></User>;
+        })}
+      </div>
     </div>
   );
 };

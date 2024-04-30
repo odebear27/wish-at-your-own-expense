@@ -30,18 +30,32 @@ const RegisterUserPage = () => {
   };
 
   return (
-    <div>
+    <div className="flex flex-col items-start space-y-3 mb-6">
       <div>Register user</div>
-      <label>name</label>
-      <input ref={nameRef} type="text"></input>
-      <label>email</label>
-      <input ref={emailRef} type="text"></input>
-      <label>password</label>
-      <input ref={passwordRef} type="text"></input>
-      <label>budget amount</label>
-      <input ref={budgetAmtRef} type="text"></input>
-      <button onClick={registerUser}>register</button>
-      <button onClick={() => navigate("/")}>Cancel</button>
+      <div className="w-auto flex space-x-4">
+        <label>name</label>
+        <input ref={nameRef} type="text"></input>
+      </div>
+      <div className="w-auto flex space-x-4">
+        <label>email</label>
+        <input ref={emailRef} type="text"></input>
+      </div>
+      <div className="w-auto flex space-x-4">
+        <label>password</label>
+        <input ref={passwordRef} type="password"></input>
+      </div>
+      <div className="w-auto flex space-x-4">
+        <label>budget amount</label>
+        <input ref={budgetAmtRef} type="text"></input>
+      </div>
+      <div className="flex space-x-4">
+        <button className="button" onClick={registerUser}>
+          Register
+        </button>
+        <button className="button" onClick={() => navigate("/")}>
+          Cancel
+        </button>
+      </div>
     </div>
   );
 };

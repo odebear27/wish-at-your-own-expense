@@ -21,6 +21,10 @@ body {
   background-color: whitesmoke;
 }
 
+.darkBlue {
+  background-color: #2e3c63;
+}
+
 .centered {
   margin: 3rem auto;
   text-align: center;

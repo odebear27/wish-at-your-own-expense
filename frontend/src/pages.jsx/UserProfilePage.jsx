@@ -157,15 +157,36 @@ const UserProfilePage = () => {
           <div className="flex flex-col items-start space-y-4">
             <p>My name: {userProfileAndBudget.user_name}</p>
             <p>My email: {userProfileAndBudget.user_email}</p>
-            <p>My budget for the month: ${userProfileAndBudget.budget_amt}</p>
+
+            <p>
+              My budget for the month:{" "}
+              {new Intl.NumberFormat("en-SG", {
+                style: "currency",
+                currency: "SGD",
+              }).format(userProfileAndBudget.budget_amt)}
+            </p>
             {/* <p>My budget for the month: ${userCtx.budget}</p> */}
+
             {userCtx.expense > 0 ? (
-              <p>My Expenses: ${userCtx.expense}</p>
+              <p>
+                My Expenses:{" "}
+                {new Intl.NumberFormat("en-SG", {
+                  style: "currency",
+                  currency: "SGD",
+                }).format(userCtx.expense)}
+              </p>
             ) : (
               <p>My Expenses: $0</p>
             )}
+
             {userCtx.wishlistCost > 0 ? (
-              <p>My Wishlist Cost: ${userCtx.wishlistCost}</p>
+              <p>
+                My Wishlist Cost:{" "}
+                {new Intl.NumberFormat("en-SG", {
+                  style: "currency",
+                  currency: "SGD",
+                }).format(userCtx.wishlistCost)}
+              </p>
             ) : (
               <p>My Wishlist Cost: $0</p>
             )}
@@ -206,13 +227,26 @@ const UserProfilePage = () => {
                 onChange={handleChange}
               ></input>
             </div>
+
             {userCtx.expense > 0 ? (
-              <p>My Expenses: ${userCtx.expense}</p>
+              <p>
+                My Expenses:{" "}
+                {new Intl.NumberFormat("en-SG", {
+                  style: "currency",
+                  currency: "SGD",
+                }).format(userCtx.expense)}
+              </p>
             ) : (
               <p>My Expenses: $0</p>
             )}
             {userCtx.wishlistCost > 0 ? (
-              <p>My Wishlist Cost: ${userCtx.wishlistCost}</p>
+              <p>
+                My Wishlist Cost:{" "}
+                {new Intl.NumberFormat("en-SG", {
+                  style: "currency",
+                  currency: "SGD",
+                }).format(userCtx.wishlistCost)}
+              </p>
             ) : (
               <p>My Wishlist Cost: $0</p>
             )}

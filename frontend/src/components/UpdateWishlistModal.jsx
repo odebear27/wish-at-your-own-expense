@@ -52,6 +52,7 @@ const OverLay = (props) => {
       if (res.ok) {
         console.log(res.data);
         props.getWishlistCost();
+        props.checkIfCanBuy();
         props.getAllWishlistForAUser();
         props.setIsUpdateWishlistPressed(false);
       } else {
@@ -159,6 +160,7 @@ const UpdateWishlistModal = (props) => {
           setIsUpdateWishlistPressed={props.setIsUpdateWishlistPressed}
           getAllWishlistForAUser={props.getAllWishlistForAUser}
           getWishlistCost={props.getWishlistCost}
+          checkIfCanBuy={props.checkIfCanBuy}
         ></OverLay>,
         document.querySelector("#modal-root")
       )}

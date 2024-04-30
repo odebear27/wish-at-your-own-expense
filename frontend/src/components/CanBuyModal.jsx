@@ -53,6 +53,7 @@ const OverLay = (props) => {
       if (res.ok) {
         console.log(res.data);
         // props.checkIfCanBuy();
+        props.getWishlistCost();
         props.getAllWishlistForAUser();
         // props.checkIfCanBuy();
         // if (body.wishlist_status === "PURCHASED") {
@@ -117,6 +118,7 @@ const CanBuyModal = (props) => {
           wishlistItem={wishlist_item}
           wishlistCost={wishlist_cost}
           wishlistStatus={wishlist_status}
+          getWishlistCost={props.getWishlistCost}
         ></OverLay>,
         document.querySelector("#modal-root")
       )}

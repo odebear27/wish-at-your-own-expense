@@ -27,15 +27,13 @@ const User = (props) => {
   };
 
   return (
-    <div>
-      <tr>
-        <td>{props.user.user_name}</td>
-        <td>{props.user.user_email}</td>
-        <td>{props.user.user_is_active ? "active" : "deleted"}</td>
-        {props.user.user_is_active === true && (
-          <button onClick={() => deleteUser(props.user.user_id)}>Delete</button>
-        )}
-      </tr>
+    <div className="grid grid-cols-4 gap-3">
+      <div>{props.user.user_name}</div>
+      <div>{props.user.user_email}</div>
+      <div>{props.user.user_is_active ? "active" : "deleted"}</div>
+      {props.user.user_is_active === true && (
+        <button onClick={() => deleteUser(props.user.user_id)}>Delete</button>
+      )}
     </div>
   );
 };

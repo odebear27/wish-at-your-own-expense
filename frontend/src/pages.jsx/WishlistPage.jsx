@@ -15,6 +15,42 @@ const WishlistPage = () => {
   const costRef = useRef();
   const storeRef = useRef();
 
+  const getUserProfileAndBudget = async () => {
+    try {
+      const res = await fetchData(
+        `/auth/u/profilebudget`,
+        "POST",
+        undefined,
+        userCtx.accessToken
+      );
+      if (res.ok) {
+        console.log(res.data);
+
+        // using userCtx.setBudget so that can access in Wishlist
+        userCtx.setBudget(res.data[0].budget_amt);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const getExpenseAmt = async () => {
+    try {
+      const res = await fetchData(
+        `/api/expensesamt`,
+        "POST",
+        undefined,
+        userCtx.accessToken
+      );
+      if (res.ok) {
+        console.log("sum" + res.data);
+        userCtx.setExpense(res.data[0].sum);
+      } else {
+        alert(JSON.stringify(res.data));
+      }
+    } catch (error) {}
+  };
+
   const getWishlistCost = async () => {
     try {
       const res = await fetchData(
@@ -81,6 +117,8 @@ const WishlistPage = () => {
   useEffect(() => {
     if (userCtx.accessToken) {
       getWishlistCost();
+      getUserProfileAndBudget();
+      getExpenseAmt();
       getAllWishlistForAUser();
     }
   }, [userCtx.accessToken]);
@@ -90,11 +128,16 @@ const WishlistPage = () => {
       <p>Wishlist Page</p>
       <div className="grid grid-cols-6">
         {userCtx.wishlistCost > 0 ? (
-          <div>My wishlist cost: ${userCtx.wishlistCost}</div>
+          <div>
+            My wishlist cost (unpurchased):{" "}
+            {new Intl.NumberFormat("en-SG", {
+              style: "currency",
+              currency: "SGD",
+            }).format(userCtx.wishlistCost)}
+          </div>
         ) : (
-          <div>My wishlist cost: $0</div>
+          <div>My wishlist cost (unpurchased): $0</div>
         )}
-
         {/* <WishlistCost></WishlistCost> */}
         {/* {JSON.stringify(wishlists)} */}
         <div></div>
@@ -120,10 +163,14 @@ const WishlistPage = () => {
       </div>
       {isAddWishlistPressed && (
         <div className="grid grid-cols-8 gap-3">
-          <input ref={itemRef} type="text"></input>
-          <input ref={costRef} type="text"></input>
-          <input className="col-span-2" ref={storeRef} type="text"></input>
-          <select disabled={true}>
+          <textarea className="h-12" ref={itemRef} type="text"></textarea>
+          <textarea ref={costRef} type="text"></textarea>
+          <textarea
+            className="col-span-2"
+            ref={storeRef}
+            type="text"
+          ></textarea>
+          <select className="dropdown w-44" disabled={true}>
             <option>NOT YET PURCHASED</option>
           </select>
           <button onClick={() => addWishlistForUser()}>Submit</button>

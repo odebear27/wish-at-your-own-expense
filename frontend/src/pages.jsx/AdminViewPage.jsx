@@ -72,11 +72,19 @@ const AdminViewPage = () => {
 
   return (
     <div>
-      <button onClick={() => handleLogout()}>Log Out</button>
-      <p>Admin view page</p>
-      <p>
-        Welcome {admin.admin_name} ({admin.admin_email})
-      </p>
+      <div className="flex justify-end">
+        <button className="" onClick={() => handleLogout()}>
+          Log Out
+        </button>
+      </div>
+      <div className="flex flex-col gap-y-4">
+        <p>Admin view page</p>
+        <p className="text-lg">
+          Welcome {admin.admin_name} ({admin.admin_email})
+        </p>
+        <div className="text-lg">What would you like to do today?</div>
+      </div>
+
       {isUpdateAdminPressed && (
         <UpdateAdminModal
           admin={admin}
@@ -84,15 +92,24 @@ const AdminViewPage = () => {
           getOneAdmin={getOneAdmin}
         ></UpdateAdminModal>
       )}
-      <button onClick={() => setIsUpdateAdminPressed(true)}>
-        Update your profile
-      </button>
-      <button onClick={() => deleteAdminAccount()}>
-        Delete your admin account (there is no going back)
-      </button>
-      <button onClick={() => navigate("/allusers/admin")}>
-        View all users
-      </button>
+
+      <div className="flex flex-col gap-y-4">
+        <div>
+          <button onClick={() => setIsUpdateAdminPressed(true)}>
+            - Update your profile
+          </button>
+        </div>
+        <div>
+          <button onClick={() => deleteAdminAccount()}>
+            - Delete your admin account (there is no going back)
+          </button>
+        </div>
+        <div>
+          <button onClick={() => navigate("/allusers/admin")}>
+            - View all users
+          </button>
+        </div>
+      </div>
     </div>
   );
 };

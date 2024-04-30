@@ -40,19 +40,32 @@ const OverLay = (props) => {
   };
 
   return (
-    <div>
-      <p>Update Admin</p>
-      <label>name</label>
-      <input
-        id="adminName"
-        value={updateAdmin.adminName}
-        type="text"
-        onChange={handleChange}
-      ></input>
-      <button onClick={() => updateAdminAccount()}>Submit</button>
-      <button onClick={() => props.setIsUpdateAdminPressed(false)}>
-        Cancel
-      </button>
+    <div className="z-10 w-screen h-screen bg-gray-800/75 fixed top-0 left-0 flex">
+      <div className="updateModal whitesmoke px-5 z-100 fixed top-1/4 w-auto overflow-hidden py-5 rounded-md flex flex-col justify-between">
+        <div className="flex flex-col items-start space-y-3 mb-6">
+          <p>Update Admin</p>
+          <div className="w-auto flex space-x-4">
+            <label>name</label>
+            <input
+              id="adminName"
+              value={updateAdmin.adminName}
+              type="text"
+              onChange={handleChange}
+            ></input>
+          </div>
+        </div>
+        <div className="flex justify-between">
+          <button className="button" onClick={() => updateAdminAccount()}>
+            Submit
+          </button>
+          <button
+            className="button"
+            onClick={() => props.setIsUpdateAdminPressed(false)}
+          >
+            Cancel
+          </button>
+        </div>
+      </div>
     </div>
   );
 };

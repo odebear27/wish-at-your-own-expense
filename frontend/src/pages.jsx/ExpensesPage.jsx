@@ -150,7 +150,13 @@ const ExpensesPage = () => {
       <p>Expenses Page</p>
       <div className="grid grid-cols-6">
         {userCtx.expense > 0 ? (
-          <div>Expense Amt: {userCtx.expense}</div>
+          <div>
+            Expense Amt:{" "}
+            {new Intl.NumberFormat("en-SG", {
+              style: "currency",
+              currency: "SGD",
+            }).format(userCtx.expense)}
+          </div>
         ) : (
           <div>Expense Amt: $0</div>
         )}
@@ -173,7 +179,11 @@ const ExpensesPage = () => {
       </div>
       {isAddExpensePressed && (
         <div className="grid grid-cols-6 gap-3">
-          <input ref={dateRef} type="date"></input>
+          <input
+            ref={dateRef}
+            type="date"
+            max={new Date(Date.now()).toISOString().split("T")[0]}
+          ></input>
 
           <input ref={itemRef} type="text"></input>
 

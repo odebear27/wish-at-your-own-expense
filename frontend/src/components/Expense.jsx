@@ -35,7 +35,13 @@ const Expense = (props) => {
         <div>{formattedDate}</div>
         <div>{props.expense.expense_item}</div>
         <div>{props.expense.expense_category}</div>
-        <div>{props.expense.expense_amt}</div>
+        <div>
+          {" "}
+          {new Intl.NumberFormat("en-SG", {
+            style: "currency",
+            currency: "SGD",
+          }).format(props.expense.expense_amt)}
+        </div>
         <button onClick={() => setShowUpdateExpenseModal(true)}>update</button>
         <button
           onClick={() => props.deleteExpenseForUser(props.expense.expense_id)}

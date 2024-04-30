@@ -1,13 +1,15 @@
-import React, { useContext, useEffect } from "react";
-import UserContext from "../context/user";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import useLocalStorage from "../hooks/useLocalStorage";
 
 const ProtectedRoute = ({ children }) => {
-  const userCtx = useContext(UserContext);
+  useLocalStorage();
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (userCtx.role !== "admin" || userCtx.role === null) {
+    const role = localStorage.getItem("role");
+
+    if (role !== "admin" || role === null) {
       navigate("/unauthorised");
     }
   }, []);
