@@ -23,7 +23,7 @@ const RegisterUserPage = () => {
         navigate("/");
       } else {
         if (JSON.stringify(res.data) === '"duplicate email"') {
-          setMessage("user email already registered");
+          setMessage("email already registered");
         }
       }
     } catch (error) {
