@@ -55,8 +55,7 @@ const loginAdmin = async (req, res) => {
       id: rows[0].admin_id,
     };
     const access = jwt.sign(claims, process.env.ACCESS_SECRET, {
-      // expiresIn: "20m",
-      expiresIn: "30d",
+      expiresIn: "20m",
       jwtid: uuidv4(),
     });
     const refresh = jwt.sign(claims, process.env.REFRESH_SECRET, {
@@ -100,7 +99,6 @@ const deleteAdmin = async (req, res) => {
       `SELECT admin_id FROM admins WHERE admin_id=$1`,
       [req.decoded.id]
     );
-    console.log(rows);
     if (rows.length < 1) {
       res.json({ status: "error", msg: "admin does not exist in database" });
     } else {
@@ -136,10 +134,6 @@ const updateAdmin = async (req, res) => {
 
 const getOneAdmin = async (req, res) => {
   try {
-    // check if role is admin or user
-    // if (req.decoded.role === "user") {
-    //   res.json({ status: "error", admin: "user cannot view admin profile" });
-    // } else if (req.decoded.role === "admin") {
     // check if admin exists in database
     const { rows } = await pool.query(
       `SELECT * FROM admins WHERE admin_id = $1`,

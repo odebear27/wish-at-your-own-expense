@@ -134,8 +134,7 @@ const loginUser = async (req, res) => {
       id: rows[0].user_id,
     };
     const access = jwt.sign(claims, process.env.ACCESS_SECRET, {
-      // expiresIn: "20m",
-      expiresIn: "30d",
+      expiresIn: "20m",
       jwtid: uuidv4(),
     });
     const refresh = jwt.sign(claims, process.env.REFRESH_SECRET, {
@@ -183,20 +182,6 @@ const updateUser = async (req, res) => {
           req.body.user_name,
           req.decoded.id,
         ]);
-      // if ("budget_amt" in req.body) {
-      //   const date = new Date();
-      //   budget_id = await pool.query(
-      //     `INSERT INTO budgets (budget_amt, budget_mth, budget_year) VALUES ($1, $2, $3) RETURNING budget_id
-      //   `,
-      //     [req.body.budget_amt, date.getMonth() + 1, date.getFullYear()]
-      //   );
-
-      //   await pool.query(
-      //     `INSERT INTO user_budgets (budget_id, user_id) VALUES ($1, $2)`,
-      //     [budget_id.rows[0].budget_id, req.decoded.id]
-      //   );
-      // }
-
       res.json({ status: "ok", msg: "user updated" });
     }
   } catch (error) {
