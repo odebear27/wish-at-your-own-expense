@@ -3,6 +3,7 @@ import useFetch from "../hooks/useFetch";
 import UserContext from "../context/user";
 import { useNavigate } from "react-router-dom";
 import useLocalStorage from "../hooks/useLocalStorage";
+import piggyBank from "../assets/piggy_bank.png";
 
 const UserProfilePage = () => {
   useLocalStorage();
@@ -149,11 +150,11 @@ const UserProfilePage = () => {
   }, [userProfileAndBudget]);
 
   return (
-    <div className="mt-16 space-y-4">
-      <div>user profile page</div>
+    <div className="mt-16 space-y-4 py-8 flex">
       {!isUpdateUserPressed ? (
         // ========================== user profile view ============================== //
         <div className="flex justify-center">
+          <img className="w-52 mx-10" src={piggyBank} />
           <div className="flex flex-col items-start space-y-4">
             <p>My name: {userProfileAndBudget.user_name}</p>
             <p>My email: {userProfileAndBudget.user_email}</p>
@@ -169,7 +170,7 @@ const UserProfilePage = () => {
 
             {userCtx.expense > 0 ? (
               <p>
-                My Expenses:{" "}
+                My Expense amount for current month:{" "}
                 {new Intl.NumberFormat("en-SG", {
                   style: "currency",
                   currency: "SGD",
@@ -190,23 +191,26 @@ const UserProfilePage = () => {
             ) : (
               <p>My Wishlist Cost: $0</p>
             )}
-            <button
-              className="button"
-              onClick={() => setIsUpdateUserPressed(true)}
-            >
-              update profile
-            </button>
-            <button className="button" onClick={deleteUser}>
-              delete profile (there is no going back)
-            </button>
+            <div className="flex space-x-4 py-4">
+              <button
+                className="button"
+                onClick={() => setIsUpdateUserPressed(true)}
+              >
+                update profile
+              </button>
+              <button className="button" onClick={deleteUser}>
+                delete profile (there is no going back)
+              </button>
+            </div>
           </div>
         </div>
       ) : (
         // ========================== update user profile view ============================== //
         <div className="flex justify-center">
+          <img className="w-52 mx-10" src={piggyBank} />
           <div className="flex flex-col items-start space-y-4">
             <div className="w-auto flex space-x-4">
-              <p>My name: </p>
+              <label>My name: </label>
               <input
                 id="user_name"
                 type="text"
@@ -218,14 +222,17 @@ const UserProfilePage = () => {
             <p>My email: {userProfileAndBudget.user_email}</p>
 
             <div className="w-auto flex space-x-4">
-              <p>My budget for the month: </p>
-              <input
-                id="budget_amt"
-                type="text"
-                value={updateUserProfile.budget_amt}
-                // value={userCtx.budget}
-                onChange={handleChange}
-              ></input>
+              <label>My budget for the month:</label>
+              <div className="space-x-1">
+                <label>$</label>
+                <input
+                  id="budget_amt"
+                  type="text"
+                  value={updateUserProfile.budget_amt}
+                  // value={userCtx.budget}
+                  onChange={handleChange}
+                ></input>
+              </div>
             </div>
 
             {userCtx.expense > 0 ? (
@@ -250,15 +257,17 @@ const UserProfilePage = () => {
             ) : (
               <p>My Wishlist Cost: $0</p>
             )}
-            <button className="button" onClick={updateUser}>
-              submit
-            </button>
-            <button
-              className="button"
-              onClick={() => setIsUpdateUserPressed(false)}
-            >
-              cancel
-            </button>
+            <div className="flex space-x-4 py-4">
+              <button className="button" onClick={updateUser}>
+                submit
+              </button>
+              <button
+                className="button"
+                onClick={() => setIsUpdateUserPressed(false)}
+              >
+                cancel
+              </button>
+            </div>
           </div>
         </div>
       )}

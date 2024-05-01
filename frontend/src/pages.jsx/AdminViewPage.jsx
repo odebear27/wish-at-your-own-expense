@@ -4,6 +4,9 @@ import useFetch from "../hooks/useFetch";
 import { useNavigate } from "react-router-dom";
 import UpdateAdminModal from "../components/UpdateAdminModal";
 import useLocalStorage from "../hooks/useLocalStorage";
+import userImage from "../assets/user_img.png";
+import usersGroup from "../assets/users_group.png";
+import deleteUser from "../assets/delete_user.png";
 
 const AdminViewPage = () => {
   useLocalStorage();
@@ -71,18 +74,17 @@ const AdminViewPage = () => {
   }, [userCtx.accessToken]);
 
   return (
-    <div>
-      <div className="flex justify-end">
+    <div className="mx-5">
+      <div className="flex justify-end py-4">
         <button onClick={() => handleLogout()} title="logout">
-          <i class="bi bi-door-open"></i>
+          <i class="bi bi-door-open h4"></i>
         </button>
       </div>
       <div className="flex flex-col gap-y-4">
-        <p>Admin view page</p>
-        <p className="text-lg">
+        <p className="text-lg font-medium">
           Welcome {admin.admin_name} ({admin.admin_email})
         </p>
-        <div className="text-lg">What would you like to do today?</div>
+        <div className="text-lg py-4">What would you like to do today?</div>
       </div>
 
       {isUpdateAdminPressed && (
@@ -93,20 +95,29 @@ const AdminViewPage = () => {
         ></UpdateAdminModal>
       )}
 
-      <div className="flex flex-col gap-y-4">
-        <div>
-          <button onClick={() => setIsUpdateAdminPressed(true)}>
-            - Update your profile
+      <div className="flex gap-x-4">
+        <div className="w-1/6 px-2.5 py-2.5 bg-colour-white">
+          <button
+            className="px-2.5 py-2.5 flex flex-wrap justify-center"
+            onClick={() => setIsUpdateAdminPressed(true)}
+          >
+            <img className="h-32" src={userImage} />
+            <span>Update your profile</span>
           </button>
         </div>
-        <div>
-          <button onClick={() => deleteAdminAccount()}>
-            - Delete your admin account (there is no going back)
+        <div className="w-1/6 px-2.5 py-2.5 bg-colour-white">
+          <button
+            className="px-2.5 py-2.5 flex flex-wrap justify-center"
+            onClick={() => deleteAdminAccount()}
+          >
+            <img className="h-32" src={deleteUser} />
+            <span>Delete your admin account (there is no going back)</span>
           </button>
         </div>
-        <div>
+        <div className="w-1/6 px-2.5 py-2.5 bg-colour-white">
           <button onClick={() => navigate("/allusers/admin")}>
-            - View all users
+            <img src={usersGroup} />
+            <span>View all users</span>
           </button>
         </div>
       </div>

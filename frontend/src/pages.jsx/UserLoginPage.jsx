@@ -75,36 +75,45 @@ const UserLoginPage = () => {
   // }, [userCtx.isLoggedIn]);
 
   return (
-    <div className="grid h-screen place-items-center relative">
-      <div className="absolute top-5 right-5">
-        <button onClick={() => navigate("/admin")}>Login as Admin</button>
-      </div>
-      <div className="flex flex-col items-center space-y-4">
-        <div className="w-auto flex space-x-10">
-          <label>email</label>
-          <input ref={emailRef} type="text"></input>
-        </div>
-        <div className="w-auto flex space-x-4">
-          <label>password</label>
-          <input ref={passwordRef} type="password"></input>
-        </div>
-        <div className="w-auto">
+    <div className="bg-flyingSanta bg-cover bg-center object-fill">
+      <div className="grid h-screen place-items-center relative">
+        <div className="absolute top-5 right-5">
           <button
-            onClick={() => {
-              handleUserLogin();
-            }}
+            className="text-colour-white font-medium"
+            onClick={() => navigate("/admin")}
           >
-            Login
+            Login as Admin
           </button>
         </div>
-        <div className="w-auto">
-          <button
-            onClick={() => {
-              navigate("/register/user");
-            }}
-          >
-            No account? Register here
-          </button>
+        <div className="flex flex-col items-center space-y-4 fixed bottom-24">
+          <div className="w-auto flex space-x-10">
+            <label className="text-colour-white font-medium">email</label>
+            <input ref={emailRef} type="text"></input>
+          </div>
+          <div className="w-auto flex space-x-4">
+            <label className="text-colour-white font-medium">password</label>
+            <input ref={passwordRef} type="password"></input>
+          </div>
+          <div className="w-auto">
+            <button
+              className="text-colour-white font-medium"
+              onClick={() => {
+                handleUserLogin();
+              }}
+            >
+              Login
+            </button>
+          </div>
+          <div className="w-auto">
+            <button
+              className="text-colour-white font-medium"
+              onClick={() => {
+                navigate("/register/user");
+              }}
+            >
+              No account? Register here
+            </button>
+          </div>
         </div>
       </div>
     </div>

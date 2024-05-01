@@ -30,25 +30,28 @@ const RegisterUserPage = () => {
   };
 
   return (
-    <div className="flex flex-col items-start space-y-3 mb-6">
-      <div>Register user</div>
+    <div className="flex flex-col items-start space-y-3 my-8 mx-5">
+      <div className="font-medium">Register user</div>
       <div className="w-auto flex space-x-4">
-        <label>name</label>
+        <label>name:</label>
         <input ref={nameRef} type="text"></input>
       </div>
       <div className="w-auto flex space-x-4">
-        <label>email</label>
+        <label>email:</label>
         <input ref={emailRef} type="text"></input>
       </div>
       <div className="w-auto flex space-x-4">
-        <label>password</label>
+        <label>password:</label>
         <input ref={passwordRef} type="password"></input>
       </div>
-      <div className="w-auto flex space-x-4">
-        <label>budget amount</label>
-        <input ref={budgetAmtRef} type="text"></input>
+      <div className="max-w-xl flex flex-wrap space-x-4">
+        <label>budget amount per month:</label>
+        <div className="space-x-1">
+          <label>$</label>
+          <input ref={budgetAmtRef} type="text"></input>
+        </div>
       </div>
-      <div className="flex space-x-4">
+      <div className="flex space-x-4 py-4">
         <button className="button" onClick={registerUser}>
           Register
         </button>

@@ -88,12 +88,15 @@ const OverLay = (props) => {
           </div>
           <div className="w-auto flex space-x-4">
             <label>Amount:</label>
-            <input
-              id="expenseAmt"
-              type="text"
-              value={expenseToUpdate.expenseAmt}
-              onChange={handleChange}
-            ></input>
+            <div className="space-x-1">
+              <label>$</label>
+              <input
+                id="expenseAmt"
+                type="text"
+                value={expenseToUpdate.expenseAmt}
+                onChange={handleChange}
+              ></input>
+            </div>
           </div>
         </div>
         <div className="flex justify-between">
@@ -101,7 +104,7 @@ const OverLay = (props) => {
             className="button"
             onClick={() => updateExpenseForUser(props.expenseId)}
           >
-            submit
+            Submit
           </button>
           <button
             className="button"
@@ -109,7 +112,7 @@ const OverLay = (props) => {
               props.setShowUpdateExpenseModal(false);
             }}
           >
-            cancel
+            Cancel
           </button>
         </div>
       </div>

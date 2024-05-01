@@ -17,6 +17,9 @@ export default {
           tableHeader: "#E1E5EC",
         },
       },
+      backgroundImage: {
+        flyingSanta: "url('/src/assets/watercolour.jpg')",
+      },
     },
   },
   plugins: [],

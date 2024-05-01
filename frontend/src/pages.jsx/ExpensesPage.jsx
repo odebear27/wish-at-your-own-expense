@@ -200,8 +200,11 @@ const ExpensesPage = () => {
                 return <option>{expenseCategory.expense_category}</option>;
               })}
           </select>
+          <div className="space-x-1">
+            <label>$</label>
+            <input ref={amtRef} type="text"></input>
+          </div>
 
-          <input ref={amtRef} type="text"></input>
           <div className="flex justify-evenly">
             <button onClick={() => createExpenseForUser()}>Submit</button>
             <button onClick={() => setIsAddExpensePressed(false)}>

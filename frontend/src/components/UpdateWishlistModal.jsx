@@ -89,12 +89,15 @@ const OverLay = (props) => {
           </div>
           <div className="w-auto flex space-x-4">
             <label>Cost:</label>
-            <input
-              id="wishlistCost"
-              value={updateWishlist.wishlistCost}
-              type="text"
-              onChange={handleChange}
-            ></input>
+            <div className="space-x-1">
+              <label>$</label>
+              <input
+                id="wishlistCost"
+                value={updateWishlist.wishlistCost}
+                type="text"
+                onChange={handleChange}
+              ></input>
+            </div>
           </div>
           <div className="w-auto flex space-x-4">
             <label>Store:</label>

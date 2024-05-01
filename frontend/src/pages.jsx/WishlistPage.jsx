@@ -163,7 +163,12 @@ const WishlistPage = () => {
       {isAddWishlistPressed && (
         <div className="grid grid-cols-6 gap-3">
           <textarea className="h-12" ref={itemRef} type="text"></textarea>
-          <textarea ref={costRef} type="text"></textarea>
+          <div className="space-x-1">
+            {" "}
+            <label>$</label>
+            <textarea ref={costRef} type="text"></textarea>
+          </div>
+
           <textarea
             className="col-span-2"
             ref={storeRef}

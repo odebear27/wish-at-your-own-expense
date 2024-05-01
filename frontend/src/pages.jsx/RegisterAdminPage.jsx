@@ -26,21 +26,21 @@ const RegisterAdminPage = () => {
   };
 
   return (
-    <div className="flex flex-col items-start space-y-3 mb-6">
-      <p>Register admin page</p>
+    <div className="flex flex-col items-start space-y-3 my-8 mx-5">
+      <div className="font-medium">Register admin</div>
       <div className="w-auto flex space-x-4">
-        <label>name</label>
+        <label>name:</label>
         <input ref={nameRef} type="text"></input>
       </div>
       <div className="w-auto flex space-x-4">
-        <label>email</label>
+        <label>email:</label>
         <input ref={emailRef} type="text"></input>
       </div>
       <div className="w-auto flex space-x-4">
-        <label>password</label>
+        <label>password:</label>
         <input ref={passwordRef} type="password"></input>
       </div>
-      <div className="flex space-x-4">
+      <div className="flex space-x-4 py-4">
         <button className="button" onClick={() => registerAdmin()}>
           Submit
         </button>
