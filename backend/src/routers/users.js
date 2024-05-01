@@ -32,7 +32,6 @@ router.put(
 router.post(
   "/u/profile/:user_id",
   authUser,
-  authAdmin,
   validateUserIdInParams,
   errorCheck,
   getOneUser

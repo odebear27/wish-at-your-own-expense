@@ -73,6 +73,7 @@ const getOneUser = async (req, res) => {
 
 // get user profile and budget for the month
 // only user able to see
+// database must have current budget month and year or it may fail to retrieve
 const getOneUserAndBudget = async (req, res) => {
   try {
     // check if user or admin

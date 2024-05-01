@@ -7,7 +7,7 @@ const getAllWishlistsForUser = async (req, res) => {
       res.json({ status: "ok", msg: "admin cannot view wishlists" });
     } else if (req.decoded.role === "user") {
       const wishlists = await pool.query(
-        `SELECT * FROM wishlists WHERE user_id=$1 ORDER BY wishlist_status ASC, wishlist_cost ASC`,
+        `SELECT * FROM wishlists WHERE user_id=$1 ORDER BY wishlist_status DESC, wishlist_cost ASC`,
         [req.decoded.id]
       );
       res.json(wishlists.rows);
@@ -32,7 +32,7 @@ const createWishlistForUser = async (req, res) => {
           req.body.wishlist_item,
           req.body.wishlist_cost,
           req.body.wishlist_store,
-          "NOT YET PURCHASED",
+          "UNPURCHASED",
           req.decoded.id,
         ]
       );
@@ -147,7 +147,7 @@ const getTotalWishlistCostForOneUser = async (req, res) => {
     } else if (req.decoded.role === "user") {
       const { rows } = await pool.query(
         `SELECT SUM(wishlist_cost) FROM wishlists WHERE user_id = $1 AND wishlist_status = $2`,
-        [req.decoded.id, "NOT YET PURCHASED"]
+        [req.decoded.id, "UNPURCHASED"]
       );
       if (rows.length < 1) {
         res.json({ sum: 0 });

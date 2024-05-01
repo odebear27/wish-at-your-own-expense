@@ -9,7 +9,7 @@ const validateUserRegistrationData = [
     min: 8,
     max: 50,
   }),
-  body("budget_amt", "budget amount must be a positive number").isInt({
+  body("budget_amt", "budget amount must be a positive number").isFloat({
     min: 0.01,
   }),
 ];
@@ -54,7 +54,7 @@ const validateUpdateUserInput = [
 ];
 
 const validateUpdateUserBudgetInput = [
-  body("budget_amt", "budget amount must be a positive number").isLength({
+  body("budget_amt", "budget amount must be a positive number").isFloat({
     min: 0.01,
   }),
 ];

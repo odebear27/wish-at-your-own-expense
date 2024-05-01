@@ -10,7 +10,9 @@ const validateWishlistForUserInput = [
     max: 50,
   }),
   body("wishlist_cost", "wishlist cost is required").not().isEmpty(),
-  body("wishlist_cost", "wishlist cost must be a number").isFloat({ min: 0 }),
+  body("wishlist_cost", "wishlist cost must be a greater than zero").isFloat({
+    min: 0.01,
+  }),
   body(
     "wishlist_store",
     "wishlist store must be less than 300 characters"
