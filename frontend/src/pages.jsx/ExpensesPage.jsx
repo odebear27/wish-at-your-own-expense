@@ -3,6 +3,7 @@ import useFetch from "../hooks/useFetch";
 import UserContext from "../context/user";
 import Expense from "../components/Expense";
 import useLocalStorage from "../hooks/useLocalStorage";
+import AddExpenseModal from "../components/AddExpenseModal";
 
 const ExpensesPage = () => {
   useLocalStorage();
@@ -11,10 +12,10 @@ const ExpensesPage = () => {
   const [expenses, setExpenses] = useState([]);
   const [isAddExpensePressed, setIsAddExpensePressed] = useState(false);
   const [expensecategories, setExpenseCategories] = useState([]);
-  const dateRef = useRef();
-  const itemRef = useRef();
-  const categoryRef = useRef();
-  const amtRef = useRef();
+  // const dateRef = useRef();
+  // const itemRef = useRef();
+  // const categoryRef = useRef();
+  // const amtRef = useRef();
 
   const getExpenseAmt = async () => {
     try {
@@ -71,32 +72,32 @@ const ExpensesPage = () => {
     }
   };
 
-  const createExpenseForUser = async () => {
-    try {
-      const body = {
-        expense_date: dateRef.current.value,
-        expense_item: itemRef.current.value,
-        expense_category: categoryRef.current.value,
-        expense_amt: parseFloat(amtRef.current.value),
-      };
-      const res = await fetchData(
-        `/api/expenses`,
-        "PUT",
-        body,
-        userCtx.accessToken
-      );
+  // const createExpenseForUser = async () => {
+  //   try {
+  //     const body = {
+  //       expense_date: dateRef.current.value,
+  //       expense_item: itemRef.current.value,
+  //       expense_category: categoryRef.current.value,
+  //       expense_amt: parseFloat(amtRef.current.value),
+  //     };
+  //     const res = await fetchData(
+  //       `/api/expenses`,
+  //       "PUT",
+  //       body,
+  //       userCtx.accessToken
+  //     );
 
-      if (res.ok) {
-        getAllExpensesForAUser();
-        setIsAddExpensePressed(false);
-        getExpenseAmt();
-      } else {
-        alert(JSON.stringify(res.data));
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  //     if (res.ok) {
+  //       getAllExpensesForAUser();
+  //       setIsAddExpensePressed(false);
+  //       getExpenseAmt();
+  //     } else {
+  //       alert(JSON.stringify(res.data));
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   const deleteExpenseForUser = async (expense_id) => {
     try {
@@ -167,7 +168,9 @@ const ExpensesPage = () => {
         <div></div>
         <button onClick={() => setIsAddExpensePressed(true)}>
           <div className="flex space-x-0.5 items-center">
-            <i class="bi bi-cash-coin"></i>
+            <span>
+              <i class="bi bi-cash-coin h4"></i>
+            </span>
             <span className="flex w-16 leading-tight font-medium">
               Add an item
             </span>
@@ -185,6 +188,14 @@ const ExpensesPage = () => {
       </div>
       <hr />
       {isAddExpensePressed && (
+        <AddExpenseModal
+          expensecategories={expensecategories}
+          setIsAddExpensePressed={setIsAddExpensePressed}
+          getExpenseAmt={getExpenseAmt}
+          getAllExpensesForAUser={getAllExpensesForAUser}
+        ></AddExpenseModal>
+      )}
+      {/* {isAddExpensePressed && (
         <div className="grid grid-cols-5 gap-3">
           <input
             ref={dateRef}
@@ -212,7 +223,7 @@ const ExpensesPage = () => {
             </button>
           </div>
         </div>
-      )}
+      )} */}
       <div className="grid divide-y-[1.3px]">
         {expenses.map((expense, idx) => {
           // const formattedDate = formatDate(expense.expense_date);

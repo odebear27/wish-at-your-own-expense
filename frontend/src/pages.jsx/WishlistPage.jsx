@@ -98,7 +98,7 @@ const WishlistPage = () => {
       <div className="flex justify-between py-3">
         {userCtx.wishlistCost > 0 ? (
           <div className="font-medium">
-            My wishlist cost (unpurchased):{" "}
+            My unpurchased wishlist cost:{" "}
             {new Intl.NumberFormat("en-SG", {
               style: "currency",
               currency: "SGD",
@@ -113,7 +113,9 @@ const WishlistPage = () => {
           }}
         >
           <div className="flex space-x-0.5 items-center">
-            <i class="bi bi-gift"></i>
+            <span>
+              <i class="bi bi-gift h4"></i>
+            </span>
             <span className="flex w-16 leading-tight font-medium">
               Add an item
             </span>
