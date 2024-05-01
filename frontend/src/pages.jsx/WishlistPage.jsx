@@ -3,6 +3,7 @@ import useFetch from "../hooks/useFetch";
 import UserContext from "../context/user";
 import Wishlist from "../components/Wishlist";
 import useLocalStorage from "../hooks/useLocalStorage";
+import AddWishlistModal from "../components/AddWishlistModal";
 
 const WishlistPage = () => {
   useLocalStorage();
@@ -10,10 +11,6 @@ const WishlistPage = () => {
   const userCtx = useContext(UserContext);
   const [wishlists, setWishlists] = useState([]);
   const [isAddWishlistPressed, setIsAddWishlistPressed] = useState(false);
-
-  const itemRef = useRef();
-  const costRef = useRef();
-  const storeRef = useRef();
 
   const getUserProfileAndBudget = async () => {
     try {
@@ -87,33 +84,6 @@ const WishlistPage = () => {
     }
   };
 
-  const addWishlistForUser = async () => {
-    try {
-      const body = {
-        wishlist_item: itemRef.current.value,
-        wishlist_cost: parseFloat(costRef.current.value),
-        wishlist_store: storeRef.current.value,
-      };
-
-      const res = await fetchData(
-        `/api/wishlists`,
-        "PUT",
-        body,
-        userCtx.accessToken
-      );
-      if (res.ok) {
-        console.log(res.data);
-        getWishlistCost();
-        getAllWishlistForAUser();
-        setIsAddWishlistPressed(false);
-      } else {
-        alert(JSON.stringify(res.data));
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
   useEffect(() => {
     if (userCtx.accessToken) {
       getWishlistCost();
@@ -161,40 +131,11 @@ const WishlistPage = () => {
       </div>
       <hr />
       {isAddWishlistPressed && (
-        <div className="grid grid-cols-6 gap-3">
-          <textarea className="h-12" ref={itemRef} type="text"></textarea>
-          <div className="space-x-1">
-            {" "}
-            <label>$</label>
-            <textarea ref={costRef} type="text"></textarea>
-          </div>
-
-          <textarea
-            className="col-span-2"
-            ref={storeRef}
-            type="text"
-          ></textarea>
-          {/* <select className="dropdown w-44" disabled={true}>
-            <option>NOT YET PURCHASED</option>
-          </select> */}
-          {/* <textarea
-            className="dropdown w-44"
-            disabled="true"
-            value="unpurchased"
-          ></textarea> */}
-          <div></div>
-          <div className="flex justify-evenly">
-            <button className="button" onClick={() => addWishlistForUser()}>
-              Submit
-            </button>
-            <button
-              className="button"
-              onClick={() => setIsAddWishlistPressed(false)}
-            >
-              Cancel
-            </button>
-          </div>
-        </div>
+        <AddWishlistModal
+          getWishlistCost={getWishlistCost}
+          getAllWishlistForAUser={getAllWishlistForAUser}
+          setIsAddWishlistPressed={setIsAddWishlistPressed}
+        ></AddWishlistModal>
       )}
       <div className="grid divide-y-[1.3px]">
         {wishlists.map((wishlist, idx) => {
