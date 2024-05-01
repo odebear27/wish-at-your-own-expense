@@ -1,4 +1,4 @@
-import React, { useContext, useRef } from "react";
+import React, { useContext, useRef, useState } from "react";
 import useFetch from "../hooks/useFetch";
 import UserContext from "../context/user";
 import { jwtDecode } from "jwt-decode";
@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 const UserLoginPage = () => {
   const fetchData = useFetch();
   const navigate = useNavigate();
+  const [message, setMessage] = useState("");
   const userCtx = useContext(UserContext);
   const emailRef = useRef();
   const passwordRef = useRef();
@@ -38,7 +39,7 @@ const UserLoginPage = () => {
         userCtx.setIsLoggedIn(true);
         navigate("/profile");
       } else {
-        alert(JSON.stringify(res.data));
+        setMessage("login error");
       }
     } catch (error) {
       console.error(error);
@@ -59,7 +60,7 @@ const UserLoginPage = () => {
         <div className="text-colour-white font-medium text-lg">
           Wish at you own Expense
         </div>
-        <div className="flex flex-col items-center space-y-4 fixed bottom-24">
+        <div className="flex flex-col items-center space-y-4 fixed bottom-20">
           <div className="w-auto flex space-x-10">
             <label className="text-colour-white font-medium">email</label>
             <input ref={emailRef} type="text"></input>
@@ -68,11 +69,19 @@ const UserLoginPage = () => {
             <label className="text-colour-white font-medium">password</label>
             <input ref={passwordRef} type="password"></input>
           </div>
+
+          {message.length > 0 ? (
+            <div className="text-colour-red font-medium">{message}</div>
+          ) : (
+            <div className="h-6"></div>
+          )}
+
           <div className="w-auto">
             <button
               className="text-colour-white font-medium"
               onClick={() => {
                 handleUserLogin();
+                setMessage("");
               }}
             >
               Login

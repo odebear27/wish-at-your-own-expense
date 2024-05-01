@@ -1,4 +1,4 @@
-import React, { useContext, useRef } from "react";
+import React, { useContext, useRef, useState } from "react";
 import useFetch from "../hooks/useFetch";
 import UserContext from "../context/user";
 import { jwtDecode } from "jwt-decode";
@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 const AdminLoginPage = () => {
   const fetchData = useFetch();
   const navigate = useNavigate();
+  const [message, setMessage] = useState("");
   const userCtx = useContext(UserContext);
   const emailRef = useRef();
   const passwordRef = useRef();
@@ -39,7 +40,7 @@ const AdminLoginPage = () => {
 
         navigate("/view/admin");
       } else {
-        alert(JSON.stringify(res.data));
+        setMessage("login error");
       }
     } catch (error) {
       console.error(error);
@@ -70,11 +71,19 @@ const AdminLoginPage = () => {
           <label className="text-colour-white font-medium">password</label>
           <input ref={passwordRef} type="password"></input>
         </div>
+
+        {message.length > 0 ? (
+          <div className="text-colour-red font-medium">{message}</div>
+        ) : (
+          <div className="h-6"></div>
+        )}
+
         <div className="w-auto">
           <button
             className="text-colour-white font-medium"
             onClick={() => {
               handleAdminLogin();
+              setMessage("");
             }}
           >
             Login
