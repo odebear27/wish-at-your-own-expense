@@ -20,7 +20,7 @@ const registerUser = async (req, res) => {
     // check for duplicate email first/
     // destructure the rows property from the result object returned by the pool.query function
     const { rows } = await pool.query(
-      `SELECT user_email FROM users WHERE user_email = $1`,
+      `SELECT user_email FROM users WHERE user_email = $1 AND user_is_active = true`,
       [req.body.user_email]
     );
 
@@ -134,7 +134,8 @@ const loginUser = async (req, res) => {
       id: rows[0].user_id,
     };
     const access = jwt.sign(claims, process.env.ACCESS_SECRET, {
-      expiresIn: "20m",
+      // expiresIn: "20m",
+      expiresIn: "30d",
       jwtid: uuidv4(),
     });
     const refresh = jwt.sign(claims, process.env.REFRESH_SECRET, {
