@@ -36,7 +36,7 @@ const OverLay = (props) => {
         alert(JSON.stringify(res.data));
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 

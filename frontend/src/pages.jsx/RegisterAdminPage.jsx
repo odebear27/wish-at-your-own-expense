@@ -17,7 +17,6 @@ const RegisterAdminPage = () => {
         password: passwordRef.current.value,
       });
       if (res.ok) {
-        console.log(res.data);
         navigate("/admin");
       }
     } catch (error) {

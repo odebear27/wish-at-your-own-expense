@@ -26,14 +26,13 @@ const UserProfilePage = () => {
         userCtx.accessToken
       );
       if (res.ok) {
-        console.log(res.data);
         setUserProfileAndBudget(res.data[0]);
 
         // using userCtx.setBudget so that can access in Wishlist
         userCtx.setBudget(res.data[0].budget_amt);
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 
@@ -46,13 +45,13 @@ const UserProfilePage = () => {
         userCtx.accessToken
       );
       if (res.ok) {
-        console.log("sum" + res.data);
-        // setExpenseAmt(res.data[0].sum);
         userCtx.setExpense(res.data[0].sum);
       } else {
         alert(JSON.stringify(res.data));
       }
-    } catch (error) {}
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const getWishlistCost = async () => {
@@ -67,7 +66,7 @@ const UserProfilePage = () => {
         userCtx.setWishlistCost(res.data[0].sum);
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 
@@ -134,12 +133,6 @@ const UserProfilePage = () => {
     }
   }, [userCtx.accessToken]);
 
-  // useEffect(() => {
-  //   getUserProfileAndBudget();
-  //   getWishlistCost();
-  //   getExpenseAmt();
-  // }, [userCtx.userId]);
-
   useEffect(() => {
     if (userProfileAndBudget) {
       setUpdateUserProfile({
@@ -169,9 +162,6 @@ const UserProfilePage = () => {
             ) : (
               <p>My budget for the month: $0</p>
             )}
-
-            {/* <p>My budget for the month: ${userCtx.budget}</p> */}
-
             {userCtx.expense > 0 ? (
               <p>
                 My expense amount for current month:{" "}
@@ -193,7 +183,7 @@ const UserProfilePage = () => {
                 }).format(userCtx.wishlistCost)}
               </p>
             ) : (
-              <p>My wishlist Cost: $0</p>
+              <p>My wishlist cost: $0</p>
             )}
             <div className="flex space-x-4 py-4">
               <button
@@ -222,9 +212,7 @@ const UserProfilePage = () => {
                 onChange={handleChange}
               ></input>
             </div>
-
             <p>My email: {userProfileAndBudget.user_email}</p>
-
             <div className="w-auto flex space-x-4">
               <label>My budget for the month:</label>
               <div className="space-x-1">
@@ -233,7 +221,6 @@ const UserProfilePage = () => {
                   id="budget_amt"
                   type="text"
                   value={updateUserProfile.budget_amt}
-                  // value={userCtx.budget}
                   onChange={handleChange}
                 ></input>
               </div>

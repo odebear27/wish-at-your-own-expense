@@ -7,33 +7,6 @@ const OverLay = (props) => {
   const fetchData = useFetch();
   const userCtx = useContext(UserContext);
 
-  //   const createExpenseForUser = async () => {
-  //     try {
-  //       const body = {
-  //         expense_date: dateRef.current.value,
-  //         expense_item: props.wishlist_item,
-  //         expense_category: categoryRef.current.value,
-  //         expense_amt: parseFloat(props.wishlist_cost),
-  //       };
-  //       const res = await fetchData(
-  //         `/api/expenses`,
-  //         "PUT",
-  //         body,
-  //         userCtx.accessToken
-  //       );
-
-  //       if (res.ok) {
-  //         console.log(res.data);
-  //         getAllExpensesForAUser();
-  //         setIsAddExpensePressed(false);
-  //       } else {
-  //         alert(JSON.stringify(res.data));
-  //       }
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   };
-
   const updateWishlistForUser = async (wishlistId) => {
     try {
       const body = {
@@ -51,17 +24,8 @@ const OverLay = (props) => {
       );
 
       if (res.ok) {
-        console.log(res.data);
-        // props.checkIfCanBuy();
         props.getWishlistCost();
         props.getAllWishlistForAUser();
-        // props.checkIfCanBuy();
-        // if (body.wishlist_status === "PURCHASED") {
-        //   props.setCanBuy(false);
-        // } else {
-        //   props.setCanBuy(true);
-        // }
-        // props.setIsUpdateWishlistPressed(false);
       } else {
         alert(JSON.stringify(res.data));
       }

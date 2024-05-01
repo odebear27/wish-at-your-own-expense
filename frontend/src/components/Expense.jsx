@@ -15,9 +15,6 @@ const Expense = (props) => {
   };
 
   const formattedDate = formatDate(props.expense.expense_date);
-  // const formattedDate = new Date(props.expense.expense_date)
-  //   .toISOString()
-  //   .split("T")[0];
 
   return (
     <div className="pt-1 pb-3">

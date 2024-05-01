@@ -8,7 +8,6 @@ const User = (props) => {
 
   const deleteUser = async (userId) => {
     try {
-      console.log(userId);
       const res = await fetchData(
         "/auth/u/delete/" + userId,
         "DELETE",

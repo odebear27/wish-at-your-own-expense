@@ -22,7 +22,6 @@ const OverLay = (props) => {
       );
 
       if (res.ok) {
-        console.log(res.data);
         props.getOneAdmin();
         props.setIsUpdateAdminPressed(false);
       } else {

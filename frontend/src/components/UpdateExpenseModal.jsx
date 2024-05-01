@@ -10,7 +10,6 @@ const OverLay = (props) => {
   const formattedDate = props.formatDate(props.expenseDate);
 
   const [expenseToUpdate, setExpenseToUpdate] = useState({
-    // expenseDate: new Date(props.expenseDate).toISOString().split("T")[0],
     expenseDate: formattedDate,
     expenseItem: props.expenseItem,
     expenseCategory: props.expenseCategory,

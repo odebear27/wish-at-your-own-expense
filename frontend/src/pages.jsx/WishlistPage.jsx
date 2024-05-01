@@ -21,13 +21,11 @@ const WishlistPage = () => {
         userCtx.accessToken
       );
       if (res.ok) {
-        console.log(res.data);
-
         // using userCtx.setBudget so that can access in Wishlist
         userCtx.setBudget(res.data[0].budget_amt);
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 
@@ -40,7 +38,6 @@ const WishlistPage = () => {
         userCtx.accessToken
       );
       if (res.ok) {
-        console.log("sum" + res.data);
         userCtx.setExpense(res.data[0].sum);
       } else {
         alert(JSON.stringify(res.data));
@@ -60,7 +57,7 @@ const WishlistPage = () => {
         userCtx.setWishlistCost(res.data[0].sum);
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 
@@ -74,7 +71,6 @@ const WishlistPage = () => {
       );
 
       if (res.ok) {
-        console.log(res.data);
         setWishlists(res.data);
       } else {
         alert(JSON.stringify(res.data));
@@ -106,9 +102,7 @@ const WishlistPage = () => {
               }).format(userCtx.wishlistCost)}
             </div>
           ) : (
-            <div className="font-medium">
-              My wishlist cost (unpurchased): $0
-            </div>
+            <div className="font-medium">My unpurchased wishlist cost: $0</div>
           )}
           <div className="font-medium">
             My excess budget:{" "}

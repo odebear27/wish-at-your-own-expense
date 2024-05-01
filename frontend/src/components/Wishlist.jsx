@@ -21,7 +21,6 @@ const Wishlist = (props) => {
       );
 
       if (res.ok) {
-        console.log(res.data);
         props.getWishlistCost();
         props.getAllWishlistForAUser();
       } else {
@@ -33,23 +32,15 @@ const Wishlist = (props) => {
   };
 
   const checkIfCanBuy = () => {
-    console.log("budget: ", userCtx.budget);
-    console.log("expense: ", userCtx.expense);
     const excessBudget = userCtx.budget - userCtx.expense;
     if (userCtx.budget !== undefined && userCtx.expense !== undefined) {
-      console.log("checkpoint");
-      console.log("status: ", props.wishlist.wishlist_status);
-      console.log("cost: ", props.wishlist.wishlist_cost);
-      console.log("excessBudget: ", excessBudget);
       if (
         props.wishlist.wishlist_status === "UNPURCHASED" &&
         excessBudget >= props.wishlist.wishlist_cost
       ) {
         setCanBuy(true);
-        console.log("can buy " + props.wishlist.wishlist_item);
       } else {
         setCanBuy(false);
-        console.log("too bad " + props.wishlist.wishlist_item);
       }
     }
   };
@@ -60,7 +51,6 @@ const Wishlist = (props) => {
       userCtx.budget !== undefined &&
       userCtx.expense !== undefined
     ) {
-      console.log("i am checking" + props.wishlist.wishlist_item);
       checkIfCanBuy();
     }
   }, [
@@ -70,10 +60,6 @@ const Wishlist = (props) => {
     props.wishlist.wishlist_status,
     props.wishlist.wishlist_cost,
   ]);
-
-  // useEffect(() => {
-  //   if (userCtx.accessToken) checkIfCanBuy();
-  // }, [userCtx.accessToken]);
 
   return (
     <div

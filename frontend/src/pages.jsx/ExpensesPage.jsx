@@ -1,4 +1,4 @@
-import React, { useEffect, useContext, useState, useRef } from "react";
+import React, { useEffect, useContext, useState } from "react";
 import useFetch from "../hooks/useFetch";
 import UserContext from "../context/user";
 import Expense from "../components/Expense";
@@ -12,10 +12,6 @@ const ExpensesPage = () => {
   const [expenses, setExpenses] = useState([]);
   const [isAddExpensePressed, setIsAddExpensePressed] = useState(false);
   const [expensecategories, setExpenseCategories] = useState([]);
-  // const dateRef = useRef();
-  // const itemRef = useRef();
-  // const categoryRef = useRef();
-  // const amtRef = useRef();
 
   const getExpenseAmt = async () => {
     try {
@@ -26,13 +22,13 @@ const ExpensesPage = () => {
         userCtx.accessToken
       );
       if (res.ok) {
-        console.log("sum" + res.data);
-        // setExpenseAmt(res.data[0].sum);
         userCtx.setExpense(res.data[0].sum);
       } else {
         alert(JSON.stringify(res.data));
       }
-    } catch (error) {}
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const getAllExpensesForAUser = async () => {
@@ -50,7 +46,7 @@ const ExpensesPage = () => {
         alert(JSON.stringify(res.data));
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 
@@ -72,33 +68,6 @@ const ExpensesPage = () => {
     }
   };
 
-  // const createExpenseForUser = async () => {
-  //   try {
-  //     const body = {
-  //       expense_date: dateRef.current.value,
-  //       expense_item: itemRef.current.value,
-  //       expense_category: categoryRef.current.value,
-  //       expense_amt: parseFloat(amtRef.current.value),
-  //     };
-  //     const res = await fetchData(
-  //       `/api/expenses`,
-  //       "PUT",
-  //       body,
-  //       userCtx.accessToken
-  //     );
-
-  //     if (res.ok) {
-  //       getAllExpensesForAUser();
-  //       setIsAddExpensePressed(false);
-  //       getExpenseAmt();
-  //     } else {
-  //       alert(JSON.stringify(res.data));
-  //     }
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-
   const deleteExpenseForUser = async (expense_id) => {
     try {
       const res = await fetchData(
@@ -117,26 +86,6 @@ const ExpensesPage = () => {
       console.error(error);
     }
   };
-
-  // Helper function to format the date
-  // const formatDate = (isoDateString) => {
-  //   const date = new Date(isoDateString);
-  //   const year = date.getFullYear();
-  //   // padStart so that for eg, 4 will become 04
-  //   const month = String(date.getMonth() + 1).padStart(2, "0");
-  //   const day = String(date.getDate()).padStart(2, "0");
-  //   return `${year}-${month}-${day}`;
-  // };
-
-  // useEffect(() => {
-  //   getExpenseAmt();
-  // }, []); // Empty dependency array to run the effect on initial render
-
-  // useEffect(() => {
-  //   if (userCtx.accessToken) {
-  //     getExpenseAmt();
-  //   }
-  // }, [userCtx.accessToken]);
 
   useEffect(() => {
     if (userCtx.accessToken) {
@@ -195,38 +144,8 @@ const ExpensesPage = () => {
           getAllExpensesForAUser={getAllExpensesForAUser}
         ></AddExpenseModal>
       )}
-      {/* {isAddExpensePressed && (
-        <div className="grid grid-cols-5 gap-3">
-          <input
-            ref={dateRef}
-            type="date"
-            max={new Date(Date.now()).toISOString().split("T")[0]}
-          ></input>
-
-          <input ref={itemRef} type="text"></input>
-
-          <select ref={categoryRef}>
-            {expensecategories.length > 0 &&
-              expensecategories.map((expenseCategory) => {
-                return <option>{expenseCategory.expense_category}</option>;
-              })}
-          </select>
-          <div className="space-x-1">
-            <label>$</label>
-            <input ref={amtRef} type="text"></input>
-          </div>
-
-          <div className="flex justify-evenly">
-            <button onClick={() => createExpenseForUser()}>Submit</button>
-            <button onClick={() => setIsAddExpensePressed(false)}>
-              Cancel
-            </button>
-          </div>
-        </div>
-      )} */}
       <div className="grid divide-y-[1.3px]">
         {expenses.map((expense, idx) => {
-          // const formattedDate = formatDate(expense.expense_date);
           return (
             <Expense
               key={idx}

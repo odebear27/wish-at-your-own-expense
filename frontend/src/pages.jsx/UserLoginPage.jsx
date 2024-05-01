@@ -1,4 +1,4 @@
-import React, { useContext, useRef, useEffect } from "react";
+import React, { useContext, useRef } from "react";
 import useFetch from "../hooks/useFetch";
 import UserContext from "../context/user";
 import { jwtDecode } from "jwt-decode";
@@ -44,35 +44,6 @@ const UserLoginPage = () => {
       console.error(error);
     }
   };
-
-  // const callRefreshToken = async () => {
-  //   try {
-  //     const res = await fetchData("/auth/u/refresh", "POST", {
-  //       refresh: userCtx.refreshToken,
-  //     });
-  //     if (res.ok) {
-  //       console.log("refreshing");
-  //       console.log(res.data);
-  //       userCtx.setAccessToken(res.data.access);
-  //     } else {
-  //       alert(JSON.stringify(res.data));
-  //     }
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   let intervalId;
-  //   // Set up interval to refresh token every 15 minutes
-  //   if (userCtx.refreshToken) {
-  //     intervalId = setInterval(callRefreshToken, 1000);
-  //   }
-  //   // 15 minutes
-
-  //   // Clean up interval on component unmount
-  //   return () => clearInterval(intervalId);
-  // }, [userCtx.isLoggedIn]);
 
   return (
     <div className="bg-flyingSanta bg-cover bg-center object-fill">

@@ -19,7 +19,6 @@ const RegisterUserPage = () => {
         budget_amt: parseFloat(budgetAmtRef.current.value),
       });
       if (res.ok) {
-        console.log(res.data);
         navigate("/");
       } else {
         alert(JSON.stringify(res.data));

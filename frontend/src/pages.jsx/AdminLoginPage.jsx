@@ -1,4 +1,4 @@
-import React, { useContext, useRef, useEffect } from "react";
+import React, { useContext, useRef } from "react";
 import useFetch from "../hooks/useFetch";
 import UserContext from "../context/user";
 import { jwtDecode } from "jwt-decode";
@@ -36,15 +36,6 @@ const AdminLoginPage = () => {
         userCtx.setUserId(decoded.id);
         userCtx.setUserEmail(decoded.email);
         userCtx.setIsLoggedIn(true);
-
-        // userCtx.setAccessToken(res.data.access);
-        // userCtx.setRefreshToken(res.data.refresh);
-        // const decoded = jwtDecode(res.data.access);
-
-        // console.log(decoded);
-        // userCtx.setRole(decoded.role);
-        // userCtx.setUserId(decoded.id);
-        // userCtx.setUserEmail(decoded.email);
 
         navigate("/view/admin");
       } else {

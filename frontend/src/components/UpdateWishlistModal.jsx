@@ -23,7 +23,6 @@ const OverLay = (props) => {
         undefined
       );
       if (res.ok) {
-        console.log(res.data);
         setAllWishlistStatus(res.data);
       } else {
         alert.JSON.stringify(res.data);
@@ -50,7 +49,6 @@ const OverLay = (props) => {
       );
 
       if (res.ok) {
-        console.log(res.data);
         props.getWishlistCost();
         props.checkIfCanBuy();
         props.getAllWishlistForAUser();
@@ -113,7 +111,6 @@ const OverLay = (props) => {
             <label>Status:</label>
             <select
               className="dropdown"
-              // disabled={true}
               id="wishlistStatus"
               value={updateWishlist.wishlistStatus}
               onChange={handleChange}

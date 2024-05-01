@@ -22,7 +22,6 @@ const AllUsersPage = () => {
       );
 
       if (res.ok) {
-        console.log(res.data);
         setAllUsers(res.data);
       } else {
         alert(JSON.stringify(res.data));
