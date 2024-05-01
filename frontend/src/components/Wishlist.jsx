@@ -42,7 +42,7 @@ const Wishlist = (props) => {
       console.log("cost: ", props.wishlist.wishlist_cost);
       console.log("excessBudget: ", excessBudget);
       if (
-        props.wishlist.wishlist_status === "NOT YET PURCHASED" &&
+        props.wishlist.wishlist_status === "UNPURCHASED" &&
         excessBudget >= props.wishlist.wishlist_cost
       ) {
         setCanBuy(true);

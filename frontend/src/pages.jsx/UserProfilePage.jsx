@@ -158,14 +158,18 @@ const UserProfilePage = () => {
           <div className="flex flex-col items-start space-y-4">
             <p>My name: {userProfileAndBudget.user_name}</p>
             <p>My email: {userProfileAndBudget.user_email}</p>
+            {userProfileAndBudget.budget_amt > 0 ? (
+              <p>
+                My budget for the month:{" "}
+                {new Intl.NumberFormat("en-SG", {
+                  style: "currency",
+                  currency: "SGD",
+                }).format(userProfileAndBudget.budget_amt)}
+              </p>
+            ) : (
+              <p>My budget for the month: $0</p>
+            )}
 
-            <p>
-              My budget for the month:{" "}
-              {new Intl.NumberFormat("en-SG", {
-                style: "currency",
-                currency: "SGD",
-              }).format(userProfileAndBudget.budget_amt)}
-            </p>
             {/* <p>My budget for the month: ${userCtx.budget}</p> */}
 
             {userCtx.expense > 0 ? (
@@ -182,7 +186,7 @@ const UserProfilePage = () => {
 
             {userCtx.wishlistCost > 0 ? (
               <p>
-                My wishlist Cost:{" "}
+                My wishlist cost:{" "}
                 {new Intl.NumberFormat("en-SG", {
                   style: "currency",
                   currency: "SGD",
@@ -248,14 +252,14 @@ const UserProfilePage = () => {
             )}
             {userCtx.wishlistCost > 0 ? (
               <p>
-                My Wishlist Cost:{" "}
+                My wishlist cost:{" "}
                 {new Intl.NumberFormat("en-SG", {
                   style: "currency",
                   currency: "SGD",
                 }).format(userCtx.wishlistCost)}
               </p>
             ) : (
-              <p>My wishlist Cost: $0</p>
+              <p>My wishlist cost: $0</p>
             )}
             <div className="flex space-x-4 py-4">
               <button className="button" onClick={updateUser}>

@@ -96,17 +96,29 @@ const WishlistPage = () => {
   return (
     <div className="mt-16 mx-5 py-6">
       <div className="flex justify-between py-3">
-        {userCtx.wishlistCost > 0 ? (
+        <div>
+          {userCtx.wishlistCost > 0 ? (
+            <div className="font-medium">
+              My unpurchased wishlist cost:{" "}
+              {new Intl.NumberFormat("en-SG", {
+                style: "currency",
+                currency: "SGD",
+              }).format(userCtx.wishlistCost)}
+            </div>
+          ) : (
+            <div className="font-medium">
+              My wishlist cost (unpurchased): $0
+            </div>
+          )}
           <div className="font-medium">
-            My unpurchased wishlist cost:{" "}
+            My excess budget:{" "}
             {new Intl.NumberFormat("en-SG", {
               style: "currency",
               currency: "SGD",
-            }).format(userCtx.wishlistCost)}
+            }).format(userCtx.budget - userCtx.expense)}
           </div>
-        ) : (
-          <div className="font-medium">My wishlist cost (unpurchased): $0</div>
-        )}
+        </div>
+
         <button
           onClick={() => {
             setIsAddWishlistPressed(true);
