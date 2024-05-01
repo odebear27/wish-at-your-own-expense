@@ -56,9 +56,10 @@ const AdminLoginPage = () => {
   };
 
   return (
-    <div className="grid h-screen place-items-center relative">
+    <div className="grid h-screen place-items-center relative bg-colour-darkBlue">
       <div className="absolute top-5 right-5">
         <button
+          className="text-colour-white font-medium"
           onClick={() => {
             navigate("/");
           }}
@@ -66,17 +67,21 @@ const AdminLoginPage = () => {
           Back to user login
         </button>
       </div>
+      <div className="text-colour-white font-medium text-lg">
+        Wish at you own Expense Admin Portal
+      </div>
       <div className="flex flex-col items-center space-y-4">
         <div className="w-auto flex space-x-10">
-          <label>email</label>
+          <label className="text-colour-white font-medium">email</label>
           <input ref={emailRef} type="text"></input>
         </div>
         <div className="w-auto flex space-x-4">
-          <label>password</label>
+          <label className="text-colour-white font-medium">password</label>
           <input ref={passwordRef} type="password"></input>
         </div>
         <div className="w-auto">
           <button
+            className="text-colour-white font-medium"
             onClick={() => {
               handleAdminLogin();
             }}
@@ -87,6 +92,7 @@ const AdminLoginPage = () => {
 
         <div className="w-auto">
           <button
+            className="text-colour-white font-medium"
             onClick={() => {
               navigate("/register/admin");
             }}

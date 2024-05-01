@@ -170,36 +170,36 @@ const UserProfilePage = () => {
 
             {userCtx.expense > 0 ? (
               <p>
-                My Expense amount for current month:{" "}
+                My expense amount for current month:{" "}
                 {new Intl.NumberFormat("en-SG", {
                   style: "currency",
                   currency: "SGD",
                 }).format(userCtx.expense)}
               </p>
             ) : (
-              <p>My Expenses: $0</p>
+              <p>My expense amount for current month: $0</p>
             )}
 
             {userCtx.wishlistCost > 0 ? (
               <p>
-                My Wishlist Cost:{" "}
+                My wishlist Cost:{" "}
                 {new Intl.NumberFormat("en-SG", {
                   style: "currency",
                   currency: "SGD",
                 }).format(userCtx.wishlistCost)}
               </p>
             ) : (
-              <p>My Wishlist Cost: $0</p>
+              <p>My wishlist Cost: $0</p>
             )}
             <div className="flex space-x-4 py-4">
               <button
                 className="button"
                 onClick={() => setIsUpdateUserPressed(true)}
               >
-                update profile
+                Update profile
               </button>
               <button className="button" onClick={deleteUser}>
-                delete profile (there is no going back)
+                Delete profile (there is no going back)
               </button>
             </div>
           </div>
@@ -237,14 +237,14 @@ const UserProfilePage = () => {
 
             {userCtx.expense > 0 ? (
               <p>
-                My Expenses:{" "}
+                My expense amount for current month:{" "}
                 {new Intl.NumberFormat("en-SG", {
                   style: "currency",
                   currency: "SGD",
                 }).format(userCtx.expense)}
               </p>
             ) : (
-              <p>My Expenses: $0</p>
+              <p>My expense amount for current month: $0</p>
             )}
             {userCtx.wishlistCost > 0 ? (
               <p>
@@ -255,17 +255,17 @@ const UserProfilePage = () => {
                 }).format(userCtx.wishlistCost)}
               </p>
             ) : (
-              <p>My Wishlist Cost: $0</p>
+              <p>My wishlist Cost: $0</p>
             )}
             <div className="flex space-x-4 py-4">
               <button className="button" onClick={updateUser}>
-                submit
+                Submit
               </button>
               <button
                 className="button"
                 onClick={() => setIsUpdateUserPressed(false)}
               >
-                cancel
+                Cancel
               </button>
             </div>
           </div>

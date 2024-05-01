@@ -28,8 +28,8 @@ const NavBar = () => {
         <NavLink
           className={({ isActive }) =>
             isActive
-              ? "hover:text-colour-darkBluishGrey hover:decoration-colour-darkBluishGrey text-colour-white mb-5 font-bold pt-10 underline decoration-solid decoration-colour-white decoration-2 underline-offset-8"
-              : "hover:text-colour-darkBluishGrey text-colour-white mb-5 font-bold pt-10"
+              ? "hover:text-colour-darkBluishGrey hover:decoration-colour-darkBluishGrey text-colour-white mb-5 font-medium pt-10 underline decoration-solid decoration-colour-white decoration-2 underline-offset-8"
+              : "hover:text-colour-darkBluishGrey text-colour-white mb-5 font-medium pt-10"
           }
           to="/expenses"
         >
@@ -38,8 +38,8 @@ const NavBar = () => {
         <NavLink
           className={({ isActive }) =>
             isActive
-              ? "hover:text-colour-darkBluishGrey hover:decoration-colour-darkBluishGrey text-colour-white mb-5 font-bold pt-10 underline decoration-solid decoration-colour-white decoration-2 underline-offset-8"
-              : "hover:text-colour-darkBluishGrey text-colour-white mb-5 font-bold pt-10"
+              ? "hover:text-colour-darkBluishGrey hover:decoration-colour-darkBluishGrey text-colour-white mb-5 font-medium pt-10 underline decoration-solid decoration-colour-white decoration-2 underline-offset-8"
+              : "hover:text-colour-darkBluishGrey text-colour-white mb-5 font-medium pt-10"
           }
           to="/wishlist"
         >
@@ -48,8 +48,8 @@ const NavBar = () => {
         <NavLink
           className={({ isActive }) =>
             isActive
-              ? "hover:text-colour-darkBluishGrey hover:decoration-colour-darkBluishGrey text-colour-white mb-5 font-bold pt-10 underline decoration-solid decoration-colour-white decoration-2 underline-offset-8"
-              : "hover:text-colour-darkBluishGrey text-colour-white mb-5 font-bold pt-10"
+              ? "hover:text-colour-darkBluishGrey hover:decoration-colour-darkBluishGrey text-colour-white mb-5 font-medium pt-10 underline decoration-solid decoration-colour-white decoration-2 underline-offset-8"
+              : "hover:text-colour-darkBluishGrey text-colour-white mb-5 font-medium pt-10"
           }
           to="/profile"
         >

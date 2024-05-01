@@ -85,6 +85,9 @@ const UserLoginPage = () => {
             Login as Admin
           </button>
         </div>
+        <div className="text-colour-white font-medium text-lg">
+          Wish at you own Expense
+        </div>
         <div className="flex flex-col items-center space-y-4 fixed bottom-24">
           <div className="w-auto flex space-x-10">
             <label className="text-colour-white font-medium">email</label>
