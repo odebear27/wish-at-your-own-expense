@@ -95,7 +95,7 @@ INSERT INTO user_budgets (budget_id, user_id) VALUES
 (3, 2),
 (1, 3),
 (2, 3),
-(3, 3),
+(3, 3);
 INSERT INTO expenses (expense_date, expense_item, expense_category, expense_amt, user_id) VALUES
 ('2024-04-07', 'Mon to fri lunch', 'FOOD', 50, 1),
 ('2024-04-08', 'Grab to office', 'TRANSPORT', 20, 1),
