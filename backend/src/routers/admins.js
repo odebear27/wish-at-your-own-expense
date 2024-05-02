@@ -12,6 +12,7 @@ const {
   validateAdminLoginData,
   validateAdminRegistrationData,
   validateRefreshToken,
+  validateUpdateAdminInput,
 } = require("../validators/auth");
 const { errorCheck } = require("../validators/errorCheck");
 const router = express.Router();
@@ -25,7 +26,13 @@ router.put(
 router.post("/a/login", validateAdminLoginData, errorCheck, loginAdmin);
 router.post("/a/refresh", validateRefreshToken, errorCheck, refreshAdmin);
 router.delete("/a/delete", authAdmin, deleteAdmin);
-router.patch("/a/update", authAdmin, updateAdmin);
+router.patch(
+  "/a/update",
+  authAdmin,
+  validateUpdateAdminInput,
+  errorCheck,
+  updateAdmin
+);
 router.post("/a/profile", authAdmin, getOneAdmin);
 
 module.exports = router;

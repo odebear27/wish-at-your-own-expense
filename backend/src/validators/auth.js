@@ -59,6 +59,13 @@ const validateUpdateUserBudgetInput = [
   }),
 ];
 
+const validateUpdateAdminInput = [
+  body("admin_name", "name must be between 1 to 20 characters").isLength({
+    min: 1,
+    max: 20,
+  }),
+];
+
 module.exports = {
   validateUserRegistrationData,
   validateUserLoginData,
@@ -68,4 +75,5 @@ module.exports = {
   validateUserIdInParams,
   validateUpdateUserInput,
   validateUpdateUserBudgetInput,
+  validateUpdateAdminInput,
 };
