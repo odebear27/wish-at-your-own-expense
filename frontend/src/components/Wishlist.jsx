@@ -95,17 +95,27 @@ const Wishlist = (props) => {
             currency: "SGD",
           }).format(props.wishlist.wishlist_cost)}
         </div>
-        <div className="col-span-2">{props.wishlist.wishlist_store}</div>
+        {props.wishlist.wishlist_store.slice(0, 5) === "https" ? (
+          <a
+            className="col-span-2"
+            href={props.wishlist.wishlist_store}
+            target="_blank"
+          >
+            {props.wishlist.wishlist_store}
+          </a>
+        ) : (
+          <div className="col-span-2">{props.wishlist.wishlist_store}</div>
+        )}
         <div>
           {props.wishlist.wishlist_status === "PURCHASED" ? (
             <div className="flex space-x-2">
               {" "}
-              <i class="bi bi-emoji-sunglasses"></i>
+              <i className="bi bi-emoji-sunglasses"></i>
               <span>purchased</span>
             </div>
           ) : (
             <div className="flex space-x-2">
-              <i class="bi bi-emoji-frown"></i>
+              <i className="bi bi-emoji-frown"></i>
               <span>unpurchased</span>
             </div>
           )}
