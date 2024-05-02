@@ -31,7 +31,7 @@ const User = (props) => {
         <div>{props.user.user_is_active ? "active" : "deleted"}</div>
         {props.user.user_is_active === true && (
           <button onClick={() => deleteUser(props.user.user_id)} title="delete">
-            <i class="bi bi-trash3-fill"></i>
+            <i className="bi bi-trash3-fill"></i>
           </button>
         )}
       </div>

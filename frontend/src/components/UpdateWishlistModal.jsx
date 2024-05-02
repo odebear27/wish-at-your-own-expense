@@ -123,8 +123,10 @@ const OverLay = (props) => {
               value={updateWishlist.wishlistStatus}
               onChange={handleChange}
             >
-              {allWishlistStatus.map((wishlistStatus) => {
-                return <option>{wishlistStatus.wishlist_status}</option>;
+              {allWishlistStatus.map((wishlistStatus, idx) => {
+                return (
+                  <option key={idx}>{wishlistStatus.wishlist_status}</option>
+                );
               })}
             </select>
           </div>

@@ -126,7 +126,7 @@ const Wishlist = (props) => {
               onClick={() => setIsCanBuyButtonPressed(true)}
               title="can buy"
             >
-              <i class="bi bi-bell-fill"></i>
+              <i className="bi bi-bell-fill"></i>
             </button>
           ) : (
             <div className="w-4"></div>
@@ -135,13 +135,13 @@ const Wishlist = (props) => {
             onClick={() => setIsUpdateWishlistPressed(true)}
             title="update"
           >
-            <i class="bi bi-pencil-fill"></i>
+            <i className="bi bi-pencil-fill"></i>
           </button>
           <button
             onClick={() => deleteWishlistForUser(props.wishlist.wishlist_id)}
             title="delete"
           >
-            <i class="bi bi-trash3-fill"></i>
+            <i className="bi bi-trash3-fill"></i>
           </button>
         </div>
       </div>

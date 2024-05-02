@@ -44,13 +44,13 @@ const Expense = (props) => {
             onClick={() => setShowUpdateExpenseModal(true)}
             title="update"
           >
-            <i class="bi bi-pencil-fill"></i>
+            <i className="bi bi-pencil-fill"></i>
           </button>
           <button
             onClick={() => props.deleteExpenseForUser(props.expense.expense_id)}
             title="delete"
           >
-            <i class="bi bi-trash3-fill"></i>
+            <i className="bi bi-trash3-fill"></i>
           </button>
         </div>
       </div>

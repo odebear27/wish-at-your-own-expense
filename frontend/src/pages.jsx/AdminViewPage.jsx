@@ -75,7 +75,7 @@ const AdminViewPage = () => {
     <div className="mx-5">
       <div className="flex justify-end py-4">
         <button onClick={() => handleLogout()} title="logout">
-          <i class="bi bi-door-open h4"></i>
+          <i className="bi bi-door-open h4"></i>
         </button>
       </div>
       <div className="flex flex-col gap-y-4">

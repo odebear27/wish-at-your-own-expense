@@ -118,7 +118,7 @@ const WishlistPage = () => {
         >
           <div className="flex space-x-0.5 items-center">
             <span>
-              <i class="bi bi-gift h4"></i>
+              <i className="bi bi-gift h4"></i>
             </span>
             <span className="flex w-16 leading-tight font-medium">
               Add an item

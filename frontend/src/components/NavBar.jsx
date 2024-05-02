@@ -63,7 +63,7 @@ const NavBar = () => {
               handleLogout();
             }}
           >
-            <i class="bi bi-door-open h4"></i>
+            <i className="bi bi-door-open h4"></i>
           </button>
         </NavLink>
       </nav>
