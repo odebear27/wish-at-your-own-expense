@@ -2,10 +2,12 @@ import React, { useState, useContext } from "react";
 import ReactDOM from "react-dom";
 import useFetch from "../hooks/useFetch";
 import UserContext from "../context/user";
+import ErrorMessage from "../components/ErrorMessage";
 
 const OverLay = (props) => {
   const fetchData = useFetch();
   const userCtx = useContext(UserContext);
+  const [message, setMessage] = useState("");
   const [updateAdmin, setUpdateAdmin] = useState({
     adminName: props.adminName,
   });
@@ -25,7 +27,15 @@ const OverLay = (props) => {
         props.getOneAdmin();
         props.setIsUpdateAdminPressed(false);
       } else {
-        alert(JSON.stringify(res.data));
+        if (Array.isArray(res.data)) {
+          // res.data is an array
+          if (res.data.length > 0) {
+            setMessage(res.data[0]);
+          }
+        } else {
+          // or if res.data is a string
+          setMessage(res.data);
+        }
       }
     } catch (error) {
       console.error(error);
@@ -54,7 +64,13 @@ const OverLay = (props) => {
           </div>
         </div>
         <div className="flex justify-between">
-          <button className="button" onClick={() => updateAdminAccount()}>
+          <button
+            className="button"
+            onClick={() => {
+              updateAdminAccount();
+              setMessage("");
+            }}
+          >
             Submit
           </button>
           <button
@@ -64,6 +80,7 @@ const OverLay = (props) => {
             Cancel
           </button>
         </div>
+        <ErrorMessage message={message}></ErrorMessage>
       </div>
     </div>
   );

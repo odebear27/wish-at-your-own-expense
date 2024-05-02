@@ -23,8 +23,6 @@ const ExpensesPage = () => {
       );
       if (res.ok) {
         userCtx.setExpense(res.data[0].sum);
-      } else {
-        alert(JSON.stringify(res.data));
       }
     } catch (error) {
       console.error(error);
@@ -42,8 +40,6 @@ const ExpensesPage = () => {
 
       if (res.ok) {
         setExpenses(res.data);
-      } else {
-        alert(JSON.stringify(res.data));
       }
     } catch (error) {
       console.error(error);
@@ -60,8 +56,6 @@ const ExpensesPage = () => {
       );
       if (res.ok) {
         setExpenseCategories(res.data);
-      } else {
-        alert(JSON.stringify(res.data));
       }
     } catch (error) {
       console.error(error);
@@ -79,8 +73,6 @@ const ExpensesPage = () => {
       if (res.ok) {
         getAllExpensesForAUser();
         getExpenseAmt();
-      } else {
-        alert(JSON.stringify(res.data));
       }
     } catch (error) {
       console.error(error);

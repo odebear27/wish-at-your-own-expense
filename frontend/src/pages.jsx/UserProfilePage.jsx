@@ -4,12 +4,14 @@ import UserContext from "../context/user";
 import { useNavigate } from "react-router-dom";
 import useLocalStorage from "../hooks/useLocalStorage";
 import piggyBank from "../assets/piggy_bank.png";
+import ErrorMessage from "../components/ErrorMessage";
 
 const UserProfilePage = () => {
   useLocalStorage();
   const fetchData = useFetch();
   const navigate = useNavigate();
   const userCtx = useContext(UserContext);
+  const [message, setMessage] = useState("");
   const [userProfileAndBudget, setUserProfileAndBudget] = useState({});
   const [isUpdateUserPressed, setIsUpdateUserPressed] = useState(false);
   const [updateUserProfile, setUpdateUserProfile] = useState({
@@ -46,8 +48,6 @@ const UserProfilePage = () => {
       );
       if (res.ok) {
         userCtx.setExpense(res.data[0].sum);
-      } else {
-        alert(JSON.stringify(res.data));
       }
     } catch (error) {
       console.error(error);
@@ -99,7 +99,11 @@ const UserProfilePage = () => {
         getUserProfileAndBudget();
         setIsUpdateUserPressed(false);
       } else {
-        alert(JSON.stringify(res.data));
+        let error = [];
+        if (resForUpdateUser.data[0]) error.push(resForUpdateUser.data[0]);
+        if (resForUpdateUserBudget.data[0])
+          error.push(resForUpdateUserBudget.data[0]);
+        setMessage(error[0]);
       }
     } catch (error) {
       console.error(error);
@@ -117,8 +121,6 @@ const UserProfilePage = () => {
 
       if (res.ok) {
         navigate("/");
-      } else {
-        alert(JSON.stringify(res.data));
       }
     } catch (error) {
       console.error(error);
@@ -249,16 +251,25 @@ const UserProfilePage = () => {
               <p>My wishlist cost: $0</p>
             )}
             <div className="flex space-x-4 py-4">
-              <button className="button" onClick={updateUser}>
+              <button
+                className="button"
+                onClick={() => {
+                  updateUser();
+                  setMessage("");
+                }}
+              >
                 Submit
               </button>
               <button
                 className="button"
-                onClick={() => setIsUpdateUserPressed(false)}
+                onClick={() => {
+                  setIsUpdateUserPressed(false);
+                }}
               >
                 Cancel
               </button>
             </div>
+            <ErrorMessage message={message}></ErrorMessage>
           </div>
         </div>
       )}

@@ -27,8 +27,6 @@ const AdminViewPage = () => {
 
       if (res.ok) {
         setAdmin(res.data);
-      } else {
-        alert(JSON.stringify(res.data));
       }
     } catch (error) {
       console.error(error);

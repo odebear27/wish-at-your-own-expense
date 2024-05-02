@@ -12,9 +12,11 @@ const validateExpenseForUserInput = [
   }),
   body("expense_category", "expense category is required").not().isEmpty(),
   body("expense_amt", "expense amt is required").not().isEmpty(),
-  body("expense_amt", "expense amt must be greater than zero").isFloat({
-    min: 0.01,
-  }),
+  body("expense_amt", "expense amt must be a number greater than zero").isFloat(
+    {
+      min: 0.01,
+    }
+  ),
 ];
 
 const validateExpenseIdInParams = [

@@ -17,8 +17,6 @@ const User = (props) => {
 
       if (res.ok) {
         props.getAllUsers();
-      } else {
-        alert(JSON.stringify(res.data));
       }
     } catch (error) {
       console.error(error);

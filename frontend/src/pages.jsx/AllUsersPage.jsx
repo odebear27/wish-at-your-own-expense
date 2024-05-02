@@ -23,8 +23,6 @@ const AllUsersPage = () => {
 
       if (res.ok) {
         setAllUsers(res.data);
-      } else {
-        alert(JSON.stringify(res.data));
       }
     } catch (error) {
       console.error(error);

@@ -1,6 +1,7 @@
 import React, { useRef, useState } from "react";
 import useFetch from "../hooks/useFetch";
 import { useNavigate } from "react-router-dom";
+import ErrorMessage from "../components/ErrorMessage";
 
 const RegisterAdminPage = () => {
   const fetchData = useFetch();
@@ -20,8 +21,14 @@ const RegisterAdminPage = () => {
       if (res.ok) {
         navigate("/admin");
       } else {
-        if (JSON.stringify(res.data) === '"duplicate email"') {
-          setMessage("email already registered");
+        if (Array.isArray(res.data)) {
+          // res.data is an array
+          if (res.data.length > 0) {
+            setMessage(res.data[0]);
+          }
+        } else {
+          // or if res.data is a string
+          setMessage(res.data);
         }
       }
     } catch (error) {
@@ -59,7 +66,7 @@ const RegisterAdminPage = () => {
             Cancel
           </button>
         </div>
-        <div className="text-colour-red font-medium">{message}</div>
+        <ErrorMessage message={message}></ErrorMessage>
       </div>
     </div>
   );
