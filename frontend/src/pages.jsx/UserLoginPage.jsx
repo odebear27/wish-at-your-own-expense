@@ -67,7 +67,7 @@ const UserLoginPage = () => {
           </button>
         </div>
         <div className="text-colour-white font-medium text-lg">
-          Wish at you own Expense
+          Wish at your own Expense
         </div>
         <div className="flex flex-col items-center space-y-4 fixed bottom-20">
           <div className="w-auto flex space-x-10">

@@ -69,7 +69,7 @@ const AdminLoginPage = () => {
         </button>
       </div>
       <div className="text-colour-white font-medium text-lg">
-        Wish at you own Expense Admin Portal
+        Wish at your own Expense Admin Portal
       </div>
       <div className="flex flex-col items-center space-y-4">
         <div className="w-auto flex space-x-10">
