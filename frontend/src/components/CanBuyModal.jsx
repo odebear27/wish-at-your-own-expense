@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import ReactDOM from "react-dom";
 import useFetch from "../hooks/useFetch";
 import UserContext from "../context/user";
@@ -6,6 +6,7 @@ import UserContext from "../context/user";
 const OverLay = (props) => {
   const fetchData = useFetch();
   const userCtx = useContext(UserContext);
+  const [expense, setExpense] = useState(userCtx.expense);
 
   const updateWishlistForUser = async (wishlistId) => {
     try {
@@ -31,9 +32,81 @@ const OverLay = (props) => {
       console.error(error);
     }
   };
+  const getExpenseAmt = async () => {
+    try {
+      const res = await fetchData(
+        `/api/expensesamt`,
+        "POST",
+        undefined,
+        userCtx.accessToken
+      );
+      if (res.ok) {
+        console.log(res.data);
+        // userCtx.setExpense(res.data[0].sum);
+        setExpense(res.data[0].sum);
+        return parseFloat(res.data[0].sum);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const getAllExpensesForAUser = async () => {
+    try {
+      const res = await fetchData(
+        `/api/expenses`,
+        undefined,
+        undefined,
+        userCtx.accessToken
+      );
+
+      if (res.ok) {
+        setExpenses(res.data);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const createExpenseForUser = async () => {
+    try {
+      const body = {
+        expense_date: new Date(Date.now()).toISOString().split("T")[0],
+        expense_item: props.wishlistItem,
+        expense_category: "OTHERS",
+        expense_amt: parseFloat(props.wishlistCost),
+      };
+      const res = await fetchData(
+        `/api/expenses`,
+        "PUT",
+        body,
+        userCtx.accessToken
+      );
+
+      if (res.ok) {
+        // props.getAllExpensesForAUser();
+        getExpenseAmt();
+      } else {
+        alert(JSON.stringify(res.data));
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   const wishlistBought = () => {
     updateWishlistForUser(props.wishlistId);
+    createExpenseForUser();
+    props.getUserProfileAndBudget();
+    getExpenseAmt();
+    console.log("budget ", userCtx.budget);
+    console.log("expense ", expense);
+    props.setExcessBudget(
+      new Intl.NumberFormat("en-SG", {
+        style: "currency",
+        currency: "SGD",
+      }).format(userCtx.budget - getExpenseAmt())
+    );
     props.setCanBuy(false);
     props.setIsCanBuyButtonPressed(false);
   };
@@ -81,6 +154,8 @@ const CanBuyModal = (props) => {
           wishlistCost={wishlist_cost}
           wishlistStatus={wishlist_status}
           getWishlistCost={props.getWishlistCost}
+          setExcessBudget={props.setExcessBudget}
+          getUserProfileAndBudget={props.getUserProfileAndBudget}
         ></OverLay>,
         document.querySelector("#modal-root")
       )}

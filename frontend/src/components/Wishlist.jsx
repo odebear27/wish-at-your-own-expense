@@ -83,6 +83,8 @@ const Wishlist = (props) => {
           getAllWishlistForAUser={props.getAllWishlistForAUser}
           wishlist={props.wishlist}
           getWishlistCost={props.getWishlistCost}
+          setExcessBudget={props.setExcessBudget}
+          getUserProfileAndBudget={props.getUserProfileAndBudget}
         ></CanBuyModal>
       )}
       <div className="grid grid-cols-6 gap-3">

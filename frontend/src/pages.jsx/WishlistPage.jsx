@@ -11,6 +11,7 @@ const WishlistPage = () => {
   const userCtx = useContext(UserContext);
   const [wishlists, setWishlists] = useState([]);
   const [isAddWishlistPressed, setIsAddWishlistPressed] = useState(false);
+  const [excessBudget, setExcessBudget] = useState(0);
 
   const getUserProfileAndBudget = async () => {
     try {
@@ -84,6 +85,12 @@ const WishlistPage = () => {
       getUserProfileAndBudget();
       getExpenseAmt();
       getAllWishlistForAUser();
+      setExcessBudget(
+        new Intl.NumberFormat("en-SG", {
+          style: "currency",
+          currency: "SGD",
+        }).format(userCtx.budget - userCtx.expense)
+      );
     }
   }, [userCtx.accessToken]);
 
@@ -102,13 +109,7 @@ const WishlistPage = () => {
           ) : (
             <div className="font-medium">My unpurchased wishlist cost: $0</div>
           )}
-          <div className="font-medium">
-            My excess budget:{" "}
-            {new Intl.NumberFormat("en-SG", {
-              style: "currency",
-              currency: "SGD",
-            }).format(userCtx.budget - userCtx.expense)}
-          </div>
+          <div className="font-medium">My excess budget: {excessBudget}</div>
         </div>
 
         <button
@@ -151,6 +152,8 @@ const WishlistPage = () => {
               wishlist={wishlist}
               getAllWishlistForAUser={getAllWishlistForAUser}
               getWishlistCost={getWishlistCost}
+              setExcessBudget={setExcessBudget}
+              getUserProfileAndBudget={getUserProfileAndBudget}
             ></Wishlist>
           );
         })}
