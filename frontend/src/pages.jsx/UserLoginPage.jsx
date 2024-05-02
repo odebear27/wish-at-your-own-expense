@@ -3,6 +3,7 @@ import useFetch from "../hooks/useFetch";
 import UserContext from "../context/user";
 import { jwtDecode } from "jwt-decode";
 import { useNavigate } from "react-router-dom";
+import ErrorMessage from "../components/ErrorMessage";
 
 const UserLoginPage = () => {
   const fetchData = useFetch();
@@ -39,7 +40,15 @@ const UserLoginPage = () => {
         userCtx.setIsLoggedIn(true);
         navigate("/profile");
       } else {
-        setMessage("login error");
+        if (Array.isArray(res.data)) {
+          // res.data is an array
+          if (res.data.length > 0) {
+            setMessage(res.data[0]);
+          }
+        } else {
+          // or if res.data is a string
+          setMessage(res.data);
+        }
       }
     } catch (error) {
       console.error(error);
@@ -71,7 +80,7 @@ const UserLoginPage = () => {
           </div>
 
           {message.length > 0 ? (
-            <div className="text-colour-red font-medium">{message}</div>
+            <ErrorMessage message={message}></ErrorMessage>
           ) : (
             <div className="h-6"></div>
           )}
