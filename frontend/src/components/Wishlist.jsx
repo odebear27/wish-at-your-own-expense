@@ -97,7 +97,7 @@ const Wishlist = (props) => {
         </div>
         {props.wishlist.wishlist_store.slice(0, 5) === "https" ? (
           <a
-            className="col-span-2"
+            className="col-span-2 line-clamp-3"
             href={props.wishlist.wishlist_store}
             target="_blank"
           >

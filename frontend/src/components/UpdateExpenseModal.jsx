@@ -72,6 +72,7 @@ const OverLay = (props) => {
               type="date"
               value={expenseToUpdate.expenseDate}
               onChange={handleChange}
+              max={new Date(Date.now()).toISOString().split("T")[0]}
             ></input>
           </div>
           <div className="w-auto flex space-x-4">
