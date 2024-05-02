@@ -134,8 +134,7 @@ const loginUser = async (req, res) => {
       id: rows[0].user_id,
     };
     const access = jwt.sign(claims, process.env.ACCESS_SECRET, {
-      // expiresIn: "20m",
-      expiresIn: "30d",
+      expiresIn: "20m",
       jwtid: uuidv4(),
     });
     const refresh = jwt.sign(claims, process.env.REFRESH_SECRET, {
