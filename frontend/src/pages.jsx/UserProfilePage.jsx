@@ -48,8 +48,6 @@ const UserProfilePage = () => {
       );
       if (res.ok) {
         userCtx.setExpense(res.data[0].sum);
-      } else {
-        alert(JSON.stringify(res.data));
       }
     } catch (error) {
       console.error(error);
@@ -123,8 +121,6 @@ const UserProfilePage = () => {
 
       if (res.ok) {
         navigate("/");
-      } else {
-        alert(JSON.stringify(res.data));
       }
     } catch (error) {
       console.error(error);

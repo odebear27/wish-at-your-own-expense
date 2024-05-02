@@ -26,8 +26,6 @@ const OverLay = (props) => {
       );
       if (res.ok) {
         setAllWishlistStatus(res.data);
-      } else {
-        alert.JSON.stringify(res.data);
       }
     } catch (error) {
       console.error(error);

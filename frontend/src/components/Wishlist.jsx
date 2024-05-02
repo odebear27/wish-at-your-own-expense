@@ -23,8 +23,6 @@ const Wishlist = (props) => {
       if (res.ok) {
         props.getWishlistCost();
         props.getAllWishlistForAUser();
-      } else {
-        alert(JSON.stringify(res.data));
       }
     } catch (error) {
       console.error(error);

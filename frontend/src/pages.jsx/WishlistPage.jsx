@@ -39,10 +39,10 @@ const WishlistPage = () => {
       );
       if (res.ok) {
         userCtx.setExpense(res.data[0].sum);
-      } else {
-        alert(JSON.stringify(res.data));
       }
-    } catch (error) {}
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const getWishlistCost = async () => {
@@ -72,8 +72,6 @@ const WishlistPage = () => {
 
       if (res.ok) {
         setWishlists(res.data);
-      } else {
-        alert(JSON.stringify(res.data));
       }
     } catch (error) {
       console.error(error);
