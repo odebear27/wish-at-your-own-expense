@@ -37,7 +37,7 @@ It allows users to track their expenses and record their wishlist items; allowin
 
 [Public Board](https://github.com/users/odebear27/projects/4)
 
-![entity_relationship_diagram](readme_screenshots/ERD.JPG)
+![entity_relationship_diagram](./readme_screenshots/ERD.jpg)
 
 Clone the repository to your local machine
 
