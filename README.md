@@ -148,6 +148,12 @@ Edit provider profile
 View all users with their account status
 Admin can delete user account
 
+### Development Environment
+
+This web application was created on Windows 10 machine with a display resolution of 1920 x 1080, tested on Google Chrome browser Version 121.0.6167.187.
+
+While efforts have been made to ensure compatibility across different screen sizes and browsers, there may be variations in styling and performance depending on your specific environment.
+
 ### Resources
 
 - [PostgreSQL official documentation](https://www.postgresql.org/docs/16)
