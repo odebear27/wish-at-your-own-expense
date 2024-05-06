@@ -96,6 +96,8 @@ Set up .env for backend
 | ACCESS_SECRET  | Secret key for access token   |
 | REFRESH_SECRET | Secret key for refresh token  |
 
+Run the `database.sql` script located in `backend/src/db` in a PostgreSQL GUI (eg, pgAdmin)
+
 Run the backend
 
 ```
