@@ -115,12 +115,15 @@ const OverLay = (props) => {
           <div className="font-medium">Have you purchased the item?</div>
           <div className="w-auto flex space-x-4">
             <label>Purchased Price:</label>
-            <input
-              id="purchasedPrice"
-              value={purchasedPrice}
-              onChange={handleChange}
-              type="text"
-            ></input>
+            <div className="space-x-1">
+              <label>$</label>
+              <input
+                id="purchasedPrice"
+                value={purchasedPrice}
+                onChange={handleChange}
+                type="text"
+              ></input>
+            </div>
           </div>
           <ErrorMessage message={message}></ErrorMessage>
         </div>
