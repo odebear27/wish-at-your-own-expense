@@ -138,6 +138,9 @@ Add a wishlist item
 ![update_wishlist](./readme_screenshots/user/update_wishlist_modal.jpg)
 Update a wishlist item
 
+![can_buy_wishlist](./readme_screenshots/user/can_buy_modal.jpg)
+Purchase a wishlist item so that it gets added to expenses
+
 ![admin_login_page](./readme_screenshots/admin/admin_login.jpg)
 ![register_admin_page](./readme_screenshots/admin/register_admin.jpg)
 Register for an admin account and login
