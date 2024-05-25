@@ -32,6 +32,58 @@ const OverLay = (props) => {
     }
   };
 
+  const getExpenseAmt = async () => {
+    try {
+      const res = await fetchData(
+        `/api/expensesamt`,
+        "POST",
+        undefined,
+        userCtx.accessToken
+      );
+      if (res.ok) {
+        userCtx.setExpense(res.data[0].sum);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const createExpenseForUser = async () => {
+    try {
+      const body = {
+        expense_date: new Date(Date.now()).toISOString().split("T")[0],
+        expense_item: updateWishlist.wishlistItem,
+        expense_category: "OTHERS",
+        expense_amt: parseFloat(updateWishlist.wishlistCost),
+      };
+      const res = await fetchData(
+        `/api/expenses`,
+        "PUT",
+        body,
+        userCtx.accessToken
+      );
+
+      if (res.ok) {
+        props.getWishlistCost();
+        getExpenseAmt();
+        props.setCanBuy(false);
+        props.setIsCanBuyButtonPressed(false);
+      } else {
+        if (Array.isArray(res.data)) {
+          // res.data is an array
+          if (res.data.length > 0) {
+            setMessage(res.data[0]);
+          }
+        } else {
+          // or if res.data is a string
+          setMessage(res.data);
+        }
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   const updateWishlistForUser = async (wishlist_id) => {
     try {
       const body = {
@@ -52,6 +104,7 @@ const OverLay = (props) => {
         props.getWishlistCost();
         props.checkIfCanBuy();
         props.getAllWishlistForAUser();
+        getExpenseAmt();
         props.setIsUpdateWishlistPressed(false);
       } else {
         if (Array.isArray(res.data)) {
@@ -73,6 +126,12 @@ const OverLay = (props) => {
     setUpdateWishlist((prevState) => {
       return { ...prevState, [event.target.id]: event.target.value };
     });
+  };
+
+  const submitPressed = () => {
+    updateWishlistForUser(props.wishlistId);
+    if (updateWishlist.wishlistStatus === "PURCHASED") createExpenseForUser();
+    setMessage("");
   };
 
   useEffect(() => {
@@ -132,13 +191,7 @@ const OverLay = (props) => {
           </div>
         </div>
         <div className="flex justify-between">
-          <button
-            className="button"
-            onClick={() => {
-              updateWishlistForUser(props.wishlistId);
-              setMessage("");
-            }}
-          >
+          <button className="button" onClick={() => submitPressed()}>
             Submit
           </button>
           <button
