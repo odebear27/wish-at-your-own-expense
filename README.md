@@ -128,7 +128,7 @@ Update an expense item
 
 ![view_wishlist](./readme_screenshots/user/wishlist_page.jpg)
 View my wishlist page  
-User can add, update, delete a wishlist item; see which item are within their excess budget (indicated by the bell icon)  
+User can add, update, delete a wishlist item; see which item are within their excess budget (indicated by the bell icon); can rearrange their unpurchased wishlist item according to priority (persisted in database)
 Clicking on the url link under Store opens the webpage in a new tab  
 Calculation for excess budget: excess budget = budget for the current month - expenses for the current month
 
@@ -167,6 +167,7 @@ While efforts have been made to ensure compatibility across different screen siz
 - [Node postgres official documentation](https://node-postgres.com/apis/pool#poolquery)
 - [Using local storage](https://blog.logrocket.com/localstorage-javascript-complete-guide/)
 - [Protecting route with react router](https://blog.logrocket.com/authentication-react-router-v6/)
+- [React drag and drop for a list](https://codesandbox.io/p/sandbox/github/react-dnd/react-dnd/tree/gh-pages/examples_js/04-sortable/simple)
 
 ### Attribution
 
