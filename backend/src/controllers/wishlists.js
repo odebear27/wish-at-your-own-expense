@@ -7,7 +7,7 @@ const getAllWishlistsForUser = async (req, res) => {
       res.json({ status: "ok", msg: "admin cannot view wishlists" });
     } else if (req.decoded.role === "user") {
       const wishlists = await pool.query(
-        `SELECT * FROM wishlists WHERE user_id=$1 ORDER BY wishlist_status DESC, wishlist_cost ASC`,
+        `SELECT * FROM wishlists WHERE user_id=$1 ORDER BY wishlist_status DESC, wishlist_position ASC, wishlist_cost ASC`,
         [req.decoded.id]
       );
       res.json(wishlists.rows);
@@ -24,11 +24,14 @@ const createWishlistForUser = async (req, res) => {
     if (req.decoded.role === "admin") {
       res.json({ status: "error", msg: "admin cannot create wishlist" });
     } else if (req.decoded.role === "user") {
-      // set wishlist_position to 1 first since unsure how drag and drop works
+      const { rows } = await pool.query(
+        `SELECT COALESCE(max(wishlist_position), 0) AS max FROM wishlists WHERE user_id = $1 AND wishlist_status = $2`,
+        [req.decoded.id, "UNPURCHASED"]
+      );
       await pool.query(
         `INSERT INTO wishlists (wishlist_position, wishlist_item, wishlist_cost, wishlist_store, wishlist_status, user_id) VALUES ($1, $2, $3, $4, $5, $6)`,
         [
-          1,
+          parseInt(rows[0].max) + 1,
           req.body.wishlist_item,
           req.body.wishlist_cost,
           req.body.wishlist_store,
