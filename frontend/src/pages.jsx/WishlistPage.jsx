@@ -4,6 +4,9 @@ import UserContext from "../context/user";
 import Wishlist from "../components/Wishlist";
 import useLocalStorage from "../hooks/useLocalStorage";
 import AddWishlistModal from "../components/AddWishlistModal";
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
+import update from "immutability-helper";
 
 const WishlistPage = () => {
   useLocalStorage();
@@ -11,6 +14,22 @@ const WishlistPage = () => {
   const userCtx = useContext(UserContext);
   const [wishlists, setWishlists] = useState([]);
   const [isAddWishlistPressed, setIsAddWishlistPressed] = useState(false);
+
+  const moveWishlist = (dragIndex, hoverIndex) => {
+    /*
+      - copy the dragged image before hovered element (i.e., [hoverIndex, 0, draggedImage])
+      - remove the previous reference of dragged element (i.e., [dragIndex, 1])
+      - here we are using this update helper method from immutability-helper package
+    */
+    setWishlists((prevWishlists) =>
+      update(prevWishlists, {
+        $splice: [
+          [dragIndex, 1],
+          [hoverIndex, 0, prevWishlists[dragIndex]],
+        ],
+      })
+    );
+  };
 
   const getUserProfileAndBudget = async () => {
     try {
@@ -143,18 +162,22 @@ const WishlistPage = () => {
           setIsAddWishlistPressed={setIsAddWishlistPressed}
         ></AddWishlistModal>
       )}
-      <div className="grid divide-y-[1.3px]">
-        {wishlists.map((wishlist, idx) => {
-          return (
-            <Wishlist
-              key={idx}
-              wishlist={wishlist}
-              getAllWishlistForAUser={getAllWishlistForAUser}
-              getWishlistCost={getWishlistCost}
-            ></Wishlist>
-          );
-        })}
-      </div>
+      <DndProvider backend={HTML5Backend}>
+        <div className="grid divide-y-[1.3px]">
+          {wishlists.map((wishlist, idx) => {
+            return (
+              <Wishlist
+                key={idx}
+                index={idx}
+                wishlist={wishlist}
+                getAllWishlistForAUser={getAllWishlistForAUser}
+                getWishlistCost={getWishlistCost}
+                moveWishlist={moveWishlist}
+              ></Wishlist>
+            );
+          })}
+        </div>
+      </DndProvider>
     </div>
   );
 };
