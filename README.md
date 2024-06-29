@@ -128,7 +128,7 @@ Update an expense item
 
 ![view_wishlist](./readme_screenshots/user/wishlist_page.jpg)
 View my wishlist page  
-User can add, update, delete a wishlist item; see which item are within their excess budget (indicated by the bell icon); can rearrange their unpurchased wishlist item according to priority (persisted in database)
+User can add, update, delete a wishlist item; see which item are within their excess budget (indicated by the bell icon); can rearrange their unpurchased wishlist item according to priority (persisted in database)  
 Clicking on the url link under Store opens the webpage in a new tab  
 Calculation for excess budget: excess budget = budget for the current month - expenses for the current month
 
